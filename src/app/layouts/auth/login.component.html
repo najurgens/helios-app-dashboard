@@ -1,5 +1,16 @@
-<div class="row">
-    <h2>Welcome to Helios!</h2>
-    <img src="../../../assets/images/helios.png"/>
-    <button mat-button (click)="authenticate">Login</button>
-</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <img src="../../../assets/images/helios.png" style="width:38%; height:62%"/>
+            <h1>Welcome! Login to your Salesforce Instance Below.</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button  mat-raised-button color="accent" (click)="authenticate('prod')">PRODUCTION</button>
+        </div>
+        <div class="col">
+            <button  mat-raised-button color="accent" (click)="authenticate('sandbox')">SANDBOX</button>
+        </div>
+    </div>
+  </div>

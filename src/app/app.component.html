@@ -1,27 +1,2 @@
 
-<mat-toolbar color="primary">
-  <!--<div class="row">-->
-    <div class="col-sm-4 col-lg-4 col-md-4">
-      <span class = "toolbar-item-menu"><mat-icon (click)="opened=!opened">menu</mat-icon></span>
-    </div>
-
-    <div class="col-sm-4 col-lg-4 col-md-4" style="text-align:center">
-      <span class="center-logo" style="display:inline-block"><img src="../assets/images/helios.png" style="width:72px;height:72px;"></span>
-    </div>
-
-    <div class="col-sm-4 col-lg-4 col-md-4" style="text-align:right">
-      <span class="toolbar-item-menu" style="display:inline-block;padding:10px;">
-        <mat-icon>settings</mat-icon>
-      </span>
-      <span class="toolbar-item-menu" style="display:inline-block;padding:10px">
-        <mat-icon>account_circle</mat-icon>
-      </span>
-    </div>
-  <!--</div>-->
-</mat-toolbar>
-
-<mat-sidenav-container>
-    <mat-sidenav mode="side" [(opened)]="opened">Sidenav</mat-sidenav>
-    <mat-sidenav-content>Main Content
-    </mat-sidenav-content>
-</mat-sidenav-container>
+<router-outlet></router-outlet>

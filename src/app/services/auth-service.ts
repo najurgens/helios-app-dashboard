@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
     providedIn:'root'
 })
 export class AuthService {
 
-    path: 'http://localhost:3001/auth/login';
+    constructor(private http:HttpClient) {}
 
-    constructor(private httpClient:HttpClient) {}
-
-    public authenticate() {
+    public authenticate(loginUrl) {
         console.log('within authservice authenticate!');
-        return this.httpClient.get(this.path);
+        const httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              //Authorization: 'bearer ' + token
+            })
+          };
+        const path = 'http://localhost:3001/auth/login';
+        //const path = 'https://' + domain + '/api/project?' + 'email=' + email;
+        return this.http.get(path, httpOptions).subscribe( data => console.log(data));
     }
 
     /*

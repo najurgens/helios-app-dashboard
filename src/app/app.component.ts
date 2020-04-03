@@ -14,7 +14,7 @@ export class AppComponent {
 
   constructor(private authService:AuthService) {
       console.log('WITHIN APP COMPONENT CONSTRUCTOR');
-      console.log('auth result = ' + JSON.stringify(this.authService.authenticate()));
+      //console.log('auth result = ' + JSON.stringify(this.authService.authenticate('')));
   }
 
   ngOnInit() {
