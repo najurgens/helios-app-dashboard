@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth-service';
 
 import { LoginComponent } from './layouts/auth/login.component';
@@ -8,7 +8,7 @@ import { LoginComponent } from './layouts/auth/login.component';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit { 
     title = 'Helios';
     opened = false;
 
@@ -18,7 +18,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-      
+      console.log('TEST API CALL: ' + JSON.stringify(this.authService.getAccounts()));
   }
 
 

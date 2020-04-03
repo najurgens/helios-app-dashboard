@@ -7,12 +7,19 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
 
     path: 'http://localhost:3001/auth/login';
+    accessToken: String;
+    userInfo: Object;
+    instanceURL: String;
 
     constructor(private httpClient:HttpClient) {}
 
     public authenticate() {
         console.log('within authservice authenticate!');
-        return this.httpClient.get(this.path);
+        console.log('authenticate result: ' + this.httpClient.get(this.path));
+    }
+
+    public getAccounts() {
+        return this.httpClient.get('http://localhost:3001/api/accounts');
     }
 
     /*

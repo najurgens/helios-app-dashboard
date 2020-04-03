@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth-service';  
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'profiles-permissions',
+  templateUrl: './pp-component.html',
+  styleUrls: ['./pp-component.scss']
 })
 export class ProfilePermissionSetComponent {
   

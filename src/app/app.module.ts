@@ -11,13 +11,17 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './layouts/auth/login.component'; 
+import { SharedComponent } from './layouts/shared/shared.component';
+import { ProfilePermissionSetComponent } from './layouts/profiles-permission-sets/pp-component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    SharedComponent,
+    ProfilePermissionSetComponent
   ],
   imports: [
     BrowserModule,
