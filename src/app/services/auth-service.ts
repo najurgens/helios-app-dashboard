@@ -1,12 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
     providedIn:'root'
 })
 export class AuthService {
 
-    constructor(private http:HttpClient) {}
+    constructor(
+        private http:HttpClient,
+        private route: ActivatedRoute
+        ) 
+        {}
+        
+    public displayKey(){
+        const firstParam: string = this.route.snapshot.queryParamMap.get('valid');
+        console.log(decodeURIComponent(firstParam));
+    }
 
     public authenticate(loginUrl) {
         console.log('within authservice authenticate!');
