@@ -9,6 +9,14 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "proxy": {
+    "/auth/login": {
+      "target": "http://localhost:3001"
+    },
+    "/api/accounts": {
+      "target": "http://localhost:3001"
+    }
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.0.2",

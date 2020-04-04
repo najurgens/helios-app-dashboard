@@ -12,10 +12,15 @@ export class LoginComponent {
 
     constructor(private authService:AuthService) {}
 
-    authenticate(orgType) {
-        this.loginUrl = (orgType==='prod') ? 'https://login.salesforce.com/' : 'https://test.salesforce.com/';
+    authenticate() {
+        window.location.href = 'http://localhost:3001/auth/login';
+        /*this.loginUrl = (orgType==='prod') ? 'https://login.salesforce.com/' : 'https://test.salesforce.com/';
         this.authService.authenticate(this.loginUrl);
         console.log('auth result = ' + this.authService.authenticate('https://test.salesforce.com/'));
-        console.log('within app.component.ts constructor!');
+        console.log('within app.component.ts constructor!');*/
+    }
+
+    displayKey(){
+        this.authService.displayKey();
     }
 }
