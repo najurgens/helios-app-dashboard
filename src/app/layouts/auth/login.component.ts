@@ -7,12 +7,15 @@ import { AuthService } from '../../services/auth-service';
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-    title = 'Helios';
+    title: String = 'Helios';
+    loginUrl: String;
 
     constructor(private authService:AuthService) {}
 
-    authenticate() {
-        console.log('auth result = ' + this.authService.authenticate());
+    authenticate(orgType) {
+        this.loginUrl = (orgType==='prod') ? 'https://login.salesforce.com/' : 'https://test.salesforce.com/';
+        this.authService.authenticate(this.loginUrl);
+        console.log('auth result = ' + this.authService.authenticate('https://test.salesforce.com/'));
         console.log('within app.component.ts constructor!');
     }
 }

@@ -14,11 +14,11 @@ export class AppComponent implements OnInit {
 
   constructor(private authService:AuthService) {
       console.log('WITHIN APP COMPONENT CONSTRUCTOR');
-      console.log('auth result = ' + JSON.stringify(this.authService.authenticate()));
+      //console.log('auth result = ' + JSON.stringify(this.authService.authenticate('')));
   }
 
   ngOnInit() {
-      console.log('TEST API CALL: ' + JSON.stringify(this.authService.getAccounts()));
+      //console.log('TEST API CALL: ' + JSON.stringify(this.authService.getAccounts()));
   }
 
 
