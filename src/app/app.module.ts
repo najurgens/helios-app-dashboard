@@ -16,12 +16,14 @@ import { LoginComponent } from './layouts/auth/login.component';
 import { ProfilePermissionSetComponent } from './layouts/profiles-permission-sets/pp-component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
+import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ProfilePermissionSetComponent
+    ProfilePermissionSetComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
