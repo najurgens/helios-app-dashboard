@@ -14,11 +14,13 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './layouts/auth/login.component'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
+import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
