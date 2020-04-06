@@ -12,14 +12,17 @@ export class AppComponent implements OnInit {
     title = 'Helios';
     opened = false;
 
-  constructor(private authService:AuthService) {
-      console.log('WITHIN APP COMPONENT CONSTRUCTOR');
-      //console.log('auth result = ' + JSON.stringify(this.authService.authenticate('')));
-  }
+    instanceUrl: String;
+    user: Object;
 
-  ngOnInit() {
-      //console.log('TEST API CALL: ' + JSON.stringify(this.authService.getAccounts()));
-  }
+    constructor(private authService:AuthService) {
+        console.log('WITHIN APP COMPONENT CONSTRUCTOR');
+        //console.log('auth result = ' + JSON.stringify(this.authService.authenticate('')));
+    }
+
+    ngOnInit() {
+        //console.log('TEST API CALL: ' + JSON.stringify(this.authService.getAccounts()));
+    }
 
 
 

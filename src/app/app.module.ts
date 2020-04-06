@@ -7,12 +7,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './layouts/auth/login.component'; 
-import { SharedComponent } from './layouts/shared/shared.component';
 import { ProfilePermissionSetComponent } from './layouts/profiles-permission-sets/pp-component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,7 +21,6 @@ import { AppRoutingModule } from './app-routing.module';
   declarations: [
     AppComponent,
     LoginComponent,
-    SharedComponent,
     ProfilePermissionSetComponent
   ],
   imports: [
@@ -34,6 +33,7 @@ import { AppRoutingModule } from './app-routing.module';
     MatIconModule,
     MatButtonModule,
     HttpClientModule,
+    MatListModule,
     RouterModule,
     AppRoutingModule
   ],

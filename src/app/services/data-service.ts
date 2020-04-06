@@ -13,4 +13,8 @@ export class DataService {
     public getPermissions(permission) {
         return this.httpClient.get(this.path+permission);
     }
+
+    public getProfiles(profiles) {
+        return this.httpClient.get(this.path+profiles);
+    }
 }
