@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'login',
@@ -10,18 +12,19 @@ export class LoginComponent {
     title: String = 'Helios';
     loginUrl: String;
 
-    constructor(private authService:AuthService) {}
+    constructor(private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router, private location: Location ) {
+
+        //console.log('AUTH-GUARD refreshToken: ' + AuthService.refreshToken + ', accessToken: ' + AuthService.accessToken + ', user: ' + AuthService.currentUser + ', instanceUrl: ' + AuthService.instanceUrl);
+        if (this.authService.isAuthenticated()) {
+            console.log('FROM LOGIN COMPONENT, ALREADY AUTHENTICATED!!!');
+            this.router.navigate(['/profiles-permissions']);// this.location.back();
+        } else {
+            console.log('FROM LOGIN COMPONENT, NOT AUTH');
+        }
+    }
 
     authenticate(orgType) {
-        //console.log('within authentication service, address=' + orgType + ', authenticated='+AuthService.authenticated+', currentUser='+JSON.stringify(AuthService.currentUser));
         this.loginUrl = (orgType==='prod') ? 'true' : 'false';
-        console.log(this.loginUrl);
         window.location.href = 'http://localhost:3001/auth/login?org=' + this.loginUrl;
     }
-
-    /*
-    displayKey(){
-        this.authService.displayKey();
-    }
-    */
 }

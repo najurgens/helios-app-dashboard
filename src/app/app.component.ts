@@ -10,6 +10,7 @@ import { Router, NavigationStart } from '@angular/router';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent { 
+
     title = 'Helios';
     opened = false;
     showMenus: Boolean;
@@ -17,17 +18,16 @@ export class AppComponent {
     instanceUrl: String;
     user: Object;
 
-    /*
-    constructor(private authService:AuthService) {
-        console.log('WITHIN APP COMPONENT CONSTRUCTOR');
-        //console.log('auth result = ' + JSON.stringify(this.authService.authenticate('')));
-    }
-    */
-
-    constructor(router:Router) {
+    constructor(private authService:AuthService, router:Router) {
+        
+        console.log('isAuthenticated: ' + this.authService.isAuthenticated());
         router.events.forEach((event) => {
-            if(event instanceof NavigationStart) {
-                this.showMenus = event.url !== "/login";
+            if (event instanceof NavigationStart) {
+                console.log('EVENT.RESTORED_STATE='+event);
+                // if auth-guard has redirected to /login, showMenues===false
+                console.log('APP COMPONENT ROUTER NAVIGATION DETECTED: authenticated: ' + this.authService.isAuthenticated());
+                //this.showMenus = this.authService.isAuthenticated();
+                this.showMenus = (event.url !== "/login" && this.authService.isAuthenticated()===true);
             }
         });
     }

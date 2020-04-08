@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth-service';  
-import { ActivatedRoute } from '@angular/router';
 import { ExportToCsv } from 'export-to-csv';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { DataService } from '../../services/data-service';
+import { isEmptyExpression } from '@angular/compiler';
 
 @Component({
   selector: 'profiles-permissions',
@@ -12,48 +13,52 @@ import { DataService } from '../../services/data-service';
 })
 export class ProfilePermissionSetComponent implements OnInit {
 
-    accessToken: String;
-    instanceUrl: String;
-    refreshToken: String;
-    user: Object;
-    data: Object;
-
     profiles:Array<any>
     permission_sets:Array<any>
 
     constructor(
         private authService: AuthService, 
-        private route: ActivatedRoute, 
-        private dataService: DataService,
-        ) {
+        private router: Router, private route: 
+        ActivatedRoute, private dataService: DataService) 
+        {
 
         console.log('Within profile-permissionSet constructor!');
+        console.log('isAuthenticated: ' + this.authService.isAuthenticated());
+        //console.log('AUTH-GUARD refreshToken: ' + AuthService.refreshToken + ', accessToken: ' + AuthService.accessToken + ', user: ' + AuthService.currentUser + ', instanceUrl: ' + AuthService.instanceUrl);
         this.route.queryParams.subscribe(params => {
             console.log('WITHIN PROFILE PERMISSION SET, params= ' + JSON.stringify(params));
-            if (params!={}) {
-                const allParams = JSON.parse(params.valid);
-                //AuthService.currentUser = allParams['user'];
-                //AuthService.authenticated=true;
-                this.accessToken = allParams['accessToken'];
-                this.refreshToken = allParams['refreshToken'];
-                this.instanceUrl = allParams['instanceUrl'];
-                this.user = allParams['user'];
-            }      
+            if (JSON.stringify(params)!=='{}') {
+                console.log('VALID PARAMS PERMPROF');
+                const allParams = JSON.parse(params.auth);
+                const authObj = { currentUser: allParams['user'], accessToken: allParams['accessToken'], refreshToken: allParams['refreshToken'], instanceUrl: allParams['instanceUrl'] };
+                console.log('SETTING...');
+                sessionStorage.setItem('auth', JSON.stringify(authObj));
+                console.log('GETTING...');
+                console.log(sessionStorage.getItem('auth'));
+                /*
+                AuthService.currentUser = allParams['user'];
+                AuthService.accessToken = allParams['accessToken'];
+                AuthService.refreshToken = allParams['refreshToken'];
+                AuthService.instanceUrl = allParams['instanceUrl'];
+                */
+            } else {
+                //this.router.navigate(['/login']);
+            }
         });
-        console.log('FINAL VALUES: ' + this.instanceUrl + ", " + JSON.stringify(this.user));
     }
 
     ngOnInit() {
-        /*this.dataService.getProfiles('profiles', this.accessToken).subscribe((profiles)=>{
-            console.log(profiles);
-        });
-
-        this.dataService.getPermissions('permission-sets').subscribe((permissions)=>{
-            console.log(permissions);
+        //console.log('data-service call: ' + this.dataService.getProfiles('profiles'));
+        //console.log('data-service call: ' + this.dataService.getPermissions('permission-sets'));
+        /*this.dataService.getProfiles('profiles', AuthService.accessToken, AuthService.instanceUrl).subscribe((profiles)=>{
+            console.log('PROFILES FROM DATA SERVICE: ' + profiles);
         });*/
 
+        /*this.dataService.getPermissions('permission-sets', AuthService.accessToken, AuthService.instanceUrl).subscribe((permissions)=>{
+            console.log('PERMISSIONS FROM DATA SERVICE: ' + permissions);
+        });*/
     }
-
+    
     createCSV(data){
         const options = { 
             fieldSeparator: ',',
