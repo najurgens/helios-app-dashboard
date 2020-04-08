@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './layouts/auth/login.component';
 import { ProfilePermissionSetComponent } from './layouts/profiles-permission-sets/pp-component';
-import { AuthGuardService } from './services/auth-guard'; 
+//import { AuthGuardService } from './services/auth-guard'; 
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 
 //import { AuthGuard } from './core/guards/auth.guard';

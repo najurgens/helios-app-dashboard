@@ -33,6 +33,7 @@
     "bootstrap": "^4.4.1",
     "datatables.net": "^1.10.20",
     "datatables.net-dt": "^1.10.20",
+    "export-to-csv": "^0.2.1",
     "jquery": "^3.4.1",
     "rxjs": "^6.5.5",
     "tslib": "^1.10.0",
