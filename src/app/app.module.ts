@@ -8,8 +8,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
-import { HttpClientModule } from '@angular/common/http';
+import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './layouts/auth/login.component'; 
@@ -36,8 +37,9 @@ import { DashboardComponent } from './layouts/dashboard/dashboard.component';
     MatButtonModule,
     HttpClientModule,
     MatListModule,
+    MatMenuModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

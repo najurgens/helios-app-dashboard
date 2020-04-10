@@ -10,16 +10,21 @@
   
       <div class="col-sm-4 col-lg-4 col-md-4" style="text-align:right">
         <span class="toolbar-item-menu" style="display:inline-block;padding:10px;">
-          <mat-icon>settings</mat-icon>
+          <mat-icon (click)="navigateToSettings()">settings</mat-icon>
         </span>
         <span class="toolbar-item-menu" style="display:inline-block;padding:10px">
-          <mat-icon>account_circle</mat-icon>
+          <!--<mat-icon>account_circle</mat-icon>-->
+          <mat-icon (click)="navigateToProfile()">account_circle</mat-icon>
         </span>
+
+        <!--<button mat-icon-button [matMenuTriggerFor]="appMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>-->
       </div>
     <!--</div>-->
   </mat-toolbar>
   
-  <router-outlet *ngIf="!showMenus"></router-outlet>
+  <router-outlet *ngIf="!showMenus" (showMenusStateChange)="showMenus=true"></router-outlet>
   <mat-sidenav-container *ngIf="showMenus">
       <mat-sidenav mode="side" [(opened)]="opened">
         <mat-nav-list>
@@ -29,3 +34,8 @@
       <mat-sidenav-content><router-outlet></router-outlet>
       </mat-sidenav-content>
   </mat-sidenav-container>
+
+  <mat-menu #stateMenu="matMenu">
+    <button mat-menu-item>Manage my Connection</button>
+    <button mat-menu-item>My profile</button>
+  </mat-menu>

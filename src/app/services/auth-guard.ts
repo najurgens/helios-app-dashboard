@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Output, Input } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
 import { HttpUrlEncodingCodec, HttpParameterCodec } from '@angular/common/http'
+import { AppComponent } from '../app.component'; 
 
 import { AuthService } from './auth-service';
 import { decode } from 'punycode';
@@ -8,7 +9,16 @@ import { decode } from 'punycode';
 @Injectable({ providedIn: 'root' })
 export class AuthGuardService implements CanActivate {
 
-    constructor(private router: Router, private authService: AuthService, private activatedRoute: ActivatedRoute) {}
+    @Input()
+    authV;
+    
+    @Output()
+    authView = new EventEmitter<Boolean>();
+
+    constructor(private router: Router, private authService: AuthService, private activatedRoute: ActivatedRoute) {
+        this.authView = new EventEmitter<Boolean>();
+
+    }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         //console.log('AUTH-GUARD refreshToken: ' + AuthService.refreshToken + ', accessToken: ' + AuthService.accessToken + ', user: ' + AuthService.currentUser + ', instanceUrl: ' + AuthService.instanceUrl);
@@ -22,8 +32,14 @@ export class AuthGuardService implements CanActivate {
             console.log('state IN AUTH-GUARD: ' + decodeURIComponent(state.url) + ', ' + state.root);
             console.log('LOOK AT THIS: ' + state.url.includes('accessToken'));
 
-            if (state.url.includes('accessToken')) return true;
-            else {
+            if (state.url.includes('accessToken')) {
+                const auth = decodeURIComponent(state.url).split("=")[1];
+                console.log('AUTH-GUARD PARSED: ' + auth);
+                sessionStorage.setItem('auth', JSON.stringify(auth));
+                console.log(sessionStorage.getItem('auth'));
+                this.authView.emit(true);
+                return true;
+            } else {
                 this.router.navigate(['/login'], {
                     queryParams: { return: state.url }
                 });

@@ -20,39 +20,25 @@ export class ProfilePermissionSetComponent implements OnInit {
         console.log('Within profile-permissionSet constructor!');
         console.log('isAuthenticated: ' + this.authService.isAuthenticated());
         //console.log('AUTH-GUARD refreshToken: ' + AuthService.refreshToken + ', accessToken: ' + AuthService.accessToken + ', user: ' + AuthService.currentUser + ', instanceUrl: ' + AuthService.instanceUrl);
-        this.route.queryParams.subscribe(params => {
-            console.log('WITHIN PROFILE PERMISSION SET, params= ' + JSON.stringify(params));
+        /*this.route.queryParams.subscribe(params => {
+            //console.log('WITHIN PROFILE PERMISSION SET, params= ' + JSON.stringify(params));
             if (JSON.stringify(params)!=='{}') {
-                console.log('VALID PARAMS PERMPROF');
+                //console.log('VALID PARAMS PERMPROF');
                 const allParams = JSON.parse(params.auth);
                 const authObj = { currentUser: allParams['user'], accessToken: allParams['accessToken'], refreshToken: allParams['refreshToken'], instanceUrl: allParams['instanceUrl'] };
-                console.log('SETTING...');
+                //console.log('SETTING...');
                 sessionStorage.setItem('auth', JSON.stringify(authObj));
-                console.log('GETTING...');
+                //console.log('GETTING...');
                 console.log(sessionStorage.getItem('auth'));
-                /*
-                AuthService.currentUser = allParams['user'];
-                AuthService.accessToken = allParams['accessToken'];
-                AuthService.refreshToken = allParams['refreshToken'];
-                AuthService.instanceUrl = allParams['instanceUrl'];
-                */
-            } else {
-                //this.router.navigate(['/login']);
+                //console.log('IS-AUTH SHOULD BE TRUE HERE: ' + this.authService.isAuthenticated());
             }
-        });
+        });*/
     }
 
     ngOnInit() {
-        //console.log('data-service call: ' + this.dataService.getProfiles('profiles'));
-        //console.log('data-service call: ' + this.dataService.getPermissions('permission-sets'));
-        /*this.dataService.getProfiles('profiles', AuthService.accessToken, AuthService.instanceUrl).subscribe((profiles)=>{
-            console.log('PROFILES FROM DATA SERVICE: ' + profiles);
-        });*/
-
-        /*this.dataService.getPermissions('permission-sets', AuthService.accessToken, AuthService.instanceUrl).subscribe((permissions)=>{
-            console.log('PERMISSIONS FROM DATA SERVICE: ' + permissions);
-        });*/
-
+        this.dataService.getAccounts('accounts').subscribe((data) => {
+            console.log('Accounts RETRIEVED: ' + data);
+        })
     }
 
 }

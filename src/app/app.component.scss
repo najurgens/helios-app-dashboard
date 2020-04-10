@@ -1,4 +1,4 @@
-:host {
+/*:host {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 14px;
     color: #333;
@@ -62,10 +62,6 @@
   svg.material-icons {
     height: 24px;
     width: auto;
-  }
-
-  .mat-icon {
-    font-size: 36px;
   }
 
   svg.material-icons:not(:last-child) {
@@ -260,8 +256,6 @@
     width: 1920px;
   }
 
-
-  /* Responsive Styles */
   @media screen and (max-width: 767px) {
 
     .card-container > *:not(.circle-link) ,
@@ -290,6 +284,16 @@
       visibility: hidden;
     }
   }
+  */
+
+  mat-icon {
+    font-size: 36px;
+  }
+
+  mat-icon:hover {
+      opacity: .5;
+      cursor: pointer;
+  }
 
   mat-sidenav-container {
       height: 100%;
@@ -299,7 +303,16 @@
       padding: 16px;
   }
 
+  mat-nav-list a {
+      color: white;
+  }
+
   mat-sidenav {
-      background-color: yellow;
+      background-color: rgb(128,128,128);
       width: 200px;
+  }
+
+  .mat-toolbar.mat-primary {
+    background: rgb(128, 128, 128);
+    color: #fff;
   }

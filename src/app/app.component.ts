@@ -14,11 +14,9 @@ export class AppComponent {
     title = 'Helios';
     opened = false;
     showMenus: Boolean;
+    
 
-    instanceUrl: String;
-    user: Object;
-
-    constructor(private authService:AuthService, router:Router) {
+    constructor(private authService:AuthService, private router:Router) {
         
         console.log('isAuthenticated: ' + this.authService.isAuthenticated());
         router.events.forEach((event) => {
@@ -30,6 +28,19 @@ export class AppComponent {
                 this.showMenus = (event.url !== "/login" && this.authService.isAuthenticated()===true);
             }
         });
+    }
+
+    navigateToSettings() {
+        this.router.navigate(['/settings']);
+    }
+
+    navigateToProfile() {
+        this.router.navigate(['/profile']);
+    }
+
+    switchMenuState(state: Boolean) {
+        console.log('WITHIN switchMenuState() ON APP-COMPONENT');
+        this.showMenus = state;
     }
 
 

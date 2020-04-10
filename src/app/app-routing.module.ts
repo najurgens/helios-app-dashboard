@@ -7,15 +7,16 @@ import { ProfilePermissionSetComponent } from './layouts/profiles-permission-set
 import { AuthGuardService } from './services/auth-guard'; 
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { AuthService } from './services/auth-service';
-
-//import { AuthGuard } from './core/guards/auth.guard';
+import { ProfileComponent } from './layouts/profile/profile.component';
+import { SettingsComponent } from './layouts/settings/settings.component';
 
 const routes: Routes = [
-  // tslint:disable-next-line: max-line-lengt
-  // { path: 'login', redirectTo: 'account/auth/login', pathMatch: 'full'},
+
   { path: 'login', component: LoginComponent/*, canActivate: [AuthGuard] */}, 
   { path: 'profiles-permissions', component: ProfilePermissionSetComponent, canActivate: [AuthGuardService] },
-  { path: '', component: ProfilePermissionSetComponent, canActivate: [AuthGuardService] }
+  { path: '', component: ProfilePermissionSetComponent, canActivate: [AuthGuardService] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
+  { path: 'settings', component:  SettingsComponent, canActivate: [AuthGuardService] }
   // UPDATE: { DASHBOARD COMPONENT '' HOME PATH } 
 ];
 
@@ -24,8 +25,6 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { 
-
-
 
     constructor(private route:ActivatedRoute) {
         this.route.queryParams.subscribe(params => {
