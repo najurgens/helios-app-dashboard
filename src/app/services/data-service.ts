@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { tokenName } from '@angular/compiler';
 
 @Injectable({
     providedIn:'root'
@@ -38,23 +39,9 @@ export class DataService {
         //return "hello2";
     }
 
-    public customQuery(queryString, token, url) {
-        console.log('in CUSTOM QUERY');
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type' : 'application/json',
-                Authorization : 'Bearer ' + token,
-                instanceUrl : url,
-                withCredentials : 'true'
-            })
-        };
-
-        const body = {query : queryString}, path = 'http://localhost:3001/api/query';
-        return this.httpClient.post(path, body, httpOptions)
-    }
-
     public getAccounts(accounts) {
         console.log('in getAccounts() api');
         return this.httpClient.get(this.path+accounts, {withCredentials: true});
     }
+
 }

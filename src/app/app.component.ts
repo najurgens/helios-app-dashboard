@@ -3,6 +3,7 @@ import { AuthService } from './services/auth-service';
 
 import { LoginComponent } from './layouts/auth/login.component';
 import { Router, NavigationStart } from '@angular/router';
+import { AuthGuardService } from './services/auth-guard';
 
 @Component({
     selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent {
     showMenus: Boolean;
     
 
-    constructor(private authService:AuthService, private router:Router) {
+    constructor(private authService:AuthService, private router:Router, private authGuardService: AuthGuardService) {
         
         console.log('isAuthenticated: ' + this.authService.isAuthenticated());
         router.events.forEach((event) => {
@@ -24,8 +25,8 @@ export class AppComponent {
                 console.log('EVENT.RESTORED_STATE='+event);
                 // if auth-guard has redirected to /login, showMenues===false
                 console.log('APP COMPONENT ROUTER NAVIGATION DETECTED: authenticated: ' + this.authService.isAuthenticated());
-                //this.showMenus = this.authService.isAuthenticated();
                 this.showMenus = (event.url !== "/login" && this.authService.isAuthenticated()===true);
+                this.authGuardService.showMenusChange.subscribe((value) => this.showMenus = value);
             }
         });
     }
@@ -37,12 +38,5 @@ export class AppComponent {
     navigateToProfile() {
         this.router.navigate(['/profile']);
     }
-
-    switchMenuState(state: Boolean) {
-        console.log('WITHIN switchMenuState() ON APP-COMPONENT');
-        this.showMenus = state;
-    }
-
-
 
 }

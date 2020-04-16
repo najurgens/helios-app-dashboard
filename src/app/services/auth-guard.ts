@@ -5,18 +5,13 @@ import { AppComponent } from '../app.component';
 
 import { AuthService } from './auth-service';
 import { decode } from 'punycode';
+import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuardService implements CanActivate {
 
-    @Input()
-    authV;
-    
-    @Output()
-    authView = new EventEmitter<Boolean>();
-
+    showMenusChange: Subject<Boolean> = new Subject<Boolean>();
     constructor(private router: Router, private authService: AuthService, private activatedRoute: ActivatedRoute) {
-        this.authView = new EventEmitter<Boolean>();
 
     }
 
@@ -37,7 +32,7 @@ export class AuthGuardService implements CanActivate {
                 console.log('AUTH-GUARD PARSED: ' + auth);
                 sessionStorage.setItem('auth', JSON.stringify(auth));
                 console.log(sessionStorage.getItem('auth'));
-                this.authView.emit(true);
+                this.showMenusChange.next(true);
                 return true;
             } else {
                 this.router.navigate(['/login'], {
