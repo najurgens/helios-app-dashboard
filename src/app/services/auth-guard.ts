@@ -33,6 +33,7 @@ export class AuthGuardService implements CanActivate {
                 sessionStorage.setItem('auth', JSON.stringify(auth));
                 console.log(sessionStorage.getItem('auth'));
                 this.showMenusChange.next(true);
+                this.router.navigate(['/profiles-permissions']);
                 return true;
             } else {
                 this.router.navigate(['/login'], {
