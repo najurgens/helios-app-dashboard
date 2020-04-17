@@ -2,13 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTablesModule } from 'angular-datatables';
 
-import { ProfilePermissionSetComponent } from '../layouts/profiles-permission-sets/pp-component';
-
+import { ProfilePermissionsComponent } from './profile-permissions/pp-component';
+import { PermissionSetPermissionsComponent } from './permission-set-permissions/psp-component';
 
 @NgModule({
-  declarations: [ProfilePermissionSetComponent],
+  declarations: [
+    ProfilePermissionsComponent,
+    PermissionSetPermissionsComponent,
+  ],
   imports: [
-      DataTablesModule
+      DataTablesModule,
+      CommonModule,
   ]
 })
 export class LayoutModule { }

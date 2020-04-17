@@ -3,7 +3,8 @@ import { Routes, RouterModule, Router, ActivatedRoute } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './layouts/auth/login.component';
-import { ProfilePermissionSetComponent } from './layouts/profiles-permission-sets/pp-component';
+import { ProfilePermissionsComponent } from './layouts/profile-permissions/pp-component';
+import { PermissionSetPermissionsComponent } from './layouts/permission-set-permissions/psp-component';
 import { AuthGuardService } from './services/auth-guard'; 
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { AuthService } from './services/auth-service';
@@ -14,8 +15,9 @@ const routes: Routes = [
   // tslint:disable-next-line: max-line-lengt
   // { path: 'login', redirectTo: 'account/auth/login', pathMatch: 'full'},
   { path: 'login', component: LoginComponent/*, canActivate: [AuthGuard] */}, 
-  { path: 'profiles-permissions', component: ProfilePermissionSetComponent, canActivate: [AuthGuardService] },
-  { path: '', component: ProfilePermissionSetComponent, canActivate: [AuthGuardService] }
+  { path: 'profiles-permissions', component: ProfilePermissionsComponent, canActivate: [AuthGuardService] },
+  { path: 'permission-set-permissions', component: PermissionSetPermissionsComponent, canActivate: [AuthGuardService] },
+  { path: '', component: ProfilePermissionsComponent, canActivate: [AuthGuardService] }
   // UPDATE: { DASHBOARD COMPONENT '' HOME PATH } 
 ];
 

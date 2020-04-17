@@ -7,14 +7,14 @@ import { DataService } from '../../services/data-service';
 import { isEmptyExpression } from '@angular/compiler';
 
 @Component({
-  selector: 'profiles-permissions',
-  templateUrl: './pp-component.html',
-  styleUrls: ['./pp-component.scss']
+  selector: 'permission-set-permissions',
+  templateUrl: './psp-component.html',
+  styleUrls: ['./psp-component.scss']
 })
-export class ProfilePermissionSetComponent implements OnInit {
+export class PermissionSetPermissionsComponent implements OnInit {
 
     tableHeaders:Array<String>;
-    profiles:Array<any>;
+    permissions:Array<any>;
     tableData:Array<any>;
     accessToken:String;
     instanceUrl:String;
@@ -25,7 +25,7 @@ export class ProfilePermissionSetComponent implements OnInit {
         ActivatedRoute, private dataService: DataService) 
         {
 
-        console.log('Within profile-permissionSet constructor!');
+        console.log('Within permission set permissions constructor!');
         console.log('isAuthenticated: ' + this.authService.isAuthenticated());
         //console.log('AUTH-GUARD refreshToken: ' + AuthService.refreshToken + ', accessToken: ' + AuthService.accessToken + ', user: ' + AuthService.currentUser + ', instanceUrl: ' + AuthService.instanceUrl);
         this.route.queryParams.subscribe(params => {
@@ -42,16 +42,12 @@ export class ProfilePermissionSetComponent implements OnInit {
     ngOnInit() {
         this.accessToken = JSON.parse(sessionStorage.getItem('auth')).accessToken;
         this.instanceUrl = JSON.parse(sessionStorage.getItem('auth')).instanceUrl;
-
-        this.dataService.getProfiles('profiles', this.accessToken, this.instanceUrl).subscribe((profiles:Array<any>)=>{
-            console.log('PROFILES FROM DATA SERVICE: ' + profiles);
-            console.log(profiles);
-        });
-
         this.dataService.getPermissions('permission-sets', this.accessToken, this.instanceUrl).subscribe((permissions:Array<any>)=>{
             console.log('PERMISSIONS FROM DATA SERVICE: ' + permissions);
             console.log(permissions);
             this.tableData = permissions;
+            for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
+            console.log(this.tableData);
             this.tableHeaders = Object.keys(this.tableData[0]);
         });
     }
@@ -70,7 +66,7 @@ export class ProfilePermissionSetComponent implements OnInit {
             // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
           };
         const csvExporter = new ExportToCsv(options);
-        csvExporter.generateCsv(data);
+        csvExporter.generateCsv(this.tableData);
     }
 
 }
