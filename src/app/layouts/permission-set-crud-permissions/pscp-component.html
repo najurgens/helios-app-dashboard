@@ -1,7 +1,7 @@
 <div>
     <div class="page-body">
         <div>
-            <h1 class="m-2">Permission Sets and Permissions</h1>
+            <h1 class="m-2">Profile CRUD Access</h1>
             <button  class="slds-button slds-button_brand m-2" (click)="createCSV(null)">Download CSV</button>
             <div class="slds-scrollable m-2">
               <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_resizable-cols" role="grid">
@@ -17,6 +17,25 @@
                             <span class="slds-form-element__label slds-assistive-text">Select All</span>
                           </label>
                         </div>
+                      </div>
+                    </th>
+                    <th aria-label="Permission Set Name" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                      <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0">
+                        <span class="slds-assistive-text">Sort by: </span>
+                        <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                          <span class="slds-truncate" title="Permission Set Name">Permission Set Name</span>
+                          <span class="slds-icon_container slds-icon-utility-arrowdown">
+                            <svg class="slds-icon slds-icon-text-default slds-is-sortable__icon " aria-hidden="true">
+                              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+                            </svg>
+                          </span>
+                        </div>
+                      </a>
+                      <div class="slds-resizable">
+                        <input type="range" aria-label="Permission Set Name column width" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-541" max="1000" min="20" tabindex="0" />
+                        <span class="slds-resizable__handle">
+                          <span class="slds-resizable__divider"></span>
+                        </span>
                       </div>
                     </th>
                     <th *ngFor="let header of tableHeaders" attr.aria-label="{{header}}" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
@@ -53,6 +72,9 @@
                           <span class="slds-form-element__label slds-assistive-text">Select item 1</span>
                         </label>
                       </div>
+                    </td>
+                    <td>
+                      <div>{{perm['permissionSetName']}}</div>
                     </td>
                     <td *ngFor="let header2 of tableHeaders" role="gridcell">
                       <div class="slds-truncate" title="{{perm[header2]}}">{{perm[header2]}}</div>

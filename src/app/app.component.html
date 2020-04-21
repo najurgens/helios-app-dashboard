@@ -16,7 +16,7 @@
         </span>
       </div>
   </mat-toolbar>-->
-  <div  class="slds-context-bar">
+  <div *ngIf="showMenus" class="slds-context-bar">
     <div class="slds-context-bar__primary">
       <div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-no-hover">
         <div class="slds-context-bar__icon-action">
@@ -42,8 +42,8 @@
     </div>
     <nav class="slds-context-bar__secondary" role="navigation">
       <ul class="slds-grid">
-        <li class="slds-context-bar__item slds-is-active">
-          <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Home">
+        <li class="slds-context-bar__item" id="homeTab">
+          <a href="http://localhost:4200" class="slds-context-bar__label-action" title="Home">
             <span class="slds-assistive-text">Current Page:</span>
             <span class="slds-truncate" title="Home">Home</span>
           </a>
@@ -91,23 +91,23 @@
             </ul>
           </div>
         </li>
-        <li class="slds-context-bar__item">
+        <li class="slds-context-bar__item" id="ProfilePermTab">
           <a href="http://localhost:4200/profiles-permissions" class="slds-context-bar__label-action" title="Menu Item">
             <span class="slds-truncate" title="Menu Item">Profile Permissions</span>
           </a>
         </li>
-        <li class="slds-context-bar__item">
+        <li class="slds-context-bar__item" id="PermSetPermTab">
           <a href="http://localhost:4200/permission-set-permissions" class="slds-context-bar__label-action" title="Menu Item">
             <span class="slds-truncate" title="Menu Item">Permission Set Permissions</span>
           </a>
         </li>
-        <li class="slds-context-bar__item">
-          <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
+        <li class="slds-context-bar__item" id="ProfileCrudTab">
+          <a href="http://localhost:4200/profile-crud-permissions" class="slds-context-bar__label-action" title="Menu Item">
             <span class="slds-truncate" title="Menu Item">Profile CRUD Access</span>
           </a>
         </li>
-        <li class="slds-context-bar__item">
-          <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
+        <li class="slds-context-bar__item" id="PermSetCrudTab">
+          <a href="http://localhost:4200/permission-set-crud-permissions" class="slds-context-bar__label-action" title="Menu Item">
             <span class="slds-truncate" title="Menu Item">Permission Set CRUD Access</span>
           </a>
         </li>
@@ -115,13 +115,4 @@
     </nav>
   </div>
   
-  <router-outlet *ngIf="!showMenus"></router-outlet>
-  <mat-sidenav-container *ngIf="showMenus">
-      <mat-sidenav mode="side" [(opened)]="opened">
-        <mat-nav-list>
-            <a mat-list-item routerLink='/profiles-permissions'>Profiles and Permission Sets</a>
-        </mat-nav-list>
-      </mat-sidenav>
-      <mat-sidenav-content><router-outlet></router-outlet>
-      </mat-sidenav-content>
-  </mat-sidenav-container>
+  <router-outlet></router-outlet>

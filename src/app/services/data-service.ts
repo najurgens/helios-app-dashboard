@@ -40,4 +40,32 @@ export class DataService {
         return this.http.get(this.path+profiles, httpOptions);
         //return "hello2";
     }
+
+    public getProfileCrud(data, token, url){
+        console.log('TOKEN IN DATA-SERVICE: ' + token)
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type' : 'application/json',
+                Authorization : 'Bearer ' + token,
+                instanceUrl : url
+            }),
+            withCredentials: true
+        };
+        return this.http.get(this.path+data, httpOptions);
+        //return "hello2";
+    }
+
+    public getPermissionSetCrud(data, token, url){
+        console.log('TOKEN IN DATA-SERVICE: ' + token)
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type' : 'application/json',
+                Authorization : 'Bearer ' + token,
+                instanceUrl : url
+            }),
+            withCredentials: true
+        };
+        return this.http.get(this.path+data, httpOptions);
+        //return "hello2";
+    }
 }

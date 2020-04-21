@@ -16,10 +16,7 @@ export class LoginComponent {
 
         //console.log('AUTH-GUARD refreshToken: ' + AuthService.refreshToken + ', accessToken: ' + AuthService.accessToken + ', user: ' + AuthService.currentUser + ', instanceUrl: ' + AuthService.instanceUrl);
         if (this.authService.isAuthenticated()) {
-            console.log('FROM LOGIN COMPONENT, ALREADY AUTHENTICATED!!!');
-            this.router.navigate(['/profiles-permissions']);// this.location.back();
-        } else {
-            console.log('FROM LOGIN COMPONENT, NOT AUTH');
+            this.router.navigate(['/']);// this.location.back();
         }
     }
 
