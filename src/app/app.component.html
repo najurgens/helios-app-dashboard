@@ -1,5 +1,4 @@
-<mat-toolbar *ngIf="showMenus" color="primary">
-    <!--<div class="row">-->
+<!--<mat-toolbar *ngIf="showMenus" color="primary">
       <div class="col-sm-4 col-lg-4 col-md-4">
         <span class = "toolbar-item-menu"><mat-icon (click)="opened=!opened">menu</mat-icon></span>
       </div>
@@ -13,16 +12,160 @@
           <mat-icon (click)="navigateToSettings()">settings</mat-icon>
         </span>
         <span class="toolbar-item-menu" style="display:inline-block;padding:10px">
-          <!--<mat-icon>account_circle</mat-icon>-->
+
+        <mat-icon>account_circle</mat-icon>
           <mat-icon (click)="navigateToProfile()">account_circle</mat-icon>
         </span>
 
-        <!--<button mat-icon-button [matMenuTriggerFor]="appMenu">
+        <button mat-icon-button [matMenuTriggerFor]="appMenu">
           <mat-icon>more_vert</mat-icon>
-        </button>-->
+        </button>
+
       </div>
-    <!--</div>-->
-  </mat-toolbar>
+  </mat-toolbar>-->
+  <div  class="slds-context-bar">
+    <div class="slds-context-bar__primary">
+      <div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-no-hover">
+        <div class="slds-context-bar__icon-action">
+          <button class="slds-button slds-icon-waffle_container slds-context-bar__button" title="Description of the icon when needed">
+            <span class="slds-icon-waffle">
+              <span class="slds-r1"></span>
+              <span class="slds-r2"></span>
+              <span class="slds-r3"></span>
+              <span class="slds-r4"></span>
+              <span class="slds-r5"></span>
+              <span class="slds-r6"></span>
+              <span class="slds-r7"></span>
+              <span class="slds-r8"></span>
+              <span class="slds-r9"></span>
+            </span>
+            <span class="slds-assistive-text">Open App Launcher</span>
+          </button>
+        </div>
+        <span class="slds-context-bar__label-action slds-context-bar__app-name">
+          <span class="slds-truncate" title="App Name">Helios</span>
+        </span>
+      </div>
+    </div>
+    <nav class="slds-context-bar__secondary" role="navigation">
+      <ul class="slds-grid">
+        <li class="slds-context-bar__item slds-is-active">
+          <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Home">
+            <span class="slds-assistive-text">Current Page:</span>
+            <span class="slds-truncate" title="Home">Home</span>
+          </a>
+        </li>
+        <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click">
+          <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
+            <span class="slds-truncate" title="Menu Item">Menu Item</span>
+          </a>
+          <div class="slds-context-bar__icon-action slds-p-left_none">
+            <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open menu item submenu">
+              <svg class="slds-button__icon" aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
+              </svg>
+              <span class="slds-assistive-text">Open menu item submenu</span>
+            </button>
+          </div>
+          <div class="slds-dropdown slds-dropdown_right">
+            <ul class="slds-dropdown__list" role="menu">
+              <li class="slds-dropdown__item" role="presentation">
+                <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                  <span class="slds-truncate" title="Main action">
+                    <svg class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-right_x-small" aria-hidden="true">
+                      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#add"></use>
+                    </svg>Main action</span>
+                </a>
+              </li>
+              <li class="slds-dropdown__header slds-has-divider_top-space" role="separator">
+                <span>Menu header</span>
+              </li>
+              <li class="slds-dropdown__item" role="presentation">
+                <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                  <span class="slds-truncate" title="Menu Item One">Menu Item One</span>
+                </a>
+              </li>
+              <li class="slds-dropdown__item" role="presentation">
+                <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                  <span class="slds-truncate" title="Menu Item Two">Menu Item Two</span>
+                </a>
+              </li>
+              <li class="slds-dropdown__item" role="presentation">
+                <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                  <span class="slds-truncate" title="Menu Item Three">Menu Item Three</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="slds-context-bar__item">
+          <a href="http://localhost:4200/profiles-permissions" class="slds-context-bar__label-action" title="Menu Item">
+            <span class="slds-truncate" title="Menu Item">Profile Permissions</span>
+          </a>
+        </li>
+        <li class="slds-context-bar__item">
+          <a href="http://localhost:4200/permission-set-permissions" class="slds-context-bar__label-action" title="Menu Item">
+            <span class="slds-truncate" title="Menu Item">Permission Set Permissions</span>
+          </a>
+        </li>
+        <li class="slds-context-bar__item">
+          <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
+            <span class="slds-truncate" title="Menu Item">Profile CRUD Access</span>
+          </a>
+        </li>
+        <li class="slds-context-bar__item">
+          <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
+            <span class="slds-truncate" title="Menu Item">Permission Set CRUD Access</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="config" style="display: flex; justify-content: flex-end">
+      <span class="slds-icon_container slds-icon-utility-settings slds-dropdown-trigger slds-dropdown-trigger_click slds-is-closed" title="Access your settings" style="padding-right:8px;" id="setupToggle" (click)="toggleSetup();">
+        <button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true" title="Setup Options">
+          <svg class="slds-button__icon slds-icon slds-icon-text-default" aria-hidden="true">
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#settings"></use>
+          </svg>
+          <span class="slds-assistive-text">Reveal Settings Options</span>
+        </button>
+        <div class="slds-dropdown slds-dropdown_right" id="setupMenuList">
+          <ul class="slds-dropdown__list" role="menu" aria-label="Show More">
+            <li class="slds-dropdown__item" role="presentation">
+              <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                <span class="slds-truncate" title="Option A">Option A</span>
+              </a>
+            </li>
+            <li class="slds-has-divider_top-space" role="separator"></li>
+            <li class="slds-dropdown__item" role="presentation">
+              <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                <span class="slds-truncate" title="Privileged Settings">Privileged Settings</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </span>
+      <span class="slds-avatar_container slds-dropdown-trigger slds-dropdown-trigger_click slds-is-closed" title="Your profile" style="padding-right:12px;" id="userSetupToggle" (click)="toggleUserSetup();">
+        <button class="slds-avatar slds-avatar_profile-image-large slds-button slds-button_icon slds-button_icon-border-filled" style="padding-right:8px;" aria-haspopup="true" title="Setup Options">
+          <span class="slds-assistive-text">Person name</span>
+        </button>
+        <div class="slds-dropdown slds-dropdown_right" id="userSetupMenuList">
+          <ul class="slds-dropdown__list" role="menu" aria-label="Show More">
+            <li class="slds-dropdown__item" role="presentation">
+              <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                <span class="slds-truncate" title="Option A">Option A</span>
+              </a>
+            </li>
+            <li class="slds-has-divider_top-space" role="separator"></li>
+            <li class="slds-dropdown__item" role="presentation">
+              <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                <span class="slds-truncate" title="My Account">Account Settings</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </span>
+    </div>
+  </div>
   
   <router-outlet *ngIf="!showMenus" (showMenusStateChange)="showMenus=true"></router-outlet>
   <mat-sidenav-container *ngIf="showMenus">

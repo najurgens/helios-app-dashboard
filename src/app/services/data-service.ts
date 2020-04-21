@@ -10,18 +10,21 @@ export class DataService {
 
     path:String = 'http://localhost:3001/api/';
 
-    constructor(private httpClient:HttpClient) {}
+    constructor(private http:HttpClient) {}
 
     public getPermissions(permission, token, url) {
+        console.log(token);
+        console.log(url);
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type' : 'application/json',
                 Authorization : 'Bearer ' + token,
-                instanceUrl : url,
-                withCredentials : 'true'
-            })
+                InstanceUrl : url
+            }),
+            withCredentials: true
         };
-        return this.httpClient.get(this.path+permission, httpOptions);
+        console.log(httpOptions);
+        return this.http.get(this.path+permission, httpOptions);
         //return "hello";
     }
 
@@ -31,17 +34,17 @@ export class DataService {
             headers: new HttpHeaders({
                 'Content-Type' : 'application/json',
                 Authorization : 'Bearer ' + token,
-                instanceUrl : url,
-                withCredentials : 'true'
-            })
+                instanceUrl : url
+            }),
+            withCredentials: true
         };
-        return this.httpClient.get(this.path+profiles, httpOptions);
+        return this.http.get(this.path+profiles, httpOptions);
         //return "hello2";
     }
 
     public getAccounts(accounts) {
         console.log('in getAccounts() api');
-        return this.httpClient.get(this.path+accounts, {withCredentials: true});
+        return this.http.get(this.path+accounts, {withCredentials: true});
     }
 
 }

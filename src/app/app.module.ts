@@ -14,7 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './layouts/auth/login.component'; 
-import { ProfilePermissionSetComponent } from './layouts/profiles-permission-sets/pp-component';
+import { ProfilePermissionsComponent } from './layouts/profile-permissions/pp-component';
+import { PermissionSetPermissionsComponent } from './layouts/permission-set-permissions/psp-component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
@@ -23,7 +24,8 @@ import { DashboardComponent } from './layouts/dashboard/dashboard.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    ProfilePermissionSetComponent,
+    ProfilePermissionsComponent,
+    PermissionSetPermissionsComponent,
     DashboardComponent
   ],
   imports: [
