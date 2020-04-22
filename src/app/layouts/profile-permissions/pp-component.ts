@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExportToCsv } from 'export-to-csv';
+import { ActivatedRoute } from "@angular/router"; 
 
 import { DataService } from '../../services/data-service';
 
@@ -17,18 +18,18 @@ export class ProfilePermissionsComponent implements OnInit {
     instanceUrl:String;
 
     constructor(
-        private dataService: DataService) 
-        {}
+        private dataService: DataService,
+        private route: ActivatedRoute
+        ) {}
 
     ngOnInit() {
-        this.accessToken = JSON.parse(sessionStorage.getItem('auth')).accessToken;
-        this.instanceUrl = JSON.parse(sessionStorage.getItem('auth')).instanceUrl;
-
-        this.dataService.getProfiles('profiles', this.accessToken, this.instanceUrl).subscribe((profiles:Array<any>)=>{
-            this.tableData = profiles;
-            for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
-            this.tableHeaders = Object.keys(this.tableData[0]);
-        });
+        this.dataService.profiles.subscribe(data=>console.log(data));
+        /*console.log('in onit');
+        console.log(this.route.snapshot.data);
+        this.tableData = this.route.snapshot.data.profileperms;
+        for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
+        this.tableHeaders = Object.keys(this.tableData[0]);
+        console.log(this.tableData);*/
     }
 
     createCSV(data){

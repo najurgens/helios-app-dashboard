@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn:'root'
 })
+//@Injectable()
 export class DataService {
 
     path:String = 'http://localhost:3001/api/';
+    private profileSource = new BehaviorSubject([]);
+    profiles = this.profileSource.asObservable();
 
-    constructor(private http:HttpClient) {}
+
+    constructor(private http:HttpClient) {
+    }
 
     public getPermissions(permission, token, url) {
         console.log(token);
@@ -37,7 +43,8 @@ export class DataService {
             }),
             withCredentials: true
         };
-        return this.http.get(this.path+profiles, httpOptions);
+        //return this.http.get<any>(this.path+profiles, httpOptions);
+        this.http.get<any>(this.path+profiles, httpOptions).subscribe(data=> this.profileSource.next(data));
         //return "hello2";
     }
 

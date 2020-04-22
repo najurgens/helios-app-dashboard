@@ -18,17 +18,17 @@ export class PermissionSetPermissionsComponent implements OnInit {
     instanceUrl:String;
 
     constructor(
-        private dataService: DataService) 
+        dataService: DataService) 
         {}
 
-    ngOnInit() {
+    ngOnInit() {/*
         this.accessToken = JSON.parse(sessionStorage.getItem('auth')).accessToken;
         this.instanceUrl = JSON.parse(sessionStorage.getItem('auth')).instanceUrl;
         this.dataService.getPermissions('permission-sets', this.accessToken, this.instanceUrl).subscribe((permissions:Array<any>)=>{
             this.tableData = permissions;
             for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
             this.tableHeaders = Object.keys(this.tableData[0]);
-        });
+        });*/
     }
 
     createCSV(data){

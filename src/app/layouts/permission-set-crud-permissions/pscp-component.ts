@@ -18,17 +18,17 @@ export class PermissionSetCrudPermissionsComponent implements OnInit {
     instanceUrl:String;
 
     constructor(
-        private dataService: DataService) 
+        dataService: DataService) 
         {}
 
-    ngOnInit() {
+    ngOnInit() {/*
         this.accessToken = JSON.parse(sessionStorage.getItem('auth')).accessToken;
         this.instanceUrl = JSON.parse(sessionStorage.getItem('auth')).instanceUrl;
         this.dataService.getPermissionSetCrud('permission-set-crud-permissions', this.accessToken, this.instanceUrl).subscribe((permissions:Array<any>)=>{
             console.log(permissions);
             this.getTableHeaders(permissions);
             this.getTableData(permissions);
-        });
+        });*/
     }
 
     getTableHeaders(permissions){
