@@ -23,15 +23,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     // ---Setting AccessToken, RefreshToken, and IsntanceUrl to seassion storage
-    this.route.queryParams.subscribe(params => {
-        if (JSON.stringify(params)!=='{}') {
-            const allParams = JSON.parse(params.auth);
-            const authObj = { currentUser: allParams['user'], accessToken: allParams['accessToken'], refreshToken: allParams['refreshToken'], instanceUrl: allParams['instanceUrl'] };
-            sessionStorage.setItem('auth', JSON.stringify(authObj));
-            this.dataService.getProfiles('profiles', authObj.accessToken, authObj.instanceUrl);
-            this.dataService.profiles.subscribe(data=>console.log(data));
-        }
-    });
   }
 
 }

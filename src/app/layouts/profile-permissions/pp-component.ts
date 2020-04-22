@@ -23,11 +23,13 @@ export class ProfilePermissionsComponent implements OnInit {
         ) {}
 
     ngOnInit() {
-        this.dataService.profiles.subscribe(data=>console.log(data));
-        /*console.log('in onit');
-        console.log(this.route.snapshot.data);
-        this.tableData = this.route.snapshot.data.profileperms;
-        for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
+        this.dataService.profiles.subscribe(data=>{
+            //if(data.length===0) this.dataService.getAllData();
+            this.dataService.test();
+            console.log(data);
+        });
+        //this.tableData = this.route.snapshot.data.profileperms;
+        /*for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
         this.tableHeaders = Object.keys(this.tableData[0]);
         console.log(this.tableData);*/
     }

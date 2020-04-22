@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";  
+/*import { Injectable } from "@angular/core";  
 import { Resolve, ActivatedRouteSnapshot } from "@angular/router";  
 import { Observable } from "rxjs";  
 import { DataService } from "../../services/data-service";   
@@ -12,4 +12,4 @@ export class ProfilePermissionsResolve implements Resolve<any[]> {
     const url = JSON.parse(sessionStorage.getItem('auth')).instanceUrl;
     return this.dataService.getProfiles('profiles', token, url);  
   }  
-}  
+}  */
