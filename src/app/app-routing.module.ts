@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './layouts/auth/login.component';
 import { ProfilePermissionsComponent } from './layouts/profile-permissions/pp-component';
 import { PermissionSetPermissionsComponent } from './layouts/permission-set-permissions/psp-component';
+import { ProfileCrudPermissionsComponent } from './layouts/profile-crud-permissions/pcp-component';
+import { PermissionSetCrudPermissionsComponent } from './layouts/permission-set-crud-permissions/pscp-component';
 import { AuthGuardService } from './services/auth-guard'; 
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { AuthService } from './services/auth-service';
@@ -18,7 +20,9 @@ const routes: Routes = [
   { path: 'settings', component:  SettingsComponent, canActivate: [AuthGuardService] },
   { path: 'profiles-permissions', component: ProfilePermissionsComponent, canActivate: [AuthGuardService] },
   { path: 'permission-set-permissions', component: PermissionSetPermissionsComponent, canActivate: [AuthGuardService] },
-  { path: '', component: ProfilePermissionsComponent, canActivate: [AuthGuardService] }
+  { path: 'profile-crud-permissions', component: ProfileCrudPermissionsComponent, canActivate: [AuthGuardService] },
+  { path: 'permission-set-crud-permissions', component: PermissionSetCrudPermissionsComponent, canActivate: [AuthGuardService] },
+  { path: '', component: DashboardComponent, canActivate: [AuthGuardService] }
   // UPDATE: { DASHBOARD COMPONENT '' HOME PATH } 
 ];
 

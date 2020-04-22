@@ -31,9 +31,9 @@ export class AuthGuardService implements CanActivate {
                 const auth = decodeURIComponent(state.url).split("=")[1];
                 console.log('AUTH-GUARD PARSED: ' + auth);
                 sessionStorage.setItem('auth', JSON.stringify(auth));
-                console.log(sessionStorage.getItem('auth'));
+                console.log('WITHIN AUTH GUARD SESSION STORAGE = ' + sessionStorage.getItem('auth'));
                 this.showMenusChange.next(true);
-                //this.router.navigate(['/profiles-permissions']);
+                this.router.navigate(['']);
                 return true;
             } else {
                 this.router.navigate(['/login'], {

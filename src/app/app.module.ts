@@ -16,6 +16,8 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './layouts/auth/login.component'; 
 import { ProfilePermissionsComponent } from './layouts/profile-permissions/pp-component';
 import { PermissionSetPermissionsComponent } from './layouts/permission-set-permissions/psp-component';
+import { ProfileCrudPermissionsComponent } from './layouts/profile-crud-permissions/pcp-component';
+import { PermissionSetCrudPermissionsComponent } from './layouts/permission-set-crud-permissions/pscp-component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
@@ -26,6 +28,8 @@ import { DashboardComponent } from './layouts/dashboard/dashboard.component';
     LoginComponent,
     ProfilePermissionsComponent,
     PermissionSetPermissionsComponent,
+    ProfileCrudPermissionsComponent,
+    PermissionSetCrudPermissionsComponent,
     DashboardComponent
   ],
   imports: [

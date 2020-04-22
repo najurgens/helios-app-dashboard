@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth-service';  
 import { ExportToCsv } from 'export-to-csv';
-import { ActivatedRoute, Router } from '@angular/router';
 
 import { DataService } from '../../services/data-service';
-import { isEmptyExpression } from '@angular/compiler';
 
 @Component({
   selector: 'profiles-permissions',
@@ -20,36 +17,18 @@ export class ProfilePermissionsComponent implements OnInit {
     instanceUrl:String;
 
     constructor(
-        private authService: AuthService, 
-        private router: Router, private route: 
-        ActivatedRoute, private dataService: DataService) 
-        {
-
-        console.log('Within profile-permissionSet constructor!');
-        console.log('isAuthenticated: ' + this.authService.isAuthenticated());
-        //console.log('AUTH-GUARD refreshToken: ' + AuthService.refreshToken + ', accessToken: ' + AuthService.accessToken + ', user: ' + AuthService.currentUser + ', instanceUrl: ' + AuthService.instanceUrl);
-        this.route.queryParams.subscribe(params => {
-            if (JSON.stringify(params)!=='{}') {
-                const allParams = JSON.parse(params.auth);
-                const authObj = { currentUser: allParams['user'], accessToken: allParams['accessToken'], refreshToken: allParams['refreshToken'], instanceUrl: allParams['instanceUrl'] };
-                sessionStorage.setItem('auth', JSON.stringify(authObj));
-                this.router.navigate(['/profiles-permissions']);
-            } else {
-                //this.router.navigate(['/login']);
-            }
-        });
-    }
+        private dataService: DataService) 
+        {}
 
     ngOnInit() {
-        this.accessToken = JSON.parse(sessionStorage.getItem('auth')).accessToken;
-        this.instanceUrl = JSON.parse(sessionStorage.getItem('auth')).instanceUrl;
+        const auth = JSON.parse(sessionStorage.getItem('auth'));
+        this.accessToken = JSON.parse(auth).accessToken;
+        this.instanceUrl = JSON.parse(auth).instanceUrl;
+
 
         this.dataService.getProfiles('profiles', this.accessToken, this.instanceUrl).subscribe((profiles:Array<any>)=>{
-            console.log('PROFILES FROM DATA SERVICE: ' + profiles);
-            console.log(profiles);
             this.tableData = profiles;
             for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
-            console.log(this.tableData);
             this.tableHeaders = Object.keys(this.tableData[0]);
         });
     }

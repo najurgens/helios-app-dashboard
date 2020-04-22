@@ -11,7 +11,6 @@ export class AuthService {
     constructor(private router: Router) {}
 
     public isAuthenticated(): Boolean {
-        console.log('SESSION STORAGE: ' + sessionStorage.getItem('auth'));
         return sessionStorage.getItem('auth')!==null ? true : false;
     }
     
