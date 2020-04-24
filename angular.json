@@ -26,9 +26,21 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              { "glob": "**/*", "input": "./node_modules/@salesforce-ux/design-system/assets/fonts", "output": "/assets/fonts/" },
-              { "glob": "**/*", "input": "./node_modules/@salesforce-ux/design-system/assets/icons", "output": "/assets/icons/" },
-              { "glob": "**/*", "input": "./node_modules/@salesforce-ux/design-system/assets/images", "output": "/assets/images/" }
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@salesforce-ux/design-system/assets/fonts",
+                "output": "/assets/fonts/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@salesforce-ux/design-system/assets/icons",
+                "output": "/assets/icons/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@salesforce-ux/design-system/assets/images",
+                "output": "/assets/images/"
+              }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
@@ -137,5 +149,8 @@
       }
     }
   },
-  "defaultProject": "Helios"
+  "defaultProject": "Helios",
+  "cli": {
+    "analytics": "f90935de-e702-4d36-9aac-1250e6b50433"
+  }
 }
