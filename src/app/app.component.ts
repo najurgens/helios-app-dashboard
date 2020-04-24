@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { LoginComponent } from './layouts/auth/login.component';
 import { Router, NavigationStart } from '@angular/router';
+import { DataService } from './services/data-service';
 
 //Jquery
 declare let $: any;
@@ -25,32 +26,22 @@ export class AppComponent{
 
     constructor(private authService:AuthService,
                 private router:Router,
-                private location: Location
+                private location: Location,
+                private dataService: DataService,
                 ) {
                 this.currentUrl = this.location.path();
                 this.showMenus = (this.currentUrl !== "/login");
                 }
 
-    ngAfterViewInit(){
-        console.log(this.currentUrl);
-        switch (this.currentUrl){
-            case '/':
-                $("#homeTab").addClass("slds-is-active");
-                break;
-            case '/profiles-permissions':
-                console.log('profile case');
-                console.log($("#ProfilePermTab"));
-                $("#ProfilePermTab").addClass("slds-is-active");
-                break;
-            case '/permission-set-permissions':
-                $("#PermSetPermTab").addClass("slds-is-active");
-                break;
-            case '/profile-crud-permissions':
-                $("#ProfileCrudTab").addClass("slds-is-active");
-                break;
-            case '/permission-set-crud-permissions':
-                $("#PermSetCrudTab").addClass("slds-is-active");
+    ngOnInit(){
+        if(this.authService.isAuthenticated()){
+            console.log('pass');
+            this.dataService.getAllData();
         }
+    }
+
+    ngAfterViewInit(){
+        
     }
 
 }

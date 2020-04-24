@@ -18,17 +18,17 @@ export class PermissionSetPermissionsComponent implements OnInit {
     instanceUrl:String;
 
     constructor(
-        dataService: DataService) 
+        private dataService: DataService) 
         {}
 
-    ngOnInit() {/*
-        this.accessToken = JSON.parse(sessionStorage.getItem('auth')).accessToken;
-        this.instanceUrl = JSON.parse(sessionStorage.getItem('auth')).instanceUrl;
-        this.dataService.getPermissions('permission-sets', this.accessToken, this.instanceUrl).subscribe((permissions:Array<any>)=>{
-            this.tableData = permissions;
+    ngOnInit() {
+        this.dataService.permissionSets.subscribe(data=>{
+            this.tableData = data;
             for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
             this.tableHeaders = Object.keys(this.tableData[0]);
-        });*/
+        });
+        $('.slds-is-active').removeClass("slds-is-active");
+        $("#PermSetPermTab").addClass("slds-is-active");
     }
 
     createCSV(data){
@@ -38,7 +38,7 @@ export class PermissionSetPermissionsComponent implements OnInit {
             decimalSeparator: '.',
             showLabels: true, 
             showTitle: true,
-            title: 'My Awesome CSV',
+            title: 'Permission Sets and Permissions',
             useTextFile: false,
             useBom: true,
             useKeysAsHeaders: true,

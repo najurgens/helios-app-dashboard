@@ -31,9 +31,6 @@ export class DataService {
                 const allParams = JSON.parse(params.auth);
                 const authObj = { currentUser: allParams['user'], accessToken: allParams['accessToken'], refreshToken: allParams['refreshToken'], instanceUrl: allParams['instanceUrl'] };
                 sessionStorage.setItem('auth', JSON.stringify(authObj));
-                console.log("In dataservice constructor");
-                this.getAllData();
-                this.profiles.subscribe(data=>console.log(data));
             }
         });
     }
@@ -76,6 +73,7 @@ export class DataService {
             withCredentials: true
         };
         this.http.get<any>(this.path+data, httpOptions).subscribe(data=>this.profileSource.next(data));
+        console.log('done');
     }
 
     public getProfileCrud(data, token, url){

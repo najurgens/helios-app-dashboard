@@ -8,7 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -17,11 +17,13 @@ import { ProfilePermissionsComponent } from './layouts/profile-permissions/pp-co
 import { PermissionSetPermissionsComponent } from './layouts/permission-set-permissions/psp-component';
 import { ProfileCrudPermissionsComponent } from './layouts/profile-crud-permissions/pcp-component';
 import { PermissionSetCrudPermissionsComponent } from './layouts/permission-set-crud-permissions/pscp-component';
-//import { ProfilePermissionsResolve } from './layouts/profile-permissions/pp.resolve';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { DataService } from './services/data-service';
+import { LoadingScreenComponent } from './layouts/loading-screen/loading-screen.component';
+import { LoadingScreenInterceptor } from './helpers/loading.interceptor';
+import { NglModule } from 'ng-lightning';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { DataService } from './services/data-service';
     PermissionSetPermissionsComponent,
     ProfileCrudPermissionsComponent,
     PermissionSetCrudPermissionsComponent,
+    LoadingScreenComponent,
     DashboardComponent
   ],
   imports: [
@@ -42,12 +45,19 @@ import { DataService } from './services/data-service';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    NglModule,
     HttpClientModule,
     MatListModule,
     RouterModule,
     AppRoutingModule
   ],
-  providers: [DataService/*ProfilePermissionsResolve*/],
+  providers: [
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: LoadingScreenInterceptor,
+    multi: true
+    }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
