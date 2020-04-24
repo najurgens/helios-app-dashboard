@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
 import { tokenName } from '@angular/compiler';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { AuthService } from './auth-service';
 
 @Injectable({
     providedIn:'root'
@@ -10,9 +13,54 @@ export class DataService {
 
     path:String = 'http://localhost:3001/api/';
 
-    constructor(private http:HttpClient) {}
+    profileSource = new BehaviorSubject([]);
+    profiles = this.profileSource.asObservable();
 
-    public getPermissions(permission, token, url) {
+    private permissionSetSource = new BehaviorSubject([]);
+    permissionSets = this.permissionSetSource.asObservable();
+
+    private profileCrudSource = new BehaviorSubject([]);
+    profileCrud = this.profileCrudSource.asObservable();
+
+    private permissionSetCrudSource = new BehaviorSubject([]);
+    permissionSetCrud = this.permissionSetCrudSource.asObservable();
+
+
+    constructor(private http:HttpClient, private route: ActivatedRoute, private router: Router, private authService: AuthService) {
+        console.log("In dataservice constructor, preliminary");
+        /*this.route.queryParams.subscribe(params => {
+            if (JSON.stringify(params)!=='{}') {
+                const allParams = JSON.parse(params.auth);
+                const authObj = { currentUser: allParams['user'], accessToken: allParams['accessToken'], refreshToken: allParams['refreshToken'], instanceUrl: allParams['instanceUrl'] };
+                sessionStorage.setItem('auth', JSON.stringify(authObj));
+                console.log("In dataservice constructor");
+                
+                //this.profiles.subscribe(data=>console.log(data));
+            }
+            this.getAllData();
+        });*/
+        
+        //this.getAllData();
+    }
+
+    public getAllData(){
+        const authString = JSON.parse(sessionStorage.getItem('auth'));
+        console.log('in getAllData from dataService, authString = ' + authString);
+
+        const accessToken = JSON.parse(authString).accessToken;
+        console.log('accessToken in getAllData(): ' + accessToken);
+        const instanceUrl = JSON.parse(authString).instanceUrl;
+        console.log('instanceUrl in getAllData(): ' + instanceUrl);
+
+
+        //let authObj = JSON.parse(sessionStorage.getItem('auth'));
+        this.getProfiles('profiles', accessToken, instanceUrl);
+        this.getPermissions('permission-sets', accessToken, instanceUrl);
+        this.getProfileCrud('profile-crud-permissions', accessToken, instanceUrl);
+        this.getPermissionSetCrud('permission-set-crud-permissions', accessToken, instanceUrl);
+    }
+
+    public getPermissions(data, token, url) {
         console.log(token);
         console.log(url);
         const httpOptions = {
@@ -24,11 +72,10 @@ export class DataService {
             withCredentials: true
         };
         console.log(httpOptions);
-        return this.http.get(this.path+permission, httpOptions);
-        //return "hello";
+        this.http.get<any>(this.path+data, httpOptions).pipe(catchError(this.handleError<any>('getPermissions',[]))).subscribe(data=>this.permissionSetSource.next(data));
     }
 
-    public getProfiles(profiles, token, url) {
+    public getProfiles(data, token, url) {
         console.log('TOKEN IN DATA-SERVICE: ' + token)
         const httpOptions = {
             headers: new HttpHeaders({
@@ -38,8 +85,7 @@ export class DataService {
             }),
             withCredentials: true
         };
-        return this.http.get(this.path+profiles, httpOptions);
-        //return "hello2";
+        this.http.get<any>(this.path+data, httpOptions).pipe(catchError(this.handleError<any>('getProfiles',[]))).subscribe(data=>this.profileSource.next(data));
     }
 
     public getProfileCrud(data, token, url){
@@ -52,8 +98,7 @@ export class DataService {
             }),
             withCredentials: true
         };
-        return this.http.get(this.path+data, httpOptions);
-        //return "hello2";
+        this.http.get<any>(this.path+data, httpOptions).pipe(catchError(this.handleError<any>('getProfileCrud',[]))).subscribe(data=>this.profileCrudSource.next(data));
     }
 
     public getPermissionSetCrud(data, token, url){
@@ -66,10 +111,10 @@ export class DataService {
             }),
             withCredentials: true
         };
-        return this.http.get(this.path+data, httpOptions);
-        //return "hello2";
+        this.http.get<any>(this.path+data, httpOptions).pipe(catchError(this.handleError<any>('getPermissionSetCrud',[]))).subscribe(data=>this.permissionSetCrudSource.next(data));
     }
 
+    /*
     public getAllSObjects(data, token, url) {
         console.log('TOKEN IN DATA-SERVICE: ' + token);
         const httpOptions = {
@@ -81,5 +126,17 @@ export class DataService {
             withCredentials: true
         };
         return this.http.get(this.path+data, httpOptions);
+    }
+    */
+
+    private handleError<Any>(operation, result?: Any) {
+        return (error: Any): Observable<Any> => {
+            console.error(`${operation} failed: ` + error);
+            this.router.navigate(['/login']);
+            this.authService.isAuth.next(false);
+            // call function to display toast here
+            // displayReAuthToast();
+            return of(result as Any);
+        }
     }
 }

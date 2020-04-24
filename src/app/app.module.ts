@@ -18,9 +18,11 @@ import { ProfilePermissionsComponent } from './layouts/profile-permissions/pp-co
 import { PermissionSetPermissionsComponent } from './layouts/permission-set-permissions/psp-component';
 import { ProfileCrudPermissionsComponent } from './layouts/profile-crud-permissions/pcp-component';
 import { PermissionSetCrudPermissionsComponent } from './layouts/permission-set-crud-permissions/pscp-component';
+//import { ProfilePermissionsResolve } from './layouts/profile-permissions/pp.resolve';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
+import { DataService } from './services/data-service';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,7 @@ import { DashboardComponent } from './layouts/dashboard/dashboard.component';
     RouterModule,
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [/*ProfilePermissionsResolve*/],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

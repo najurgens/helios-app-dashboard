@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExportToCsv } from 'export-to-csv';
+import { ActivatedRoute } from "@angular/router"; 
 
 import { DataService } from '../../services/data-service';
 
@@ -17,20 +18,21 @@ export class ProfilePermissionsComponent implements OnInit {
     instanceUrl:String;
 
     constructor(
-        private dataService: DataService) 
-        {}
+        private dataService: DataService,
+        private route: ActivatedRoute
+        ) { console.log('ProfilePermissionsComponent contstructor called'); }
 
     ngOnInit() {
-        const auth = JSON.parse(sessionStorage.getItem('auth'));
-        this.accessToken = JSON.parse(auth).accessToken;
-        this.instanceUrl = JSON.parse(auth).instanceUrl;
-
-
-        this.dataService.getProfiles('profiles', this.accessToken, this.instanceUrl).subscribe((profiles:Array<any>)=>{
-            this.tableData = profiles;
-            for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
-            this.tableHeaders = Object.keys(this.tableData[0]);
+        console.log('PATH IN PROFILE-PERMISSIONS-COMPONENT: ' + this.dataService.path);
+        this.dataService.profiles.subscribe(data=>{
+            //if(data.length===0) this.dataService.getAllData();
+            //this.dataService.test();
+            console.log('ALL PROFILES IN PP_COMPONENT: ' + data);
         });
+        //this.tableData = this.route.snapshot.data.profileperms;
+        /*for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
+        this.tableHeaders = Object.keys(this.tableData[0]);
+        console.log(this.tableData);*/
     }
 
     createCSV(data){

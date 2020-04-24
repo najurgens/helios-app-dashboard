@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { LoginComponent } from './layouts/auth/login.component';
 import { Router, NavigationStart, RouterStateSnapshot } from '@angular/router';
 import { AuthGuardService } from './services/auth-guard';
+import { DataService } from './services/data-service';
 
 //Jquery
 declare let $: any;
@@ -32,7 +33,8 @@ export class AppComponent{
     constructor(private authService:AuthService, private router:Router, private location: Location, private authGuardService: AuthGuardService) {
         
         this.currentUrl = this.location.path();
-        this.showMenus = (this.currentUrl !== "/login");
+        this.authService.isAuth.subscribe((auth)=>this.showMenus=(this.currentUrl !== "/login" && auth));
+        //this.showMenus = (this.currentUrl !== "/login");
         /*console.log(this.router.routerState.snapshot.url);
         console.log('isAuthenticated: ' + this.authService.isAuthenticated());
         router.events.forEach((event) => {

@@ -29,11 +29,11 @@ export class SettingsComponent {
             const instanceUrl = JSON.parse(auth).instanceUrl;
             console.log('settings instanceUrl = ' + instanceUrl);
 
-            this.dataService.getProfiles('profiles', accessToken, instanceUrl).subscribe((profiles:Array<any>)=>{
+            /*this.dataService.getProfiles('profiles', accessToken, instanceUrl).subscribe((profiles:Array<any>)=>{
               console.log('PROFILE IN SETTINGS: ' + JSON.stringify(profiles[0]));
               const arr = Object.keys(profiles[0]);
               console.log('KEYS: ' + arr);
-            });
+            });*/
 
             /*
             this.dataService.getPermissions('permission-sets', accessToken, instanceUrl).subscribe((profiles:Array<any>)=>{

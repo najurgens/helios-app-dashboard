@@ -18,16 +18,16 @@ export class ProfileCrudPermissionsComponent implements OnInit {
     instanceUrl:String;
 
     constructor(
-        private dataService: DataService) 
+        dataService: DataService) 
         {}
 
     ngOnInit() {
-        this.accessToken = JSON.parse(sessionStorage.getItem('auth')).accessToken;
+        this.accessToken /*= JSON.parse(sessionStorage.getItem('auth')).accessToken;
         this.instanceUrl = JSON.parse(sessionStorage.getItem('auth')).instanceUrl;
         this.dataService.getProfileCrud('profile-crud-permissions', this.accessToken, this.instanceUrl).subscribe((permissions:Array<any>)=>{
             this.getTableHeaders(permissions);
             this.getTableData(permissions);
-        });
+        });*/
     }
 
     getTableHeaders(permissions){

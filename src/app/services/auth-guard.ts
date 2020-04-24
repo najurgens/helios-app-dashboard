@@ -16,23 +16,24 @@ export class AuthGuardService implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        //console.log('AUTH-GUARD refreshToken: ' + AuthService.refreshToken + ', accessToken: ' + AuthService.accessToken + ', user: ' + AuthService.currentUser + ', instanceUrl: ' + AuthService.instanceUrl);
+        console.log('isAuth in AuthGuard: ' + this.authService.isAuthenticated());
         if (this.authService.isAuthenticated()) {
             console.log('FROM AUTH GUARD, ALREADY AUTHENTICATED!!!');
+            console.log('in AuthGuard, auth = ' + sessionStorage.getItem('auth'));
             return true;
         } else {
-            console.log('activatedRoute IN AUTH-GUARD: ' + this.activatedRoute.pathFromRoot);
+            /*console.log('activatedRoute IN AUTH-GUARD: ' + this.activatedRoute.pathFromRoot);
             console.log('router IN AUTH-GUARD: ' + this.router.url);
             console.log('route IN AUTH-GUARD: ' + route.url + ', ' + route.root + ', ' + route.queryParams + ', ' + route.pathFromRoot);
             console.log('state IN AUTH-GUARD: ' + decodeURIComponent(state.url) + ', ' + state.root);
-            console.log('LOOK AT THIS: ' + state.url.includes('accessToken'));
+            console.log('LOOK AT THIS: ' + state.url.includes('accessToken'));*/
 
             if (state.url.includes('accessToken')) {
+                this.authService.isAuth.next(true);
                 const auth = decodeURIComponent(state.url).split("=")[1];
-                console.log('AUTH-GUARD PARSED: ' + auth);
                 sessionStorage.setItem('auth', JSON.stringify(auth));
-                console.log('WITHIN AUTH GUARD SESSION STORAGE = ' + sessionStorage.getItem('auth'));
-                this.showMenusChange.next(true);
+                console.log('WITHIN AUTH GUARD, SESSION STORAGE = ' + sessionStorage.getItem('auth'));
+                //this.showMenusChange.next(true);
                 this.router.navigate(['']);
                 return true;
             } else {
