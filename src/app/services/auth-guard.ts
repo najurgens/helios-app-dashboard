@@ -22,12 +22,6 @@ export class AuthGuardService implements CanActivate {
             console.log('in AuthGuard, auth = ' + sessionStorage.getItem('auth'));
             return true;
         } else {
-            /*console.log('activatedRoute IN AUTH-GUARD: ' + this.activatedRoute.pathFromRoot);
-            console.log('router IN AUTH-GUARD: ' + this.router.url);
-            console.log('route IN AUTH-GUARD: ' + route.url + ', ' + route.root + ', ' + route.queryParams + ', ' + route.pathFromRoot);
-            console.log('state IN AUTH-GUARD: ' + decodeURIComponent(state.url) + ', ' + state.root);
-            console.log('LOOK AT THIS: ' + state.url.includes('accessToken'));*/
-
             if (state.url.includes('accessToken')) {
                 this.authService.isAuth.next(true);
                 const auth = decodeURIComponent(state.url).split("=")[1];

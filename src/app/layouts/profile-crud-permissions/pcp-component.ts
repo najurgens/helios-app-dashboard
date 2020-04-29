@@ -18,16 +18,16 @@ export class ProfileCrudPermissionsComponent implements OnInit {
     instanceUrl:String;
 
     constructor(
-        dataService: DataService) 
+        private dataService: DataService) 
         {}
 
     ngOnInit() {
-        this.accessToken /*= JSON.parse(sessionStorage.getItem('auth')).accessToken;
-        this.instanceUrl = JSON.parse(sessionStorage.getItem('auth')).instanceUrl;
-        this.dataService.getProfileCrud('profile-crud-permissions', this.accessToken, this.instanceUrl).subscribe((permissions:Array<any>)=>{
-            this.getTableHeaders(permissions);
-            this.getTableData(permissions);
-        });*/
+        this.dataService.profileCrud.subscribe(data=>{
+            this.getTableHeaders(data);
+            this.getTableData(data);
+        });
+        $('.slds-is-active').removeClass("slds-is-active");
+        $("#ProfileCrudTab").addClass("slds-is-active");
     }
 
     getTableHeaders(permissions){
@@ -71,7 +71,7 @@ export class ProfileCrudPermissionsComponent implements OnInit {
             decimalSeparator: '.',
             showLabels: true, 
             showTitle: true,
-            title: 'My Awesome CSV',
+            title: 'Profile CRUD Access',
             useTextFile: false,
             useBom: true,
             useKeysAsHeaders: true,

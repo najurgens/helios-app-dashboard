@@ -35,7 +35,8 @@
               "src/styles.scss",
               "node_modules/datatables.net-dt/css/jquery.dataTables.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css"
+              "node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css",
+              "node_modules/@angular/cdk/overlay-prebuilt.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",

@@ -18,15 +18,23 @@ export class AuthService {
         this.isAuth.asObservable().subscribe((auth)=>{console.log('value of isAuth: ' + auth); this.auth = auth});
     }
 
+    // check for access token.
     public isAuthenticated(): Boolean {
-        //return sessionStorage.getItem('auth')!==null ? true : false;
-        return this.auth;
+        return sessionStorage.getItem('auth')!==null ? true : false;
+        //return this.auth;
     }
 
+    // set isAuth.
     public setAuthState() {
         sessionStorage.getItem('auth')!==null ? this.isAuth.next(true) : this.isAuth.next(false);
     }
+
+    // set auth.
+    public setAuth(val: Boolean) {
+        this.auth = val;
+    }
     
+    // logout.
     public logout() {
         // remove user from local storage to log user out
         sessionStorage.removeItem('auth');

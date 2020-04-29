@@ -1,74 +1,190 @@
-<div>
-    <div class="page-body">
-        <div>
-            <h1 class="m-2">Permission Sets and Permissions</h1>
-            <button  class="slds-button slds-button_brand m-2" (click)="createCSV(null)">Download CSV</button>
-            <div class="slds-scrollable m-2">
-              <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_resizable-cols" role="grid">
-                <thead>
-                  <tr class="slds-line-height_reset">
-                    <th class="slds-text-align_right" scope="col" style="width:3.25rem">
-                      <span id="column-group-header" class="slds-assistive-text">Choose a row</span>
-                      <div class="slds-th__action slds-th__action_form">
-                        <div class="slds-checkbox">
-                          <input type="checkbox" name="options" id="checkbox-unique-id-297" value="checkbox-unique-id-297" tabindex="0" aria-labelledby="check-select-all-label column-group-header" />
-                          <label class="slds-checkbox__label" for="checkbox-unique-id-297" id="check-select-all-label">
-                            <span class="slds-checkbox_faux"></span>
-                            <span class="slds-form-element__label slds-assistive-text">Select All</span>
-                          </label>
-                        </div>
-                      </div>
-                    </th>
-                    <th *ngFor="let header of tableHeaders" attr.aria-label="{{header}}" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
-                      <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0">
-                        <span class="slds-assistive-text">Sort by: </span>
-                        <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
-                          <span class="slds-truncate" title="{{header}}">{{header}}</span>
-                          <span class="slds-icon_container slds-icon-utility-arrowdown">
-                            <svg class="slds-icon slds-icon-text-default slds-is-sortable__icon " aria-hidden="true">
-                              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
-                            </svg>
-                          </span>
-                        </div>
-                      </a>
-                      <div class="slds-resizable">
-                        <input type="range" attr.aria-label="{{header}} column width" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-540" max="1000" min="20" tabindex="0" />
-                        <span class="slds-resizable__handle">
-                          <span class="slds-resizable__divider"></span>
-                        </span>
-                      </div>
-                    </th>
-                    <th class="" scope="col" style="width:3.25rem">
-                      <div class="slds-truncate slds-assistive-text" title="Actions">Actions</div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let perm of tableData" aria-selected="false" class="slds-hint-parent">
-                    <td class="slds-text-align_right" role="gridcell">
-                      <div class="slds-checkbox">
-                        <input type="checkbox" name="options" id="checkbox-01" value="checkbox-01" tabindex="0" aria-labelledby="check-button-label-01 column-group-header" />
-                        <label class="slds-checkbox__label" for="checkbox-01" id="check-button-label-01">
-                          <span class="slds-checkbox_faux"></span>
-                          <span class="slds-form-element__label slds-assistive-text">Select item 1</span>
-                        </label>
-                      </div>
-                    </td>
-                    <td *ngFor="let header2 of tableHeaders" role="gridcell">
-                      <div class="slds-truncate" title="{{perm[header2]}}">{{perm[header2]}}</div>
-                    </td>
-                    <td role="gridcell">
-                      <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" tabindex="0" title="More actions for Acme - 1,200 Widgets">
-                        <svg class="slds-button__icon slds-button__icon_hint slds-button__icon_small" aria-hidden="true">
-                          <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
-                        </svg>
-                        <span class="slds-assistive-text">Actions</span>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+<div class="slds-page-header mr-2 ml-2 mt-2">
+  <div class="slds-page-header__row">
+    <div class="slds-page-header__col-title">
+      <div class="slds-media">
+        <div class="slds-media__figure">
+          <span class="slds-icon_container slds-icon-standard-opportunity">
+            <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+              <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#opportunity"></use>
+            </svg>
+          </span>
         </div>
+        <div class="slds-media__body">
+              <h1>
+                <span>Permission Sets and Permissions</span>
+              </h1>
+        </div>
+      </div>
     </div>
+    <div class="slds-page-header__col-actions">
+      <div class="slds-page-header__controls">
+        <div class="slds-page-header__control">
+          <ul class="slds-button-group-list">
+            <li>
+              <button class="slds-button slds-button_neutral" (click)="createCSV(null)">Download CSV</button>
+            </li>
+            <li>
+              <button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true" title="More Actions">
+                <svg class="slds-button__icon" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                </svg>
+                <span class="slds-assistive-text">More Actions</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slds-page-header__row">
+    <div class="slds-page-header__col-meta">
+    </div>
+    <div class="slds-page-header__col-controls">
+      <div class="slds-page-header__controls">
+        <div class="slds-page-header__control">
+          <div class="slds-form-element">
+            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+              <svg class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default" aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+              </svg>
+              <input type="text" id="text-input-id-1" placeholder="Search this list..." class="slds-input" />
+            </div>
+          </div>
+        </div>
+        <div class="slds-page-header__control">
+          <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+            <button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="List View Controls">
+              <svg class="slds-button__icon" aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#settings"></use>
+              </svg>
+              <svg class="slds-button__icon slds-button__icon_x-small" aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+              </svg>
+              <span class="slds-assistive-text">List View Controls</span>
+            </button>
+          </div>
+        </div>
+        <div class="slds-page-header__control">
+          <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+            <button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="Change view">
+              <svg class="slds-button__icon" aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#table"></use>
+              </svg>
+              <svg class="slds-button__icon slds-button__icon_x-small" aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+              </svg>
+              <span class="slds-assistive-text">Change view</span>
+            </button>
+          </div>
+        </div>
+        <div class="slds-page-header__control">
+          <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Edit List">
+            <svg class="slds-button__icon" aria-hidden="true">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+            </svg>
+            <span class="slds-assistive-text">Edit List</span>
+          </button>
+        </div>
+        <div class="slds-page-header__control">
+          <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Refresh List">
+            <svg class="slds-button__icon" aria-hidden="true">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#refresh"></use>
+            </svg>
+            <span class="slds-assistive-text">Refresh List</span>
+          </button>
+        </div>
+        <div class="slds-page-header__control">
+          <ul class="slds-button-group-list">
+            <li>
+              <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Charts">
+                <svg class="slds-button__icon" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chart"></use>
+                </svg>
+                <span class="slds-assistive-text">Charts</span>
+              </button>
+            </li>
+            <li>
+              <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Filters">
+                <svg class="slds-button__icon" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#filterList"></use>
+                </svg>
+                <span class="slds-assistive-text">Filters</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="slds-card mr-2 ml-2 mb-2">
+  <div class="slds-card__body">
+    <div class="slds-scrollable m-2">
+      <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_resizable-cols" role="grid">
+        <thead>
+          <tr class="slds-line-height_reset">
+            <th class="slds-text-align_right" scope="col" style="width:3.25rem">
+              <span id="column-group-header" class="slds-assistive-text">Choose a row</span>
+              <div class="slds-th__action slds-th__action_form">
+                <div class="slds-checkbox">
+                  <input type="checkbox" name="options" id="checkbox-unique-id-297" value="checkbox-unique-id-297" tabindex="0" aria-labelledby="check-select-all-label column-group-header" />
+                  <label class="slds-checkbox__label" for="checkbox-unique-id-297" id="check-select-all-label">
+                    <span class="slds-checkbox_faux"></span>
+                    <span class="slds-form-element__label slds-assistive-text">Select All</span>
+                  </label>
+                </div>
+              </div>
+            </th>
+            <th *ngFor="let header of tableHeaders" attr.aria-label="{{header}}" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+              <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0">
+                <span class="slds-assistive-text">Sort by: </span>
+                <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                  <span class="slds-truncate" title="{{header}}">{{header}}</span>
+                  <span class="slds-icon_container slds-icon-utility-arrowdown">
+                    <svg class="slds-icon slds-icon-text-default slds-is-sortable__icon " aria-hidden="true">
+                      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+                    </svg>
+                  </span>
+                </div>
+              </a>
+              <div class="slds-resizable">
+                <input type="range" attr.aria-label="{{header}} column width" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-540" max="1000" min="20" tabindex="0" />
+                <span class="slds-resizable__handle">
+                  <span class="slds-resizable__divider"></span>
+                </span>
+              </div>
+            </th>
+            <th class="" scope="col" style="width:3.25rem">
+              <div class="slds-truncate slds-assistive-text" title="Actions">Actions</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let perm of tableData" aria-selected="false" class="slds-hint-parent">
+            <td class="slds-text-align_right" role="gridcell">
+              <div class="slds-checkbox">
+                <input type="checkbox" name="options" id="checkbox-01" value="checkbox-01" tabindex="0" aria-labelledby="check-button-label-01 column-group-header" />
+                <label class="slds-checkbox__label" for="checkbox-01" id="check-button-label-01">
+                  <span class="slds-checkbox_faux"></span>
+                  <span class="slds-form-element__label slds-assistive-text">Select item 1</span>
+                </label>
+              </div>
+            </td>
+            <td *ngFor="let header2 of tableHeaders" role="gridcell">
+              <div class="slds-truncate" title="{{perm[header2]}}">{{perm[header2]}}</div>
+            </td>
+            <td role="gridcell">
+              <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" tabindex="0" title="More actions for Acme - 1,200 Widgets">
+                <svg class="slds-button__icon slds-button__icon_hint slds-button__icon_small" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                </svg>
+                <span class="slds-assistive-text">Actions</span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="slds-card__footer"><a href="#">View All <span class="slds-assistive-text">entity type</span></a></div>
 </div>

@@ -7,19 +7,18 @@ import { ProfilePermissionsComponent } from './layouts/profile-permissions/pp-co
 import { PermissionSetPermissionsComponent } from './layouts/permission-set-permissions/psp-component';
 import { ProfileCrudPermissionsComponent } from './layouts/profile-crud-permissions/pcp-component';
 import { PermissionSetCrudPermissionsComponent } from './layouts/permission-set-crud-permissions/pscp-component';
-//import { ProfilePermissionsResolve } from './layouts/profile-permissions/pp.resolve';
 import { AuthGuardService } from './services/auth-guard'; 
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { AuthService } from './services/auth-service';
 import { ProfileComponent } from './layouts/profile/profile.component';
-import { SettingsComponent } from './layouts/settings/settings.component';
+import { SystemSettingsComponent } from './layouts/settings/system-settings/system-settings.component';
 
 const routes: Routes = [
 
   { path: 'login', component: LoginComponent/*, canActivate: [AuthGuard] */}, 
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
-  { path: 'settings', component:  SettingsComponent, canActivate: [AuthGuardService] },
-  { path: 'profiles-permissions', component: ProfilePermissionsComponent, /*resolve:{ profileperms:ProfilePermissionsResolve } ,*/ canActivate: [AuthGuardService] },
+  { path: 'system-settings', component:  SystemSettingsComponent, canActivate: [AuthGuardService] },
+  { path: 'profiles-permissions', component: ProfilePermissionsComponent, canActivate: [AuthGuardService] },
   { path: 'permission-set-permissions', component: PermissionSetPermissionsComponent, canActivate: [AuthGuardService] },
   { path: 'profile-crud-permissions', component: ProfileCrudPermissionsComponent, canActivate: [AuthGuardService] },
   { path: 'permission-set-crud-permissions', component: PermissionSetCrudPermissionsComponent, canActivate: [AuthGuardService] },

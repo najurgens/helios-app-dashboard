@@ -25,14 +25,16 @@ export class ProfilePermissionsComponent implements OnInit {
     ngOnInit() {
         console.log('PATH IN PROFILE-PERMISSIONS-COMPONENT: ' + this.dataService.path);
         this.dataService.profiles.subscribe(data=>{
-            //if(data.length===0) this.dataService.getAllData();
-            //this.dataService.test();
-            console.log('ALL PROFILES IN PP_COMPONENT: ' + data);
+            this.tableData = data;
+            for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
+            this.tableHeaders = Object.keys(this.tableData[0]);
         });
-        //this.tableData = this.route.snapshot.data.profileperms;
-        /*for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
-        this.tableHeaders = Object.keys(this.tableData[0]);
-        console.log(this.tableData);*/
+        $('.slds-is-active').removeClass("slds-is-active");
+        $("#ProfilePermTab").addClass("slds-is-active");
+    }
+
+    onSort($event){
+        console.log($event);
     }
 
     createCSV(data){
@@ -42,7 +44,7 @@ export class ProfilePermissionsComponent implements OnInit {
             decimalSeparator: '.',
             showLabels: true, 
             showTitle: true,
-            title: 'My Awesome CSV',
+            title: 'Profiles and Permissions',
             useTextFile: false,
             useBom: true,
             useKeysAsHeaders: true,

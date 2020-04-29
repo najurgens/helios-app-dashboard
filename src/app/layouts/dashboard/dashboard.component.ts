@@ -18,7 +18,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // ---Setting AccessToken, RefreshToken, and IsntanceUrl to seassion storage
+    this.dataService.getAllData();
+    $("#homeTab").addClass("slds-is-active");
+    $('.slds-is-active').removeClass("slds-is-active");
+    console.log('in dashboard');
   }
 
 }

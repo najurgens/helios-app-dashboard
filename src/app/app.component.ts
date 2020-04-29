@@ -30,10 +30,10 @@ export class AppComponent{
     userSetupOpen: Boolean = false;
     
 
-    constructor(private authService:AuthService, private router:Router, private location: Location, private authGuardService: AuthGuardService) {
+    constructor(private authService:AuthService, private router:Router, private location: Location, private authGuardService: AuthGuardService, private dataService: DataService) {
         
         this.currentUrl = this.location.path();
-        this.authService.isAuth.subscribe((auth)=>this.showMenus=(this.currentUrl !== "/login" && auth));
+        this.authService.isAuth.subscribe((auth)=>{console.log('auth in AppComponent: ' + auth); this.showMenus=(this.currentUrl !== "/login" && auth)});
         //this.showMenus = (this.currentUrl !== "/login");
         /*console.log(this.router.routerState.snapshot.url);
         console.log('isAuthenticated: ' + this.authService.isAuthenticated());
@@ -49,7 +49,7 @@ export class AppComponent{
     }
 
     navigateToSettings() {
-        this.router.navigate(['/settings']);
+        this.router.navigate(['/system-settings']);
     }
 
     navigateToProfile() {
@@ -74,26 +74,15 @@ export class AppComponent{
         }
     }
 
-    ngAfterViewInit(){
-        console.log(this.currentUrl);
-        switch (this.currentUrl){
-            case '/':
-                $("#homeTab").addClass("slds-is-active");
-                break;
-            case '/profiles-permissions':
-                console.log('profile case');
-                console.log($("#ProfilePermTab"));
-                $("#ProfilePermTab").addClass("slds-is-active");
-                break;
-            case '/permission-set-permissions':
-                $("#PermSetPermTab").addClass("slds-is-active");
-                break;
-            case '/profile-crud-permissions':
-                $("#ProfileCrudTab").addClass("slds-is-active");
-                break;
-            case '/permission-set-crud-permissions':
-                $("#PermSetCrudTab").addClass("slds-is-active");
+    ngOnInit(){
+        if(this.authService.isAuthenticated()){
+            console.log('pass');
+            this.dataService.getAllData();
         }
+    }
+
+    ngAfterViewInit(){
+        
     }
 
 }

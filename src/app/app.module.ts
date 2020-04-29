@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -10,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './layouts/auth/login.component'; 
@@ -18,11 +19,14 @@ import { ProfilePermissionsComponent } from './layouts/profile-permissions/pp-co
 import { PermissionSetPermissionsComponent } from './layouts/permission-set-permissions/psp-component';
 import { ProfileCrudPermissionsComponent } from './layouts/profile-crud-permissions/pcp-component';
 import { PermissionSetCrudPermissionsComponent } from './layouts/permission-set-crud-permissions/pscp-component';
-//import { ProfilePermissionsResolve } from './layouts/profile-permissions/pp.resolve';
+import { SystemSettingsComponent } from './layouts/settings/system-settings/system-settings.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { DataService } from './services/data-service';
+import { LoadingScreenComponent } from './layouts/loading-screen/loading-screen.component';
+import { LoadingScreenInterceptor } from './helpers/loading.interceptor';
+import { NglModule } from 'ng-lightning';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,9 @@ import { DataService } from './services/data-service';
     PermissionSetPermissionsComponent,
     ProfileCrudPermissionsComponent,
     PermissionSetCrudPermissionsComponent,
-    DashboardComponent
+    LoadingScreenComponent,
+    DashboardComponent,
+    SystemSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -43,13 +49,21 @@ import { DataService } from './services/data-service';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    NglModule,
     HttpClientModule,
     MatListModule,
     MatMenuModule,
     RouterModule,
     AppRoutingModule,
+    CommonModule
   ],
-  providers: [/*ProfilePermissionsResolve*/],
+  providers: [
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: LoadingScreenInterceptor,
+    multi: true
+    }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
