@@ -22,7 +22,9 @@ export class DashboardComponent implements OnInit {
 }
 
   ngOnInit(): void {
-    this.dataService.getAllData();
+    this.dataService.profiles.subscribe(data=>{
+      if(data.tableData.length===0) this.dataService.getAllData();
+    })
     $("#homeTab").addClass("slds-is-active");
     $('.slds-is-active').removeClass("slds-is-active");
     console.log('in dashboard');

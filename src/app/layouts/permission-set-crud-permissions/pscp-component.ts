@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ExportToCsv } from 'export-to-csv';
-
 import { DataService } from '../../services/data-service';
-import { isEmptyExpression } from '@angular/compiler';
 
 @Component({
   selector: 'permission-set-crud-permissions',
@@ -11,26 +8,28 @@ import { isEmptyExpression } from '@angular/compiler';
 })
 export class PermissionSetCrudPermissionsComponent implements OnInit {
 
-    tableHeaders:Array<String> = [];
+    tableHeaders:Array<string> = [];
     tableData:Array<any> = [];
-    crudObj:Object = {profileName : ""};
-    accessToken:String;
-    instanceUrl:String;
+    crudObj:Object = {'Permission Set Name' : ""};
+    accessToken:string;
+    instanceUrl:string;
 
-    constructor(
-        private dataService: DataService) 
-        {}
+    constructor(private dataService: DataService){}
 
     ngOnInit() {
         this.dataService.permissionSetCrud.subscribe(data=>{
-            this.getTableHeaders(data);
-            this.getTableData(data);
+            if(data.length===0) this.dataService.getAllData();
+            else {
+                this.getTableHeaders(data);
+                this.getTableData(data);
+            }
         });
         $('.slds-is-active').removeClass("slds-is-active");
         $("#PermSetCrudTab").addClass("slds-is-active");
     }
 
     getTableHeaders(permissions){
+        this.tableHeaders.push('Permission Set Name');
         for(let i=0; i<permissions.length; i++){
             if(!this.tableHeaders.includes(permissions[i].SobjectType)){
                 this.tableHeaders.push(permissions[i].SobjectType);
@@ -50,35 +49,17 @@ export class PermissionSetCrudPermissionsComponent implements OnInit {
             if(permissions[j].PermissionsViewAllRecords) crud +='V';
             if(permissions[j].PermissionsModifyAllRecords) crud +='M';
             if(j===0){
-                currentObj['permissionSetName'] = permissions[j].Parent.Label;
+                currentObj['Permission Set Name'] = permissions[j].Parent.Label;
                 currentObj[permissions[j].SobjectType] = crud;
             }else if(permissions[j].Parent.Label===permissions[j-1].Parent.Label){
                 currentObj[permissions[j].SobjectType] = crud;
             }else{
                 this.tableData.push(currentObj);
                 currentObj = {...this.crudObj};
-                currentObj['permissionSetName'] = permissions[j].Parent.Label;
+                currentObj['Permission Set Name'] = permissions[j].Parent.Label;
                 currentObj[permissions[j].SobjectType] = crud;
             }
         }
         this.tableData.push(currentObj);
     }
-
-    createCSV(data){
-        const options = { 
-            fieldSeparator: ',',
-            quoteStrings: '"',
-            decimalSeparator: '.',
-            showLabels: true, 
-            showTitle: true,
-            title: 'Profile CRUD Access',
-            useTextFile: false,
-            useBom: true,
-            useKeysAsHeaders: true,
-            // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
-          };
-        const csvExporter = new ExportToCsv(options);
-        csvExporter.generateCsv(this.tableData);
-    }
-
 }

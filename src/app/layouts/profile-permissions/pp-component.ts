@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ExportToCsv } from 'export-to-csv';
-import { ActivatedRoute } from "@angular/router"; 
-
 import { DataService } from '../../services/data-service';
 
 @Component({
@@ -11,46 +8,23 @@ import { DataService } from '../../services/data-service';
 })
 export class ProfilePermissionsComponent implements OnInit {
 
-    tableHeaders:Array<String>;
+    tableHeaders:Array<string>;
     profiles:Array<any>;
     tableData:Array<any>;
-    accessToken:String;
-    instanceUrl:String;
+    accessToken:string;
+    instanceUrl:string;
 
-    constructor(
-        private dataService: DataService,
-        private route: ActivatedRoute
-        ) {}
+    constructor(private dataService: DataService){}
 
     ngOnInit() {
         this.dataService.profiles.subscribe(data=>{
-            this.tableData = data;
-            for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
-            this.tableHeaders = Object.keys(this.tableData[0]);
+            if(data.tableData.length===0) this.dataService.getAllData();
+            else{
+                this.tableData = data.tableData;
+                this.tableHeaders = data.tableHeaders;
+            }
         });
         $('.slds-is-active').removeClass("slds-is-active");
         $("#ProfilePermTab").addClass("slds-is-active");
     }
-
-    onSort($event){
-        console.log($event);
-    }
-
-    createCSV(data){
-        const options = { 
-            fieldSeparator: ',',
-            quoteStrings: '"',
-            decimalSeparator: '.',
-            showLabels: true, 
-            showTitle: true,
-            title: 'Profiles and Permissions',
-            useTextFile: false,
-            useBom: true,
-            useKeysAsHeaders: true,
-            // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
-          };
-        const csvExporter = new ExportToCsv(options);
-        csvExporter.generateCsv(this.tableData);
-    }
-
 }

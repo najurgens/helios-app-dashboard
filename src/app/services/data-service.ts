@@ -10,10 +10,10 @@ export class DataService {
 
     path:String = 'http://localhost:3001/api/';
 
-    private profileSource = new BehaviorSubject([]);
+    private profileSource = new BehaviorSubject({tableData:[], tableHeaders:[]});
     profiles = this.profileSource.asObservable();
 
-    private permissionSetSource = new BehaviorSubject([]);
+    private permissionSetSource = new BehaviorSubject({tableData:[], tableHeaders:[]});
     permissionSets = this.permissionSetSource.asObservable();
 
     private profileCrudSource = new BehaviorSubject([]);
@@ -59,7 +59,14 @@ export class DataService {
             withCredentials: true
         };
         console.log(httpOptions);
-        this.http.get<any>(this.path+data, httpOptions).subscribe(data=> this.permissionSetSource.next(data));
+        this.http.get<any>(this.path+data, httpOptions).subscribe(data=>{
+            for(let i=0; i<data.length; i++) delete data[i].attributes;
+            const permissionData = {
+                tableData: data,
+                tableHeaders: Object.keys(data[0])
+            }
+            this.permissionSetSource.next(permissionData);
+        });
     }
 
     public getProfiles(data, token, url) {
@@ -72,8 +79,16 @@ export class DataService {
             }),
             withCredentials: true
         };
-        this.http.get<any>(this.path+data, httpOptions).subscribe(data=>this.profileSource.next(data));
+        this.http.get<any>(this.path+data, httpOptions).subscribe(data=>{
+            for(let i=0; i<data.length; i++) delete data[i].attributes;
+            const profileData = {
+                tableData: data,
+                tableHeaders: Object.keys(data[0])
+            }
+            this.profileSource.next(profileData);
+        });
         console.log('done');
+        this.profiles.subscribe(data=>console.log(data));
     }
 
     public getProfileCrud(data, token, url){

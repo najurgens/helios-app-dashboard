@@ -34,10 +34,10 @@ export class AppComponent{
                 }
 
     ngOnInit(){
-        if(this.authService.isAuthenticated()){
+        /*if(this.authService.isAuthenticated()){
             console.log('pass');
             this.dataService.getAllData();
-        }
+        }*/
     }
 
     ngAfterViewInit(){

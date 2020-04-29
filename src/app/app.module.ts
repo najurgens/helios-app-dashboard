@@ -24,6 +24,7 @@ import { DataService } from './services/data-service';
 import { LoadingScreenComponent } from './layouts/loading-screen/loading-screen.component';
 import { LoadingScreenInterceptor } from './helpers/loading.interceptor';
 import { NglModule } from 'ng-lightning';
+import { DatatableComponent } from './layouts/datatable/datatable.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { NglModule } from 'ng-lightning';
     ProfileCrudPermissionsComponent,
     PermissionSetCrudPermissionsComponent,
     LoadingScreenComponent,
-    DashboardComponent
+    DashboardComponent,
+    DatatableComponent
   ],
   imports: [
     BrowserModule,
