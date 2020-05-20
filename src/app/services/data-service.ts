@@ -87,8 +87,7 @@ export class DataService {
             }
             this.profileSource.next(profileData);
         });
-        console.log('done');
-        this.profiles.subscribe(data=>console.log(data));
+
     }
 
     public getProfileCrud(data, token, url){
