@@ -11,7 +11,7 @@
         </div>
         <div class="slds-media__body">
           <h1>
-            <span>Privileged Permission Settings</span>
+            <span>Key Permission Settings</span>
           </h1>
         </div>
       </div>
@@ -19,19 +19,15 @@
     <div class="slds-page-header__col-actions">
       <div class="slds-page-header__controls">
         <div class="slds-page-header__control">
-          <ul class="slds-button-group-list">
-            <li>
-              <button class="slds-button slds-button_neutral">Download CSV</button>
-            </li>
-            <li>
+              <button class="slds-button slds-button_outline-brand">Download CSV</button>
+              <button class="slds-button slds-button_text-destructive">Reset to Default Settings</button>
+              <button class="slds-button slds-button_success" (click)="saveSettings();">Save Settings</button>
               <button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true" title="More Actions">
                 <svg class="slds-button__icon" aria-hidden="true">
                   <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
                 </svg>
                 <span class="slds-assistive-text">More Actions</span>
               </button>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
@@ -118,20 +114,26 @@
   </div>
 </div>
 
-<article class="slds-card mr-2 ml-2 mb-2">
-  <div class="slds-card__body slds-card__body_inner">
+<!--*ngFor="let setting of userPermissionsProfileSettings" -->
+<!-- *ngFor="let setting of profileSettings" -->
+<!--  *ngIf="permissionSet" -->
+<!-- *ngFor="let setting of userPermissionsPermissionSetSettings"-->
+<!-- *ngFor="let setting of permissionSetSettings" -->
+
+<article class="slds-card mr-2 ml-2 mb-2" style="height: 100vh;">
+  <div class="slds-card__body slds-card__body_inner slds-scrollable" style="height: 75vh;">
     <ul class="slds-grid slds-wrap slds-grid_pull-padded">
-      <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+      <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-1">
         <article class="slds-tile slds-media slds-card__tile slds-hint-parent">
-          <div class="slds-media__figure">
+          <!--<div class="slds-media__figure">
             <span class="slds-icon_container slds-icon-standard-contact" title="Description of icon when needed">
               <svg class="slds-icon slds-icon_small" aria-hidden="true">
                 <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use>
               </svg>
               <span class="slds-assistive-text">Contact</span>
             </span>
-          </div>
-          <div *ngIf="profile" class="slds-media__body">
+          </div>-->
+          <div class="slds-media__body">
             <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
               <h2 class="slds-tile__title slds-truncate" title="Related Record Title 1">
                 <a href="javascript:void(0);">Profiles & Permission-Sets</a>
@@ -145,115 +147,88 @@
                 </button>
               </div>
             </div>
-            <div class="slds-tile__detail" style="padding-bottom:24px;">
-              <h4 class="slds-tile__title slds-truncate" title="Related Record Title 1">
+            <div class="slds-tile__detail" style="padding-bottom:24px; margin-left:0px; margin-right:0px;">
+              <h3 class="slds-tile__title slds-truncate" title="Related Record Title 1">
                   <a href="javascript:void(0);">User Permissions</a>
-              </h4>
-              <dl *ngFor="let setting of userPermissionsProfileSettings" class="slds-list_horizontal slds-grid_align-spread slds-wrap">
-                  <dt class="slds-item_label slds-text-color_weak" title="First Label">{{setting}}</dt>
-                  <div class="slds-form-element">
-                      <label class="slds-checkbox_toggle slds-grid">
-                      <input type="checkbox" name="checkbox-toggle-16" value="checkbox-toggle-16" aria-describedby="checkbox-toggle-16" checked="" />
-                      <span id="checkbox-toggle-16" class="slds-checkbox_faux_container" aria-live="assertive">
-                          <span class="slds-checkbox_faux"></span>
-                          <span class="slds-checkbox_on">Privileged</span>
-                          <span class="slds-checkbox_off"></span>
-                      </span>
-                      </label>
-                  </div>
-              </dl>
+              </h3>
+              <div class="row" style="margin-left:0px; margin-right: 0px;">
+                <div class="slds-size_1-of-2 slds-medium-size_1-of-2" style="padding-right: 30px;">
+                  <dl class="slds-list_horizontal slds-grid_align-spread slds-wrap " *ngFor="let permission of userPermissionsKeysA">
+                      <dt class="slds-item_label slds-text-color_weak" title="First Label">{{permission}}</dt>
+                      <div class="slds-form-element">
+                          <label class="slds-checkbox_toggle slds-grid">
+                          <input type="checkbox" name="checkbox-toggle-16" value="checkbox-toggle-16" aria-describedby="checkbox-toggle-16" [attr.checked]="userPermissions[permission] ? '' : null" (click)="toggleUserPermissions(permission);"/>
+                          <span id="checkbox-toggle-16" class="slds-checkbox_faux_container" aria-live="assertive">
+                              <span class="slds-checkbox_faux"></span>
+                              <span class="slds-checkbox_on">Privileged</span>
+                              <span class="slds-checkbox_off"></span>
+                          </span>
+                          </label>
+                      </div>
+                  </dl>
+                </div>
+                <div class="slds-size_1-of-2 slds-medium-size_1-of-2" style="padding-left: 30px;">
+                  <dl class="slds-list_horizontal slds-grid_align-spread slds-wrap" *ngFor="let permission of userPermissionsKeysB">
+                    <dt class="slds-item_label slds-text-color_weak" title="First Label">{{permission}}</dt>
+                    <div class="slds-form-element">
+                        <label class="slds-checkbox_toggle slds-grid">
+                        <input type="checkbox" name="checkbox-toggle-16" value="checkbox-toggle-16" aria-describedby="checkbox-toggle-16" [attr.checked]="userPermissions[permission] ? '' : null" (click)="toggleUserPermissions(permission);" />
+                        <span id="checkbox-toggle-16" class="slds-checkbox_faux_container" aria-live="assertive">
+                            <span class="slds-checkbox_faux"></span>
+                            <span class="slds-checkbox_on">Privileged</span>
+                            <span class="slds-checkbox_off"></span>
+                        </span>
+                        </label>
+                    </div>
+                  </dl>
+                </div>
+              </div>
             </div>
-            <div class="slds-tile__detail">
-              <h4 class="slds-tile__title slds-truncate" title="Related Record Title 1">
+            <div class="slds-tile__detail" style="padding-bottom:24px; margin-left:0px; margin-right:0px;">
+              <h3 class="slds-tile__title slds-truncate" title="Related Record Title 1">
                   <a href="javascript:void(0);">System Permissions</a>
-              </h4>
-              <dl *ngFor="let setting of profileSettings" class="slds-list_horizontal slds-grid_align-spread slds-wrap">
-                  <dt class="slds-item_label slds-text-color_weak" title="First Label">{{setting}}</dt>
-                  <div class="slds-form-element">
-                    <label class="slds-checkbox_toggle slds-grid">
-                      <!--<span class="slds-form-element__label slds-m-bottom_none">Toggle Label</span>-->
-                      <input type="checkbox" name="checkbox-toggle-16" value="checkbox-toggle-16" aria-describedby="checkbox-toggle-16" checked="" />
-                      <span id="checkbox-toggle-16" class="slds-checkbox_faux_container" aria-live="assertive">
-                        <span class="slds-checkbox_faux"></span>
-                        <span class="slds-checkbox_on">Privileged</span>
-                        <span class="slds-checkbox_off"></span>
-                      </span>
-                    </label>
-                  </div>
-              </dl>
+              </h3>
+              <div class="row" style="margin-left:0px; margin-right: 0px;">
+                <div class="slds-size_1-of-2 slds-medium-size_1-of-2" style="padding-right: 30px;">
+                  <dl class="slds-list_horizontal slds-grid_align-spread slds-wrap " *ngFor="let permission of systemPermissionsKeysA">
+                      <dt class="slds-item_label slds-text-color_weak" title="First Label">{{permission}}</dt>
+                      <div class="slds-form-element">
+                          <label class="slds-checkbox_toggle slds-grid">
+                          <input type="checkbox" name="checkbox-toggle-16" value="checkbox-toggle-16" aria-describedby="checkbox-toggle-16" [attr.checked]="systemPermissions[permission] ? '' : null" (click)="toggleSystemsPermissions(permission);" />
+                          <span id="checkbox-toggle-16" class="slds-checkbox_faux_container" aria-live="assertive">
+                              <span class="slds-checkbox_faux"></span>
+                              <span class="slds-checkbox_on">Privileged</span>
+                              <span class="slds-checkbox_off"></span>
+                          </span>
+                          </label>
+                      </div>
+                  </dl>
+                </div>
+                <div class="slds-size_1-of-2 slds-medium-size_1-of-2" style="padding-left: 30px;">
+                  <dl class="slds-list_horizontal slds-grid_align-spread slds-wrap" *ngFor="let permission of systemPermissionsKeysB">
+                    <dt class="slds-item_label slds-text-color_weak" title="First Label">{{permission}}</dt>
+                    <div class="slds-form-element">
+                        <label class="slds-checkbox_toggle slds-grid">
+                        <input type="checkbox" name="checkbox-toggle-16" value="checkbox-toggle-16" aria-describedby="checkbox-toggle-16" [attr.checked]="systemPermissions[permission] ? '' : null" (click)="toggleSystemsPermissions(permission);"/>
+                        <span id="checkbox-toggle-16" class="slds-checkbox_faux_container" aria-live="assertive">
+                            <span class="slds-checkbox_faux"></span>
+                            <span class="slds-checkbox_on">Privileged</span>
+                            <span class="slds-checkbox_off"></span>
+                        </span>
+                        </label>
+                    </div>
+                  </dl>
+                </div>
+              </div>
             </div>
           </div>
         </article>
       </li>
-
-      <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
-          <article class="slds-tile slds-media slds-card__tile slds-hint-parent">
-            <div class="slds-media__figure">
-              <span class="slds-icon_container slds-icon-standard-contact" title="Description of icon when needed">
-                <svg class="slds-icon slds-icon_small" aria-hidden="true">
-                  <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use>
-                </svg>
-                <span class="slds-assistive-text">Contact</span>
-              </span>
-            </div>
-            <div *ngIf="permissionSet" class="slds-media__body">
-              <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
-                <h2 class="slds-tile__title slds-truncate" title="Related Record Title 1">
-                  <a href="javascript:void(0);">Permission Set Permissions</a>
-                </h2>
-                <div class="slds-shrink-none">
-                  <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="More options">
-                    <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
-                      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
-                    </svg>
-                    <span class="slds-assistive-text">More options</span>
-                  </button>
-                </div>
-              </div>
-              <div class="slds-tile__detail" style="padding-bottom:24px;">
-                <h4 class="slds-tile__title" title="Related Record Title 1">
-                    <a href="javascript:void(0);">User Permissions</a>
-                </h4>
-                <dl *ngFor="let setting of userPermissionsPermissionSetSettings" class="slds-list_horizontal slds-wrap slds-grid_align-spread">
-                  <dt class="slds-item_label slds-text-color_weak" title="First Label">{{setting}}</dt>
-                  <div class="slds-form-element">
-                    <label class="slds-checkbox_toggle slds-grid">
-                      <input type="checkbox" name="checkbox-toggle-16" value="checkbox-toggle-16" aria-describedby="checkbox-toggle-16" checked="" />
-                      <span id="checkbox-toggle-16" class="slds-checkbox_faux_container" aria-live="assertive">
-                        <span class="slds-checkbox_faux"></span>
-                        <span class="slds-checkbox_on">Privileged</span>
-                        <span class="slds-checkbox_off"></span>
-                      </span>
-                    </label>
-                  </div>
-                </dl>
-              </div>
-              <div class="slds-tile__detail">
-                <h4 class="slds-tile__title slds-truncate" title="Related Record Title 1">
-                    <a href="javascript:void(0);">System Permissions</a>
-                </h4>
-                <dl *ngFor="let setting of permissionSetSettings" class="slds-list_horizontal slds-wrap slds-grid_align-spread">
-                    <dt class="slds-item_label slds-text-color_weak" title="First Label">{{setting}}</dt>
-                    <div class="slds-form-element">
-                      <label class="slds-checkbox_toggle slds-grid">
-                        <input type="checkbox" name="checkbox-toggle-16" value="checkbox-toggle-16" aria-describedby="checkbox-toggle-16" checked="" />
-                        <span id="checkbox-toggle-16" class="slds-checkbox_faux_container" aria-live="assertive">
-                          <span class="slds-checkbox_faux"></span>
-                          <span class="slds-checkbox_on">Privileged</span>
-                          <span class="slds-checkbox_off"></span>
-                        </span>
-                      </label>
-                    </div>
-                </dl>
-              </div>
-            </div>
-          </article>
-        </li>
     </ul>
   </div>
-  <footer class="slds-card__footer">
+  <!--<footer class="slds-card__footer">
     <a class="slds-card__footer-action" href="javascript:void(0);">View All
       <span class="slds-assistive-text">Contacts</span>
     </a>
-  </footer>
+  </footer>-->
 </article>

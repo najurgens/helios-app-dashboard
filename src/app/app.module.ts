@@ -27,6 +27,8 @@ import { DataService } from './services/data-service';
 import { LoadingScreenComponent } from './layouts/loading-screen/loading-screen.component';
 import { LoadingScreenInterceptor } from './helpers/loading.interceptor';
 import { NglModule } from 'ng-lightning';
+import { DatatableComponent } from './layouts/datatable/datatable.component';
+import { ObjectSettingsComponent } from './layouts/settings/object-settings/object-settings.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { NglModule } from 'ng-lightning';
     PermissionSetCrudPermissionsComponent,
     LoadingScreenComponent,
     DashboardComponent,
-    SystemSettingsComponent
+    SystemSettingsComponent,
+    ObjectSettingsComponent,
+    DatatableComponent
   ],
   imports: [
     BrowserModule,

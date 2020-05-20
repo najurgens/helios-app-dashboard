@@ -13,10 +13,10 @@ export class DataService {
 
     path:String = 'http://localhost:3001/api/';
 
-    profileSource = new BehaviorSubject([]);
+    private profileSource = new BehaviorSubject({tableData:[], tableHeaders:[]});
     profiles = this.profileSource.asObservable();
 
-    private permissionSetSource = new BehaviorSubject([]);
+    private permissionSetSource = new BehaviorSubject({tableData:[], tableHeaders:[]});
     permissionSets = this.permissionSetSource.asObservable();
 
     private profileCrudSource = new BehaviorSubject([]);
@@ -24,7 +24,6 @@ export class DataService {
 
     private permissionSetCrudSource = new BehaviorSubject([]);
     permissionSetCrud = this.permissionSetCrudSource.asObservable();
-
 
     constructor(private http:HttpClient, private route: ActivatedRoute, private router: Router, private authService: AuthService) {
         console.log("In dataservice constructor, preliminary");
@@ -52,12 +51,15 @@ export class DataService {
         const instanceUrl = JSON.parse(authString).instanceUrl;
         console.log('instanceUrl in getAllData(): ' + instanceUrl);
 
-
         //let authObj = JSON.parse(sessionStorage.getItem('auth'));
         this.getProfiles('profiles', accessToken, instanceUrl);
         this.getPermissions('permission-sets', accessToken, instanceUrl);
         this.getProfileCrud('profile-crud-permissions', accessToken, instanceUrl);
         this.getPermissionSetCrud('permission-set-crud-permissions', accessToken, instanceUrl);
+
+        /*console.log("In dataService, getting all Objects ...");
+        this.getAllSObjects('getAllObjects', accessToken, instanceUrl);
+        console.log("In dataService, after getAllSObjects!");*/
     }
 
     public getPermissions(data, token, url) {
@@ -72,7 +74,14 @@ export class DataService {
             withCredentials: true
         };
         console.log(httpOptions);
-        this.http.get<any>(this.path+data, httpOptions).pipe(catchError(this.handleError<any>('getPermissions',[]))).subscribe(data=>this.permissionSetSource.next(data));
+        this.http.get<any>(this.path+data, httpOptions).pipe(catchError(this.handleError<any>('getPermissions',[]))).subscribe(data=>{
+            for(let i=0; i<data.length; i++) delete data[i].attributes;
+            const permissionData = {
+                tableData: data,
+                tableHeaders: Object.keys(data[0])
+            }
+            this.permissionSetSource.next(permissionData);
+        });
     }
 
     public getProfiles(data, token, url) {
@@ -85,7 +94,16 @@ export class DataService {
             }),
             withCredentials: true
         };
-        this.http.get<any>(this.path+data, httpOptions).pipe(catchError(this.handleError<any>('getProfiles',[]))).subscribe(data=>this.profileSource.next(data));
+        this.http.get<any>(this.path+data, httpOptions).pipe(catchError(this.handleError<any>('getProfiles',[]))).subscribe(data=>{
+            for(let i=0; i<data.length; i++) delete data[i].attributes;
+            const profileData = {
+                tableData: data,
+                tableHeaders: Object.keys(data[0])
+            }
+            this.profileSource.next(profileData);
+        });
+        console.log('done');
+        this.profiles.subscribe(data=>console.log(data));
     }
 
     public getProfileCrud(data, token, url){
@@ -114,26 +132,13 @@ export class DataService {
         this.http.get<any>(this.path+data, httpOptions).pipe(catchError(this.handleError<any>('getPermissionSetCrud',[]))).subscribe(data=>this.permissionSetCrudSource.next(data));
     }
 
-    /*
-    public getAllSObjects(data, token, url) {
-        console.log('TOKEN IN DATA-SERVICE: ' + token);
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type' : 'application/json',
-                Authorization : 'Bearer ' + token,
-                instanceUrl : url
-            }),
-            withCredentials: true
-        };
-        return this.http.get(this.path+data, httpOptions);
-    }
-    */
-
     private handleError<Any>(operation, result?: Any) {
         return (error: Any): Observable<Any> => {
             console.error(`${operation} failed: ` + error);
-            this.router.navigate(['/login']);
             this.authService.isAuth.next(false);
+            sessionStorage.removeItem('auth');
+            this.router.navigate(['/login']);
+
             // call function to display toast here
             // displayReAuthToast();
             return of(result as Any);

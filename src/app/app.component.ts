@@ -33,7 +33,8 @@ export class AppComponent{
     constructor(private authService:AuthService, private router:Router, private location: Location, private authGuardService: AuthGuardService, private dataService: DataService) {
         
         this.currentUrl = this.location.path();
-        this.authService.isAuth.subscribe((auth)=>{console.log('auth in AppComponent: ' + auth); this.showMenus=(this.currentUrl !== "/login" && auth)});
+        console.log('in appComponent, isAuthenticated() = ' + authService.isAuthenticated());
+        this.authService.isAuth.subscribe((auth)=>this.showMenus=(authService.isAuthenticated() || auth));
         //this.showMenus = (this.currentUrl !== "/login");
         /*console.log(this.router.routerState.snapshot.url);
         console.log('isAuthenticated: ' + this.authService.isAuthenticated());
@@ -50,6 +51,10 @@ export class AppComponent{
 
     navigateToSettings() {
         this.router.navigate(['/system-settings']);
+    }
+
+    navigateToObjectSettings() {
+        this.router.navigate(['/object-settings']);
     }
 
     navigateToProfile() {
@@ -75,10 +80,10 @@ export class AppComponent{
     }
 
     ngOnInit(){
-        if(this.authService.isAuthenticated()){
+        /*if(this.authService.isAuthenticated()){
             console.log('pass');
             this.dataService.getAllData();
-        }
+        }*/
     }
 
     ngAfterViewInit(){

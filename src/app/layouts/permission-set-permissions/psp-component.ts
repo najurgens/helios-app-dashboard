@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ExportToCsv } from 'export-to-csv';
-
 import { DataService } from '../../services/data-service';
-import { isEmptyExpression } from '@angular/compiler';
 
 @Component({
   selector: 'permission-set-permissions',
@@ -11,41 +8,23 @@ import { isEmptyExpression } from '@angular/compiler';
 })
 export class PermissionSetPermissionsComponent implements OnInit {
 
-    tableHeaders:Array<String>;
+    tableHeaders:Array<string>;
     permissions:Array<any>;
     tableData:Array<any>;
-    accessToken:String;
-    instanceUrl:String;
+    accessToken:string;
+    instanceUrl:string;
 
-    constructor(
-        private dataService: DataService) 
-        {}
+    constructor(private dataService: DataService){}
 
     ngOnInit() {
         this.dataService.permissionSets.subscribe(data=>{
-            this.tableData = data;
-            for(let i=0; i<this.tableData.length; i++) delete this.tableData[i].attributes;
-            this.tableHeaders = Object.keys(this.tableData[0]);
+            if(data.tableData.length===0) this.dataService.getAllData();
+            else{
+                this.tableData = data.tableData;
+                this.tableHeaders = data.tableHeaders;
+            }
         });
         $('.slds-is-active').removeClass("slds-is-active");
         $("#PermSetPermTab").addClass("slds-is-active");
     }
-
-    createCSV(data){
-        const options = { 
-            fieldSeparator: ',',
-            quoteStrings: '"',
-            decimalSeparator: '.',
-            showLabels: true, 
-            showTitle: true,
-            title: 'Permission Sets and Permissions',
-            useTextFile: false,
-            useBom: true,
-            useKeysAsHeaders: true,
-            // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
-          };
-        const csvExporter = new ExportToCsv(options);
-        csvExporter.generateCsv(this.tableData);
-    }
-
 }

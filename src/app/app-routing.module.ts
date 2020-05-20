@@ -12,12 +12,14 @@ import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { AuthService } from './services/auth-service';
 import { ProfileComponent } from './layouts/profile/profile.component';
 import { SystemSettingsComponent } from './layouts/settings/system-settings/system-settings.component';
+import { ObjectSettingsComponent } from './layouts/settings/object-settings/object-settings.component';
 
 const routes: Routes = [
 
   { path: 'login', component: LoginComponent/*, canActivate: [AuthGuard] */}, 
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'system-settings', component:  SystemSettingsComponent, canActivate: [AuthGuardService] },
+  { path: 'object-settings', component: ObjectSettingsComponent, canActivate: [AuthGuardService]},
   { path: 'profiles-permissions', component: ProfilePermissionsComponent, canActivate: [AuthGuardService] },
   { path: 'permission-set-permissions', component: PermissionSetPermissionsComponent, canActivate: [AuthGuardService] },
   { path: 'profile-crud-permissions', component: ProfileCrudPermissionsComponent, canActivate: [AuthGuardService] },
