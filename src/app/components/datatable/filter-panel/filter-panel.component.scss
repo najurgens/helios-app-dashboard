@@ -5,10 +5,15 @@
 
 .criteriaPosition {
   position: absolute;
-  z-index: 100;
+  z-index: 1000;
 }
 
 .filterGutter {
   padding-right: 0.75rem;
   padding-left: 0.75rem;
+}
+
+.panelHeader {
+  padding: 0.75rem;
+  border-bottom: 1px solid #dddbda;
 }

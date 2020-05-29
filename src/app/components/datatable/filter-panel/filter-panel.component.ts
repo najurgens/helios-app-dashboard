@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 
 @Component({
   selector: "app-filter-panel",
@@ -9,14 +10,23 @@ export class FilterPanelComponent implements OnInit {
   @Input() showFilterPanel: Boolean;
   @Output() showFilterPanelChange: EventEmitter<Boolean> = new EventEmitter();
   @Input() tableHeaders: Array<string>;
+  @Input() filterListener: BehaviorSubject<Array<any>>;
+
+  //current values
   filters: Map<any, any> = new Map();
   filterCount: number = 0;
   filterKeys: Array<number> = [];
   filterValues: Array<any> = [];
+  deleteOffSet: number = 0;
 
-  //Combobox Variables
-  //selectedField: string;
-  //selectedOperator: string = "Equals";
+  //updated values
+  newFilters: Map<any, any> = new Map();
+  newFilterCount: number = 0;
+  newFilterKeys: Array<number> = [];
+  newFilterValues: Array<any> = [];
+  newDeleteOffSet: number = 0;
+
+  filtersUpdated: boolean = false;
 
   constructor() {}
 
@@ -24,24 +34,108 @@ export class FilterPanelComponent implements OnInit {
 
   addFilter() {
     // Add new filter to the map
-    this.filters.set(this.filterCount, {
-      key: this.filterCount,
-      field: "New Filter" + this.filterCount,
+    this.newFilters.set(this.newFilterCount, {
+      key: this.newFilterCount,
+      field: "New Filter" + this.newFilterCount,
       selectedField: this.tableHeaders[0],
       selectedOperator: "Equals",
       inputValue: "",
     });
-    let idVal = this.filterCount;
-    this.filterKeys.push(this.filterCount);
-    this.filterValues = Array.from(this.filters.values());
-    console.log(this.filterValues);
+    let idVal = this.newFilterCount;
+    this.newFilterKeys.push(this.newFilterCount);
+    this.newFilterValues = Array.from(this.newFilters.values());
     this.showCriteria(null, idVal);
-    //this.selectedField = this.tableHeaders[0];
     //initial selects
-    this.selectedFieldItem(null, idVal);
-    this.selectedOperatorItem(null, idVal);
-    this.filterCount++;
-    console.log(this.filterValues[0].inputValue);
+    this.itemSelected(null, idVal);
+    this.newFilterCount++;
+    this.filtersUpdated = true;
+  }
+
+  cancelChanges() {
+    //set new Values back to the current values
+    this.filtersUpdated = false;
+    this.newFilters = new Map(this.filters);
+    this.newFilterCount = this.filterCount;
+    this.newFilterKeys = this.filterKeys;
+    this.newFilterValues = this.filterValues;
+    this.newDeleteOffSet = this.deleteOffSet;
+  }
+
+  itemSelected(event, initialId) {
+    this.filtersUpdated = true;
+    if (!event) {
+      const initialOperatorElement = "#focusEquals" + initialId;
+      const initialFieldElement = "#focus" + this.tableHeaders[0] + initialId;
+      setTimeout(() => {
+        //add initial focus
+        $(initialFieldElement).addClass("slds-is-selected slds-has-focus");
+        $(initialOperatorElement).addClass("slds-is-selected slds-has-focus");
+        // add initial utility check
+        $(initialFieldElement)
+          .find(".slds-icon-utility-check")
+          .addClass("slds-visible")
+          .removeClass("slds-hidden");
+        $(initialOperatorElement)
+          .find(".slds-icon-utility-check")
+          .addClass("slds-visible")
+          .removeClass("slds-hidden");
+      }, 100);
+    } else if (event.currentTarget.type === "field") {
+      const currentCriteriaElement =
+        "#" + event.currentTarget.getAttribute("criteriaid");
+      const currentFocusElement = "#focus" + event.currentTarget.id;
+      const currentCriteriaIndex = currentCriteriaElement.slice(-1);
+      const filter = this.newFilters.get(parseInt(currentCriteriaIndex));
+      const filterValueIndex = this.newFilterValues.indexOf(filter);
+      this.newFilterValues[
+        filterValueIndex
+      ].selectedField = event.currentTarget.getAttribute("val");
+      //remove previous focus
+      $(currentCriteriaElement)
+        .find(".slds-has-focus")
+        .removeClass("slds-is-selected slds-has-focus");
+      // remove previous utility check
+      $(currentCriteriaElement)
+        .find(".slds-icon-utility-check.slds-visible")
+        .removeClass("slds-visible")
+        .addClass("slds-hidden");
+      //add new focus
+      $(currentFocusElement).addClass("slds-is-selected slds-has-focus");
+      // add new utility check
+      $(currentFocusElement)
+        .find(".slds-icon-utility-check")
+        .addClass("slds-visible")
+        .removeClass("slds-hidden");
+    } else if (event.currentTarget.type === "operator") {
+      const currentCriteriaElement =
+        "#" + event.currentTarget.getAttribute("criteriaid");
+      const currentFocusElement = "#focus" + event.currentTarget.id;
+      const currentCriteriaIndex = currentCriteriaElement.slice(-1);
+      const filter = this.newFilters.get(parseInt(currentCriteriaIndex));
+      const filterValueIndex = this.newFilterValues.indexOf(filter);
+      this.newFilterValues[
+        filterValueIndex
+      ].selectedOperator = event.currentTarget.getAttribute("val");
+      //remove previous focus
+      $($(currentCriteriaElement).find(".slds-has-focus")[1]).removeClass(
+        "slds-is-selected slds-has-focus"
+      );
+      // remove previous utility check
+      $(
+        $(currentCriteriaElement).find(
+          ".slds-icon-utility-check.slds-visible"
+        )[1]
+      )
+        .removeClass("slds-visible")
+        .addClass("slds-hidden");
+      //add new focus
+      $(currentFocusElement).addClass("slds-is-selected slds-has-focus");
+      // add new utility check
+      $(currentFocusElement)
+        .find(".slds-icon-utility-check")
+        .addClass("slds-visible")
+        .removeClass("slds-hidden");
+    }
   }
 
   openComboBox(event) {
@@ -68,98 +162,32 @@ export class FilterPanelComponent implements OnInit {
   }
 
   removeAllFilters() {
-    this.filters.clear();
-    this.filterValues = [];
-    this.filterKeys = [];
-    this.filterCount = 0;
+    this.newFilters.clear();
+    this.newFilterValues = [];
+    this.newFilterKeys = [];
+    this.newFilterCount = 0;
+    this.newDeleteOffSet = 0;
+    this.filtersUpdated = true;
   }
 
   removeFilter(key) {
-    this.filters.delete(key);
-    this.filterKeys.splice(key, 1);
-    this.filterValues = Array.from(this.filters.values());
+    this.newFilters.delete(key);
+    this.newFilterKeys.splice(key, 1);
+    this.newFilterValues = Array.from(this.newFilters.values());
+    this.newDeleteOffSet++;
+    this.filtersUpdated = true;
   }
 
-  selectedFieldItem(event, initialId) {
-    if (!event) {
-      const initialField = this.tableHeaders[0];
-      const focusElement = "#focus" + initialField + initialId;
-      setTimeout(() => {
-        //add initial focus
-        $(focusElement).addClass("slds-is-selected slds-has-focus");
-        // add initial utility check
-        $(focusElement)
-          .find(".slds-icon-utility-check")
-          .addClass("slds-visible")
-          .removeClass("slds-hidden");
-      }, 100);
-    } else {
-      const currentCriteriaElement =
-        "#" + event.currentTarget.getAttribute("criteriaid");
-      const currentFocusElement = "#focus" + event.currentTarget.id;
-      const currentCriteriaIndex = currentCriteriaElement.slice(-1);
-      this.filterValues[
-        currentCriteriaIndex
-      ].selectedField = event.currentTarget.getAttribute("val");
-      //remove previous focus
-      $(currentCriteriaElement)
-        .find(".slds-has-focus")
-        .removeClass("slds-is-selected slds-has-focus");
-      // remove previous utility check
-      $(currentCriteriaElement)
-        .find(".slds-icon-utility-check.slds-visible")
-        .removeClass("slds-visible")
-        .addClass("slds-hidden");
-      //add new focus
-      $(currentFocusElement).addClass("slds-is-selected slds-has-focus");
-      // add new utility check
-      $(currentFocusElement)
-        .find(".slds-icon-utility-check")
-        .addClass("slds-visible")
-        .removeClass("slds-hidden");
-    }
-  }
-
-  selectedOperatorItem(event, initialId) {
-    if (!event) {
-      const initialElement = "#focusEquals" + initialId;
-      setTimeout(() => {
-        //add initial focus
-        $(initialElement).addClass("slds-is-selected slds-has-focus");
-        // add initial utility check
-        $(initialElement)
-          .find(".slds-icon-utility-check")
-          .addClass("slds-visible")
-          .removeClass("slds-hidden");
-      }, 100);
-    } else {
-      const currentCriteriaElement =
-        "#" + event.currentTarget.getAttribute("criteriaid");
-      const currentFocusElement = "#focus" + event.currentTarget.id;
-      const currentCriteriaIndex = currentCriteriaElement.slice(-1);
-      this.filterValues[
-        currentCriteriaIndex
-      ].selectedOperator = event.currentTarget.getAttribute("val");
-      //remove previous focus
-      $($(currentCriteriaElement).find(".slds-has-focus")[1]).removeClass(
-        "slds-is-selected slds-has-focus"
-      );
-      // remove previous utility check
-      $(
-        $(currentCriteriaElement).find(
-          ".slds-icon-utility-check.slds-visible"
-        )[1]
-      )
-        .removeClass("slds-visible")
-        .addClass("slds-hidden");
-      //add new focus
-      $(currentFocusElement).addClass("slds-is-selected slds-has-focus");
-      // add new utility check
-      $(currentFocusElement)
-        .find(".slds-icon-utility-check")
-        .addClass("slds-visible")
-        .removeClass("slds-hidden");
-    }
+  saveChanges() {
+    //Save new values to current values
+    console.log(this.newFilters);
+    this.filtersUpdated = false;
+    this.filters = new Map(this.newFilters);
+    this.filterCount = this.newFilterCount;
+    this.filterKeys = this.newFilterKeys;
+    this.filterValues = this.newFilterValues;
+    this.deleteOffSet = this.newDeleteOffSet;
+    this.filterListener.next(this.filterValues);
   }
 
   setFilterCriteriaPosition(index) {
@@ -176,7 +204,7 @@ export class FilterPanelComponent implements OnInit {
     if (!existingFilter) {
       setTimeout(() => {
         this.setFilterCriteriaPosition(index);
-      }, 500);
+      }, 300);
     } else {
       index = $(existingFilter.target).closest("li").attr("id").slice(-1);
       this.setFilterCriteriaPosition(index);

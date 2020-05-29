@@ -170,6 +170,7 @@
           ngl-datatable
           [data]="tableData"
           trackByKey="rank"
+          [loading]="false"
           [(sort)]="sort"
           (sortChange)="onSort($event)"
           (rowClick)="onRowClick($event)"
@@ -178,8 +179,13 @@
             *ngFor="let header of tableHeaders"
             heading="{{ header }}"
             key="{{ header }}"
+            cellClass="test"
             sortable
           ></ngl-datatable-column>
+          <!-- Loading overlay-->
+          <ng-template nglLoadingOverlay>
+            <app-loading-screen></app-loading-screen>
+          </ng-template>
           <!-- No rows overlay-->
           <ng-template nglNoRowsOverlay
             >No data available in table!</ng-template
@@ -191,6 +197,7 @@
       <app-filter-panel
         class="slds-hide"
         [tableHeaders]="tableHeaders"
+        [filterListener]="filterListener"
         [(showFilterPanel)]="showFilterPanel"
       ></app-filter-panel>
     </div>
