@@ -22,7 +22,7 @@
         </span>
       </div>
     </div>
-    <nav class="slds-context-bar__secondary" role="navigation">
+    <nav class="slds-context-bar__secondary" role="navigation" style="display: flex;">
       <ul class="slds-grid">
         <li class="slds-context-bar__item" id="homeTab">
           <a [routerLink]="['/']" class="slds-context-bar__label-action" title="Home">
@@ -30,9 +30,34 @@
             <span class="slds-truncate" title="Home">Home</span>
           </a>
         </li>
+        <li class="slds-context-bar__item" id="ProfilePermTab">
+          <a [routerLink]="['/profiles-permissions']" class="slds-context-bar__label-action" title="Menu Item">
+            <span class="slds-truncate" title="Menu Item">Profile Permissions</span>
+          </a>
+        </li>
+        <li class="slds-context-bar__item" id="PermSetPermTab">
+          <a [routerLink]="['/permission-set-permissions']" class="slds-context-bar__label-action" title="Menu Item">
+            <span class="slds-truncate" title="Menu Item">Permission Set Permissions</span>
+          </a>
+        </li>
+        <li class="slds-context-bar__item" id="ProfileCrudTab">
+          <a [routerLink]="['/profile-crud-permissions']" class="slds-context-bar__label-action" title="Menu Item">
+            <span class="slds-truncate" title="Menu Item">Profile CRUD Access</span>
+          </a>
+        </li>
+        <li class="slds-context-bar__item" id="PermSetCrudTab">
+          <a [routerLink]="['/permission-set-crud-permissions']" class="slds-context-bar__label-action" title="Menu Item">
+            <span class="slds-truncate" title="Menu Item">Permission Set CRUD Access</span>
+          </a>
+        </li>
+        <li class="slds-context-bar__item" id="PermissionComparisonTool">
+          <a [routerLink]="['/permission-comparison-tool']" class="slds-context-bar__label-action" title="Menu Item">
+            <span class="slds-truncate" title="Menu Item">Permission Comparison Tool</span>
+          </a>
+        </li>
         <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click">
           <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
-            <span class="slds-truncate" title="Menu Item">Menu Item</span>
+            <span class="slds-truncate" title="Menu Item">More</span>
           </a>
           <div class="slds-context-bar__icon-action slds-p-left_none">
             <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open menu item submenu">
@@ -72,26 +97,6 @@
               </li>
             </ul>
           </div>
-        </li>
-        <li class="slds-context-bar__item" id="ProfilePermTab">
-          <a [routerLink]="['/profiles-permissions']" class="slds-context-bar__label-action" title="Menu Item">
-            <span class="slds-truncate" title="Menu Item">Profile Permissions</span>
-          </a>
-        </li>
-        <li class="slds-context-bar__item" id="PermSetPermTab">
-          <a [routerLink]="['/permission-set-permissions']" class="slds-context-bar__label-action" title="Menu Item">
-            <span class="slds-truncate" title="Menu Item">Permission Set Permissions</span>
-          </a>
-        </li>
-        <li class="slds-context-bar__item" id="ProfileCrudTab">
-          <a [routerLink]="['/profile-crud-permissions']" class="slds-context-bar__label-action" title="Menu Item">
-            <span class="slds-truncate" title="Menu Item">Profile CRUD Access</span>
-          </a>
-        </li>
-        <li class="slds-context-bar__item" id="PermSetCrudTab">
-          <a [routerLink]="['/permission-set-crud-permissions']" class="slds-context-bar__label-action" title="Menu Item">
-            <span class="slds-truncate" title="Menu Item">Permission Set CRUD Access</span>
-          </a>
         </li>
       </ul>
     </nav>

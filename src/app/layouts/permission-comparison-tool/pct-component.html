@@ -1,0 +1,251 @@
+<div class="slds-page-header mr-2 ml-2 mt-2">
+    <div class="slds-page-header__row">
+      <div class="slds-page-header__col-title">
+        <div class="slds-media">
+          <div class="slds-media__figure">
+            <span class="slds-icon_container slds-icon-standard-opportunity">
+              <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+                <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#opportunity"></use>
+              </svg>
+            </span>
+          </div>
+          <div class="slds-media__body">
+            <h1>
+              <span>Compare Permissions</span>
+            </h1>
+          </div>
+        </div>
+      </div>
+      <div class="slds-page-header__col-actions">
+        <div class="slds-page-header__controls">
+          <div class="slds-page-header__control">
+                <button class="slds-button slds-button_outline-brand">Download CSV</button>
+                <button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true" title="More Actions">
+                  <svg class="slds-button__icon" aria-hidden="true">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                  </svg>
+                  <span class="slds-assistive-text">More Actions</span>
+                </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slds-page-header__row">
+      <div class="slds-page-header__col-meta">
+      </div>
+      <div class="slds-page-header__col-controls">
+        <div class="slds-page-header__controls">
+          <div class="slds-page-header__control">
+            <div class="slds-form-element">
+              <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+                <svg class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                </svg>
+                <input type="text" id="text-input-id-1" placeholder="Search this list..." class="slds-input" />
+              </div>
+            </div>
+          </div>
+          <div class="slds-page-header__control">
+            <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+              <button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="List View Controls">
+                <svg class="slds-button__icon" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#settings"></use>
+                </svg>
+                <svg class="slds-button__icon slds-button__icon_x-small" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                </svg>
+                <span class="slds-assistive-text">List View Controls</span>
+              </button>
+            </div>
+          </div>
+          <div class="slds-page-header__control">
+            <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+              <button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" title="Change view">
+                <svg class="slds-button__icon" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#table"></use>
+                </svg>
+                <svg class="slds-button__icon slds-button__icon_x-small" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                </svg>
+                <span class="slds-assistive-text">Change view</span>
+              </button>
+            </div>
+          </div>
+          <div class="slds-page-header__control">
+            <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Edit List">
+              <svg class="slds-button__icon" aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+              </svg>
+              <span class="slds-assistive-text">Edit List</span>
+            </button>
+          </div>
+          <div class="slds-page-header__control">
+            <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Refresh List">
+              <svg class="slds-button__icon" aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#refresh"></use>
+              </svg>
+              <span class="slds-assistive-text">Refresh List</span>
+            </button>
+          </div>
+          <div class="slds-page-header__control">
+            <ul class="slds-button-group-list">
+              <li>
+                <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Charts">
+                  <svg class="slds-button__icon" aria-hidden="true">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chart"></use>
+                  </svg>
+                  <span class="slds-assistive-text">Charts</span>
+                </button>
+              </li>
+              <li>
+                <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Filters">
+                  <svg class="slds-button__icon" aria-hidden="true">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#filterList"></use>
+                  </svg>
+                  <span class="slds-assistive-text">Filters</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div>
+  <article class="slds-card mr-2 ml-2 mb-2" style="height: 100vh;">
+    <div class="slds-card__body slds-card__body_inner slds-scrollable" style="height: 75vh;">
+      <div class="slds-form-element" role="group" aria-labelledby="picklist-group-label">
+        <h3 id="picklist-group-label" class="slds-form-element__label slds-form-element__legend">Select Your Profile or Permission-Set</h3>
+        <div class="slds-form-element__control">
+          <div class="row">
+            <div class="objects-config">
+              <div class="slds-dueling-list">
+                <div class="slds-assistive-text" id="drag-live-region" aria-live="assertive">Option 5: current position 2 of 2. Press up or down arrows to move within list.</div>
+                <div class="slds-assistive-text" id="option-drag-label"></div>
+                <div class="slds-dueling-list__column">
+                  <span class="slds-form-element__label" id="label-104">Key Objects</span>
+                  <div class="slds-dueling-list__options">
+                    <ul aria-describedby="option-drag-label" aria-labelledby="label-104" aria-multiselectable="true" class="slds-listbox slds-listbox_vertical" role="listbox" id="keyObjects">
+                      <li *ngFor="let obj of Object.keys(assignedObjects)" role="presentation" class="slds-listbox__item" draggable="true">
+                        <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline"  attr.value="{{obj}}" aria-selected="false" draggable="true" role="option" tabindex="-1" (click)="toggleSelected($event); showPermissions($event);">
+                          <span class="slds-media__body">
+                            <span class="slds-truncate" title="Option 4">{{obj}}</span>
+                          </span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="permissions-config">
+              <div class="slds-form-element">
+                <label class="slds-form-element__label" for="combobox-id-4">Key Objects</label>
+                <div class="slds-form-element__control">
+                  <div class="slds-combobox_container slds-size_small">
+                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false" aria-haspopup="listbox" role="combobox" id="keyObjectsPicklist" (click)="togglePicklist();">
+                      <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                        <input type="text" class="slds-input slds-combobox__input slds-has-focus slds-combobox__input-value" id="combobox-id-4" aria-activedescendant="option1" aria-controls="listbox-id-4" autoComplete="off" role="textbox" placeholder="Select an Option"
+                          readonly="" value="" />
+                        <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+                          <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                          </svg>
+                        </span>
+                      </div>
+                      <div id="listbox-id-4" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
+                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                          <li *ngFor="let obj of Object.keys(assignedObjects)" role="presentation" class="slds-listbox__item">
+                            <div attr.value="{{obj}}" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option" (click)="selectPicklistOption($event);">
+                              <span class="slds-media__figure slds-listbox__option-icon">
+                                <span class="slds-icon_container slds-icon-utility-check slds-current-color">
+                                  <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                  </svg>
+                                </span>
+                              </span>
+                              <span class="slds-media__body">
+                                <span class="slds-truncate" title="{{obj}}">
+                                  <span class="slds-assistive-text">Current Selection:</span>{{obj}}</span>
+                              </span>
+                            </div>
+                          </li>
+                          <!--<li role="presentation" class="slds-listbox__item">
+                            <div id="option2" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
+                              <span class="slds-media__figure slds-listbox__option-icon"></span>
+                              <span class="slds-media__body">
+                                <span class="slds-truncate" title="Option B"> Option B</span>
+                              </span>
+                            </div>
+                          </li>
+                          <li role="presentation" class="slds-listbox__item">
+                            <div id="option3" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
+                              <span class="slds-media__figure slds-listbox__option-icon"></span>
+                              <span class="slds-media__body">
+                                <span class="slds-truncate" title="Option ABCDEFGHIJKLMNOPQRSTUVWXYZ"> Option ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
+                              </span>
+                            </div>
+                          </li>-->
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="slds-dueling-list" style="height: 13rem;">
+                <div class="slds-assistive-text" id="drag-live-region" aria-live="assertive">Option 5: current position 2 of 2. Press up or down arrows to move within list.</div>
+                <div class="slds-assistive-text" id="option-drag-label"></div>
+                <div class="slds-dueling-list__column">
+                  <span class="slds-form-element__label" id="label-103">Available Permissions</span>
+                  <div class="slds-dueling-list__options">
+                    <ul id="nonKeyPermissions" aria-describedby="option-drag-label" aria-labelledby="label-103" aria-multiselectable="true" class="slds-listbox slds-listbox_vertical" role="listbox">
+                      <li *ngFor="let permission of availablePermissionsList" role="presentation" class="slds-listbox__item">
+                        <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline" attr.value="{{permission}}" aria-selected="false" draggable="true" role="option" tabindex="0" (click)="toggleSelected($event);">
+                          <span class="slds-media__body">
+                            <span class="slds-truncate" title="{{permission}}">{{permission}}</span>
+                          </span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="slds-dueling-list__column">
+                  <button class="slds-button slds-button_icon slds-button_icon-container" title="Move Selection to Second Category" (click)="shiftPermissionsRight();">
+                    <svg class="slds-button__icon" aria-hidden="true">
+                      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#right"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Move Selection to Second Category</span>
+                  </button>
+                  <button class="slds-button slds-button_icon slds-button_icon-container" title="Move Selection to First Category" (click)="shiftPermissionsLeft();">
+                    <svg class="slds-button__icon" aria-hidden="true">
+                      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#left"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Move Selection to First Category</span>
+                  </button>
+                </div>
+                <div class="slds-dueling-list__column">
+                  <span class="slds-form-element__label" id="label-104">Assigned Permissions</span>
+                  <div class="slds-dueling-list__options">
+                    <ul id="keyPermissions" aria-describedby="option-drag-label" aria-labelledby="label-104" aria-multiselectable="true" class="slds-listbox slds-listbox_vertical" role="listbox">
+                      <li *ngFor="let permission of keyPermissionsList" role="presentation" class="slds-listbox__item" draggable="true">
+                        <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline" attr.value="{{permission}}" aria-selected="false" draggable="true" role="option" tabindex="-1" (click)="toggleSelected($event);">
+                          <span class="slds-media__body">
+                            <span class="slds-truncate" title="{{permission}}">{{permission}}</span>
+                          </span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </article>
+  </div>

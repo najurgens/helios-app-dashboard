@@ -13,6 +13,7 @@ import { AuthService } from './services/auth-service';
 import { ProfileComponent } from './layouts/profile/profile.component';
 import { SystemSettingsComponent } from './layouts/settings/system-settings/system-settings.component';
 import { ObjectSettingsComponent } from './layouts/settings/object-settings/object-settings.component';
+import { PermissionComparisonToolComponent } from './layouts/permission-comparison-tool/pct-component';
 
 const routes: Routes = [
 
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'permission-set-permissions', component: PermissionSetPermissionsComponent, canActivate: [AuthGuardService] },
   { path: 'profile-crud-permissions', component: ProfileCrudPermissionsComponent, canActivate: [AuthGuardService] },
   { path: 'permission-set-crud-permissions', component: PermissionSetCrudPermissionsComponent, canActivate: [AuthGuardService] },
-  { path: '', component: DashboardComponent, canActivate: [AuthGuardService] }
+  { path: '', component: DashboardComponent, canActivate: [AuthGuardService] },
+  { path: 'permission-comparison-tool', component:  PermissionComparisonToolComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({
