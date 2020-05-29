@@ -18,9 +18,9 @@ export class ProfileComponent {
     constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {
 
             const auth = JSON.parse(sessionStorage.getItem('auth'));
-            console.log('IN PROFILE COMPONENT: auth.instanceUrl='+auth.instanceUrl + ', auth.myUser=' + JSON.stringify(auth.currentUser));
+            console.log('IN PROFILE COMPONENT: auth.instanceUrl='+auth.instanceUrl + ', auth.myUser=' + JSON.stringify(auth.user));
             this.myOrg = auth.instanceUrl;
-            this.myUser = auth.currentUser;
+            this.myUser = auth.user;
 
     }
 

@@ -1,0 +1,199 @@
+<div
+  class="slds-brand-band slds-brand-band_medium slds-has-bottom-magnet"
+  style="width: 100vw;"
+>
+  <!--Salesforce Card Body-->
+  <div
+    class="slds-card slds-grid slds-grid_vertical slds-card-boundary mt-2 mr-2 ml-2 mb-2"
+  >
+    <!--Salesforce Page Header-->
+    <div class="slds-page-header">
+      <div class="slds-page-header__row">
+        <div class="slds-page-header__col-title">
+          <div class="slds-media">
+            <div class="slds-media__figure">
+              <span class="slds-icon_container slds-icon-standard-opportunity">
+                <svg
+                  class="slds-icon slds-page-header__icon"
+                  aria-hidden="true"
+                >
+                  <use
+                    xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#opportunity"
+                  ></use>
+                </svg>
+              </span>
+            </div>
+            <div class="slds-media__body">
+              <h1>
+                <span>Profiles and Permissions</span>
+              </h1>
+            </div>
+          </div>
+        </div>
+        <div class="slds-page-header__col-actions">
+          <div class="slds-page-header__controls">
+            <div class="slds-page-header__control">
+              <ul class="slds-button-group-list">
+                <li>
+                  <button
+                    class="slds-button slds-button_neutral"
+                    (click)="createCSV(null)"
+                  >
+                    Download CSV
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="slds-button slds-button_icon slds-button_icon-border-filled"
+                    aria-haspopup="true"
+                    title="More Actions"
+                  >
+                    <svg class="slds-button__icon" aria-hidden="true">
+                      <use
+                        xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"
+                      ></use>
+                    </svg>
+                    <span class="slds-assistive-text">More Actions</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slds-page-header__row">
+        <div class="slds-page-header__col-meta"></div>
+        <div class="slds-page-header__col-controls">
+          <div class="slds-page-header__controls">
+            <div class="slds-page-header__control">
+              <div class="slds-form-element">
+                <div
+                  class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left"
+                >
+                  <svg
+                    class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"
+                    aria-hidden="true"
+                  >
+                    <use
+                      xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"
+                    ></use>
+                  </svg>
+                  <input
+                    type="text"
+                    #dataSearchInput
+                    placeholder="Search this list..."
+                    class="slds-input"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="slds-page-header__control">
+              <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+                <button
+                  class="slds-button slds-button_icon slds-button_icon-more"
+                  aria-haspopup="true"
+                  title="List View Controls"
+                >
+                  <svg class="slds-button__icon" aria-hidden="true">
+                    <use
+                      xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#settings"
+                    ></use>
+                  </svg>
+                  <svg
+                    class="slds-button__icon slds-button__icon_x-small"
+                    aria-hidden="true"
+                  >
+                    <use
+                      xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"
+                    ></use>
+                  </svg>
+                  <span class="slds-assistive-text">List View Controls</span>
+                </button>
+              </div>
+            </div>
+            <div class="slds-page-header__control">
+              <button
+                class="slds-button slds-button_icon slds-button_icon-border-filled"
+                title="Refresh List"
+                (click)="refreshTable()"
+              >
+                <svg class="slds-button__icon" aria-hidden="true">
+                  <use
+                    xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#refresh"
+                  ></use>
+                </svg>
+                <span class="slds-assistive-text">Refresh List</span>
+              </button>
+            </div>
+            <div class="slds-page-header__control">
+              <ul class="slds-button-group-list">
+                <li>
+                  <button
+                    class="slds-button slds-button_icon slds-button_icon-border-filled"
+                    title="Charts"
+                  >
+                    <svg class="slds-button__icon" aria-hidden="true">
+                      <use
+                        xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chart"
+                      ></use>
+                    </svg>
+                    <span class="slds-assistive-text">Charts</span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="slds-button slds-button_icon slds-button_icon-border-filled"
+                    (click)="toggleFilter()"
+                    title="Filters"
+                  >
+                    <svg class="slds-button__icon" aria-hidden="true">
+                      <use
+                        xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#filterList"
+                      ></use>
+                    </svg>
+                    <span class="slds-assistive-text">Filters</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--END of Page Header-->
+
+    <div class="slds-grid slds-no-space" style="height: 100vh;">
+      <!--Salesforce Datatable-->
+      <div class="slds-scrollable fillWidth">
+        <table
+          class="slds-col slds-table_bordered slds-max-medium-table_stacked-horizontal"
+          ngl-datatable
+          [data]="tableData"
+          trackByKey="rank"
+          [(sort)]="sort"
+          (sortChange)="onSort($event)"
+          (rowClick)="onRowClick($event)"
+        >
+          <ngl-datatable-column
+            *ngFor="let header of tableHeaders"
+            heading="{{ header }}"
+            cellClass="test"
+            key="{{ header }}"
+            sortable
+          ></ngl-datatable-column>
+          <!-- No rows overlay-->
+          <ng-template nglNoRowsOverlay
+            >No data available in table!</ng-template
+          >
+        </table>
+      </div>
+
+      <!--Salesforce Filter Panel-->
+      <app-filter-panel
+        class="slds-hide"
+        [tableHeaders]="tableHeaders"
+        [(showFilterPanel)]="showFilterPanel"
+      ></app-filter-panel>
+    </div>
+  </div>
+</div>

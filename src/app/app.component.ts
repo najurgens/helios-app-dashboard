@@ -30,23 +30,19 @@ export class AppComponent{
     userSetupOpen: Boolean = false;
     
 
-    constructor(private authService:AuthService, private router:Router, private location: Location, private authGuardService: AuthGuardService, private dataService: DataService) {
-        
+    constructor(private authService:AuthService, private router:Router, private location: Location, private authGuardService: AuthGuardService, private dataService: DataService) { 
         this.currentUrl = this.location.path();
+        console.log('currentUrl: ' + this.currentUrl);
         console.log('in appComponent, isAuthenticated() = ' + authService.isAuthenticated());
-        this.authService.isAuth.subscribe((auth)=>this.showMenus=(authService.isAuthenticated() || auth));
-        //this.showMenus = (this.currentUrl !== "/login");
-        /*console.log(this.router.routerState.snapshot.url);
-        console.log('isAuthenticated: ' + this.authService.isAuthenticated());
-        router.events.forEach((event) => {
-            if (event instanceof NavigationStart) {
-                console.log('EVENT.RESTORED_STATE='+event);
-                // if auth-guard has redirected to /login, showMenues===false
-                console.log('APP COMPONENT ROUTER NAVIGATION DETECTED: authenticated: ' + this.authService.isAuthenticated());
-                this.showMenus = (event.url !== "/login" && this.authService.isAuthenticated()===true);
-                this.authGuardService.showMenusChange.subscribe((value) => this.showMenus = value);
-            }
-        });*/
+        this.authService.isAuth.subscribe((auth)=>{
+            this.authService.showMenu.subscribe((state)=>{
+                this.showMenus=((authService.isAuthenticated() || auth) && state);
+            });
+        });
+    }
+
+    receiveMenuState($event) {
+        this.showMenus = $event
     }
 
     navigateToSettings() {
@@ -80,10 +76,7 @@ export class AppComponent{
     }
 
     ngOnInit(){
-        /*if(this.authService.isAuthenticated()){
-            console.log('pass');
-            this.dataService.getAllData();
-        }*/
+        console.log('on init APP COMPONENT!');
     }
 
     ngAfterViewInit(){

@@ -19,21 +19,13 @@ export class LoginComponent {
 
     constructor(private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router, private location: Location ) {
 
-        //console.log('AUTH-GUARD refreshToken: ' + AuthService.refreshToken + ', accessToken: ' + AuthService.accessToken + ', user: ' + AuthService.currentUser + ', instanceUrl: ' + AuthService.instanceUrl);
         if (this.authService.isAuthenticated()) {
             this.router.navigate(['/']);// this.location.back();
         }
 
-        /*this.router.events.subscribe((event) => {
-            // see also 
-            console.log('router login val');
-            if (event instanceof NavigationEnd) console.log('event.url: ' + event.url);
-            //console.log(event instanceof NavigationEnd); 
-        });*/
-
-        /*this.router.events.subscribe((event) => {
-            console.log('LOGIN STATE URL: ' + this.state.url);
-        });*/
+        console.log('in loginComponent, isAuthenticated() = ' + authService.isAuthenticated());
+        this.authService.isAuth.subscribe((auth)=>this.showMenusStateChange.emit((authService.isAuthenticated() || auth)));
+        
     }
 
     authenticate(orgType) {

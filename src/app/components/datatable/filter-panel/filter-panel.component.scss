@@ -1,0 +1,14 @@
+.fillHeight {
+  overflow: scroll;
+  height: calc(100% - 250px);
+}
+
+.criteriaPosition {
+  position: absolute;
+  z-index: 100;
+}
+
+.filterGutter {
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
+}

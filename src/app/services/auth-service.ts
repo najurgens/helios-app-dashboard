@@ -12,6 +12,7 @@ export class AuthService {
     public errorText: String;
     private auth:Boolean;
     
+    showMenu = new BehaviorSubject(true);
 
     constructor(private router: Router) {
         console.log('in auth service constructor!!!!');

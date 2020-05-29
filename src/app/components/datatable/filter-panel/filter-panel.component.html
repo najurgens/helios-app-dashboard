@@ -1,0 +1,451 @@
+<!--Salesforce Filter Panel-->
+<div id="filterPanel" class="slds-col" style="height: 100vh;">
+  <div
+    id="test"
+    class="slds-panel slds-size_medium slds-panel_docked slds-panel_docked-right slds-is-open"
+    aria-hidden="false"
+  >
+    <div class="slds-panel__header">
+      <h2
+        class="slds-panel__header-title slds-text-heading_small slds-truncate"
+        title="Filter"
+      >
+        Filter
+      </h2>
+      <button
+        class="slds-button slds-button_icon slds-button_icon-small slds-panel__close"
+        title="Collapse Filter"
+        (click)="toggleFilter()"
+      >
+        <svg class="slds-button__icon" aria-hidden="true">
+          <use
+            xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"
+          ></use>
+        </svg>
+        <span class="slds-assistive-text">Collapse Filter</span>
+      </button>
+    </div>
+    <div id="filterList" class="slds-panel__body fillHeight">
+      <div class="slds-filters">
+        <h3
+          *ngIf="filterValues.length > 0"
+          class="slds-text-body_small slds-m-vertical_x-small"
+        >
+          Matching all these filters
+        </h3>
+        <ol class="slds-list_vertical slds-list_vertical-space">
+          <li
+            *ngFor="let filter of filterValues; index as i"
+            id="filter{{ filterKeys[i] }}"
+            class="slds-item slds-hint-parent"
+          >
+            <div
+              class="slds-filters__item slds-grid slds-grid_vertical-align-center"
+            >
+              <button
+                class="slds-button_reset slds-grow slds-has-blur-focus"
+                (click)="showCriteria($event, null)"
+              >
+                <span class="slds-assistive-text">Edit filter:</span>
+                <span class="slds-show slds-text-body_small">{{
+                  filterValues[i].selectedField
+                }}</span>
+                <span class="slds-show">{{
+                  filterValues[i].selectedOperator +
+                    " " +
+                    filterValues[i].inputValue
+                }}</span>
+              </button>
+              <button
+                class="slds-button slds-button_icon slds-button_icon slds-button_icon-small"
+                title="Remove equals THIS WEEK"
+                (click)="removeFilter(filter.key)"
+              >
+                <svg
+                  class="slds-button__icon slds-button__icon_hint"
+                  aria-hidden="true"
+                >
+                  <use
+                    xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#delete"
+                  ></use>
+                </svg>
+                <span class="slds-assistive-text"
+                  >Remove filter: Created Date equals THIS WEEK</span
+                >
+              </button>
+            </div>
+          </li>
+        </ol>
+        <div class="slds-filters__footer slds-grid slds-shrink-none">
+          <button
+            class="slds-button_reset slds-text-link"
+            (click)="addFilter()"
+          >
+            Add Filter
+          </button>
+          <button
+            class="slds-button_reset slds-text-link slds-col_bump-left"
+            (click)="removeAllFilters()"
+          >
+            Remove All
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Criteria panel-->
+
+<section
+  *ngFor="let filterCriteria of filterValues; index as i"
+  id="filterCriteria{{ filterKeys[i] }}"
+  aria-label="Dialog title"
+  aria-describedby="popover-body-id"
+  class="slds-popover slds-nubbin_right criteriaPosition"
+  role="dialog"
+>
+  <div class="slds-expression">
+    <ul>
+      <li class="slds-expression__row">
+        <fieldset>
+          <div class="slds-grid_vertical">
+            <div class="slds-col filterGutter">
+              <div class="slds-form-element">
+                <label class="slds-form-element__label" for="combobox-id-473"
+                  >Field</label
+                >
+                <div class="slds-form-element__control">
+                  <div class="slds-combobox_container">
+                    <div
+                      class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click"
+                      id="fieldCB{{ filterKeys[i] }}"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      role="combobox"
+                    >
+                      <div
+                        class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+                        role="none"
+                      >
+                        <input
+                          type="text"
+                          class="slds-input slds-combobox__input slds-combobox__input-value"
+                          id="combobox-fields{{ filterKeys[i] }}"
+                          aria-controls="listbox-id-455"
+                          autoComplete="off"
+                          role="textbox"
+                          placeholder="Select an Option"
+                          readonly=""
+                          value="{{ filterValues[i].selectedField }}"
+                          (click)="openComboBox($event)"
+                        />
+                        <span
+                          class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right"
+                        >
+                          <svg
+                            class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default"
+                            aria-hidden="true"
+                          >
+                            <use
+                              xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"
+                            ></use>
+                          </svg>
+                        </span>
+                      </div>
+                      <div
+                        id="listbox-id-455"
+                        class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
+                        role="listbox"
+                      >
+                        <ul
+                          class="slds-listbox slds-listbox_vertical"
+                          role="presentation"
+                        >
+                          <li
+                            *ngFor="let header of tableHeaders"
+                            id="{{ header + filterKeys[i] }}"
+                            attr.val="{{ header }}"
+                            attr.criteriaid="filterCriteria{{ filterKeys[i] }}"
+                            role="presentation"
+                            class="slds-listbox__item"
+                            (click)="selectedFieldItem($event, null)"
+                          >
+                            <div
+                              aria-selected="true"
+                              id="focus{{ header + filterKeys[i] }}"
+                              class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                              role="option"
+                            >
+                              <span
+                                class="slds-media__figure slds-listbox__option-icon"
+                              >
+                                <span
+                                  class="slds-icon_container slds-icon-utility-check slds-current-color slds-hidden"
+                                >
+                                  <svg
+                                    class="slds-icon slds-icon_x-small"
+                                    aria-hidden="true"
+                                  >
+                                    <use
+                                      xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"
+                                    ></use>
+                                  </svg>
+                                </span>
+                              </span>
+                              <span class="slds-media__body">
+                                <span
+                                  class="slds-truncate"
+                                  title="{{ header }}"
+                                >
+                                  <span class="slds-assistive-text"
+                                    >Current Selection:</span
+                                  >
+                                  {{ header }}</span
+                                >
+                              </span>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slds-col slds-grow-none filterGutter">
+              <div class="slds-form-element">
+                <label class="slds-form-element__label" for="combobox-id-474"
+                  >Operator</label
+                >
+                <div class="slds-form-element__control">
+                  <div class="slds-combobox_container">
+                    <div
+                      class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click"
+                      id="operatorCB{{ filterKeys[i] }}"
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      role="combobox"
+                    >
+                      <div
+                        class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+                        role="none"
+                      >
+                        <input
+                          type="text"
+                          class="slds-input slds-combobox__input"
+                          id="combobox-operators{{ filterKeys[i] }}"
+                          aria-controls="listbox-id-456"
+                          autoComplete="off"
+                          role="textbox"
+                          placeholder="Select an Option"
+                          readonly=""
+                          value="{{ filterValues[i].selectedOperator }}"
+                          (click)="openComboBox($event)"
+                        />
+                        <span
+                          class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right"
+                        >
+                          <svg
+                            class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default"
+                            aria-hidden="true"
+                          >
+                            <use
+                              xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"
+                            ></use>
+                          </svg>
+                        </span>
+                      </div>
+                      <div
+                        id="listbox-id-456"
+                        class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
+                        role="listbox"
+                      >
+                        <ul
+                          class="slds-listbox slds-listbox_vertical"
+                          role="presentation"
+                        >
+                          <li
+                            id="Equals{{ filterKeys[i] }}"
+                            role="presentation"
+                            class="slds-listbox__item"
+                            val="Equals"
+                            attr.criteriaid="filterCriteria{{ filterKeys[i] }}"
+                            (click)="selectedOperatorItem($event, null)"
+                          >
+                            <div
+                              id="focusEquals{{ filterKeys[i] }}"
+                              class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                              role="option"
+                            >
+                              <span
+                                class="slds-media__figure slds-listbox__option-icon"
+                              >
+                                <span
+                                  class="slds-icon_container slds-icon-utility-check slds-current-color slds-hidden"
+                                >
+                                  <svg
+                                    class="slds-icon slds-icon_x-small"
+                                    aria-hidden="true"
+                                  >
+                                    <use
+                                      xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"
+                                    ></use>
+                                  </svg>
+                                </span>
+                              </span>
+                              <span class="slds-media__body">
+                                <span class="slds-truncate" title="Equals">
+                                  Equals</span
+                                >
+                              </span>
+                            </div>
+                          </li>
+                          <li
+                            id="DoesNotEqual{{ filterKeys[i] }}"
+                            role="presentation"
+                            class="slds-listbox__item"
+                            val="Does Not Equal"
+                            attr.criteriaid="filterCriteria{{ filterKeys[i] }}"
+                            (click)="selectedOperatorItem($event, null)"
+                          >
+                            <div
+                              id="focusDoesNotEqual{{ filterKeys[i] }}"
+                              class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                              role="option"
+                            >
+                              <span
+                                class="slds-media__figure slds-listbox__option-icon"
+                              >
+                                <span
+                                  class="slds-icon_container slds-icon-utility-check slds-current-color slds-hidden"
+                                >
+                                  <svg
+                                    class="slds-icon slds-icon_x-small"
+                                    aria-hidden="true"
+                                  >
+                                    <use
+                                      xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"
+                                    ></use>
+                                  </svg>
+                                </span>
+                              </span>
+                              <span class="slds-media__body">
+                                <span
+                                  class="slds-truncate"
+                                  title="Does Not Equal"
+                                >
+                                  Does Not Equal</span
+                                >
+                              </span>
+                            </div>
+                          </li>
+                          <li
+                            id="GreaterThan{{ filterKeys[i] }}"
+                            role="presentation"
+                            class="slds-listbox__item"
+                            val="Greater Than"
+                            attr.criteriaid="filterCriteria{{ filterKeys[i] }}"
+                            (click)="selectedOperatorItem($event, null)"
+                          >
+                            <div
+                              id="focusGreaterThan{{ filterKeys[i] }}"
+                              class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                              role="option"
+                            >
+                              <span
+                                class="slds-media__figure slds-listbox__option-icon"
+                              >
+                                <span
+                                  class="slds-icon_container slds-icon-utility-check slds-current-color slds-hidden"
+                                >
+                                  <svg
+                                    class="slds-icon slds-icon_x-small"
+                                    aria-hidden="true"
+                                  >
+                                    <use
+                                      xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"
+                                    ></use>
+                                  </svg>
+                                </span>
+                              </span>
+                              <span class="slds-media__body">
+                                <span
+                                  class="slds-truncate"
+                                  title="Greater Than"
+                                >
+                                  Greater Than</span
+                                >
+                              </span>
+                            </div>
+                          </li>
+                          <li
+                            id="LessThan{{ filterKeys[i] }}"
+                            role="presentation"
+                            class="slds-listbox__item"
+                            val="Less Than"
+                            attr.criteriaid="filterCriteria{{ filterKeys[i] }}"
+                            (click)="selectedOperatorItem($event, null)"
+                          >
+                            <div
+                              id="focusLessThan{{ filterKeys[i] }}"
+                              class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                              role="option"
+                            >
+                              <span
+                                class="slds-media__figure slds-listbox__option-icon"
+                              >
+                                <span
+                                  class="slds-icon_container slds-icon-utility-check slds-current-color slds-hidden"
+                                >
+                                  <svg
+                                    class="slds-icon slds-icon_x-small"
+                                    aria-hidden="true"
+                                  >
+                                    <use
+                                      xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"
+                                    ></use>
+                                  </svg>
+                                </span>
+                              </span>
+                              <span class="slds-media__body">
+                                <span class="slds-truncate" title="Less Than">
+                                  Less Than</span
+                                >
+                              </span>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slds-col filterGutter">
+              <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-170"
+                  >Value</label
+                >
+                <div class="slds-form-element__control">
+                  <input
+                    type="text"
+                    id="text-input-id-170"
+                    class="slds-input"
+                    [(ngModel)]="filterValues[i].inputValue"
+                    value="{{ filterValues[i].inputValue }}"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="slds-col slds-grow-none">
+              <div class="slds-form-element">
+                <span class="slds-form-element__label"> </span>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </li>
+    </ul>
+  </div>
+</section>

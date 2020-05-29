@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data-service';
+import { ToastComponent } from '../../components/toast/toast.component';
 
 @Component({
   selector: 'profiles-permissions',
@@ -27,5 +28,6 @@ export class ProfilePermissionsComponent implements OnInit {
         });
         $('.slds-is-active').removeClass("slds-is-active");
         $("#ProfilePermTab").addClass("slds-is-active");
+
     }
 }

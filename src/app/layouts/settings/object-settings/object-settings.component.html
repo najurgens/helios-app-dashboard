@@ -114,6 +114,7 @@
   </div>
 </div>
 
+<div *ngIf="assignedObjects">
 <article class="slds-card mr-2 ml-2 mb-2" style="height: 100vh;">
   <div class="slds-card__body slds-card__body_inner slds-scrollable" style="height: 75vh;">
     <div class="slds-form-element" role="group" aria-labelledby="picklist-group-label">
@@ -175,7 +176,7 @@
               <label class="slds-form-element__label" for="combobox-id-4">Key Objects</label>
               <div class="slds-form-element__control">
                 <div class="slds-combobox_container slds-size_small">
-                  <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox" id="keyObjectsPicklist" (click)="togglePicklist();">
+                  <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false" aria-haspopup="listbox" role="combobox" id="keyObjectsPicklist" (click)="togglePicklist();">
                     <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
                       <input type="text" class="slds-input slds-combobox__input slds-has-focus slds-combobox__input-value" id="combobox-id-4" aria-activedescendant="option1" aria-controls="listbox-id-4" autoComplete="off" role="textbox" placeholder="Select an Option"
                         readonly="" value="" />
@@ -188,7 +189,7 @@
                     <div id="listbox-id-4" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
                       <ul class="slds-listbox slds-listbox_vertical" role="presentation">
                         <li *ngFor="let obj of Object.keys(assignedObjects)" role="presentation" class="slds-listbox__item">
-                          <div attr.value="{{obj}}" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-is-selected" role="option" (click)="selectPicklistOption($event);">
+                          <div attr.value="{{obj}}" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option" (click)="selectPicklistOption($event);">
                             <span class="slds-media__figure slds-listbox__option-icon">
                               <span class="slds-icon_container slds-icon-utility-check slds-current-color">
                                 <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
@@ -278,3 +279,4 @@
     </div>
   </div>
 </article>
+</div>

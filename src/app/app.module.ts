@@ -27,8 +27,11 @@ import { DataService } from './services/data-service';
 import { LoadingScreenComponent } from './layouts/loading-screen/loading-screen.component';
 import { LoadingScreenInterceptor } from './helpers/loading.interceptor';
 import { NglModule } from 'ng-lightning';
-import { DatatableComponent } from './layouts/datatable/datatable.component';
+import { DatatableComponent } from "./components/datatable/datatable.component";
 import { ObjectSettingsComponent } from './layouts/settings/object-settings/object-settings.component';
+
+import { FilterPanelComponent } from "./components/datatable/filter-panel/filter-panel.component";
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,9 @@ import { ObjectSettingsComponent } from './layouts/settings/object-settings/obje
     DashboardComponent,
     SystemSettingsComponent,
     ObjectSettingsComponent,
-    DatatableComponent
+    DatatableComponent,
+    FilterPanelComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
@@ -63,11 +68,11 @@ import { ObjectSettingsComponent } from './layouts/settings/object-settings/obje
   ],
   providers: [
     {
-    provide: HTTP_INTERCEPTORS,
-    useClass: LoadingScreenInterceptor,
-    multi: true
-    }
-],
-  bootstrap: [AppComponent]
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingScreenInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

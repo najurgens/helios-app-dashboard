@@ -62,6 +62,24 @@ export class AccountService {
         return this.http.get<any>(this.path+data+'/'+orgId, httpOptions).pipe(catchError(this.handleError<any>('getAccount',[])));
     }
 
+    public refreshAccountInformation(data, token, url, orgId) {
+        const authGov = JSON.parse(JSON.parse(sessionStorage.getItem('auth')));
+        this.getAccount('account', authGov.authGovAccessToken, authGov.authGovInstanceUrl, authGov.user.organizationId).subscribe((account)=>{
+            if (account) {
+
+                // if valid account returned, populate key settings
+                if (JSON.stringify(account)!=='[]') {
+                    this.accountSource.next(account);
+                    this.accountSource.subscribe((acct)=>{
+                        console.log('acct already created: ' + JSON.stringify(acct));
+                        this.keyPermissionsSource.next(JSON.parse(acct[0].Key_Permissions__c));
+                        this.keyObjectsSource.next(JSON.parse(acct[0].Key_Objects__c));
+                    });
+                }
+            }
+        });
+    }
+
     /*
     public createAccount(data, token, url, body) {
         console.log('Within Account-SERVICE, createAccount');
@@ -119,6 +137,19 @@ export class AccountService {
         return this.http.get(this.path+data, httpOptions).pipe(catchError(this.handleError<any>('getSettings',[])));
     }
 
+    public getObjectSettings(data, token, url): Observable<Object> {
+        console.log('Within Account-service, getObjectSettings');
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type':'application/json',
+                Authorization: 'Bearer ' + token,
+                instanceUrl: url
+            }),
+            withCredentials: true
+        };
+        return this.http.get(this.path+data, httpOptions).pipe(catchError(this.handleError<any>('getObjectSettings',[])));
+    }
+
     /*
     public getOrgInfo(data, token, url) {
         console.log('Within account-service, getOrgInfo, data=' + data + ', token=' + token + ', url='+url);
@@ -153,7 +184,8 @@ export class AccountService {
             this.authService.isAuth.next(false);
             sessionStorage.removeItem('auth');
             this.router.navigate(['/login']);
-
+            console.log(this.authService.isAuth.subscribe((auth)=>console.log('within handleError, after rejection, auth = ' + auth)));
+            this.authService.showMenu.next(false);
             // call function to display toast here
             // displayReAuthToast();
             return of(result as Any);

@@ -25,7 +25,6 @@ const routes: Routes = [
   { path: 'profile-crud-permissions', component: ProfileCrudPermissionsComponent, canActivate: [AuthGuardService] },
   { path: 'permission-set-crud-permissions', component: PermissionSetCrudPermissionsComponent, canActivate: [AuthGuardService] },
   { path: '', component: DashboardComponent, canActivate: [AuthGuardService] }
-  // UPDATE: { DASHBOARD COMPONENT '' HOME PATH } 
 ];
 
 @NgModule({

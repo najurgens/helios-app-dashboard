@@ -1,29 +1,4 @@
-<!--<mat-toolbar *ngIf="showMenus" color="primary">
-      <div class="col-sm-4 col-lg-4 col-md-4">
-        <span class = "toolbar-item-menu"><mat-icon (click)="opened=!opened">menu</mat-icon></span>
-      </div>
-  
-      <div class="col-sm-4 col-lg-4 col-md-4" style="text-align:center">
-        <span class="center-logo" style="display:inline-block"><img src="../assets/images/helios.png" style="width:72px;height:72px;"></span>
-      </div>
-  
-      <div class="col-sm-4 col-lg-4 col-md-4" style="text-align:right">
-        <span class="toolbar-item-menu" style="display:inline-block;padding:10px;">
-          <mat-icon (click)="navigateToSettings()">settings</mat-icon>
-        </span>
-        <span class="toolbar-item-menu" style="display:inline-block;padding:10px">
-
-        <mat-icon>account_circle</mat-icon>
-          <mat-icon (click)="navigateToProfile()">account_circle</mat-icon>
-        </span>
-
-        <button mat-icon-button [matMenuTriggerFor]="appMenu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-
-      </div>
-  </mat-toolbar>-->
-  <div *ngIf="showMenus" class="slds-context-bar">
+  <div *ngIf="showMenus" (showMenusStateChange)="receiveMenuState($event)" class="slds-context-bar">
     <div class="slds-context-bar__primary">
       <div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-no-hover">
         <div class="slds-context-bar__icon-action">

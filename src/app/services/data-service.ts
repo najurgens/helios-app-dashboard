@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { AuthService } from './auth-service';
+import { AccountService } from './account-service';
 
 @Injectable({
     providedIn:'root'
@@ -25,41 +26,26 @@ export class DataService {
     private permissionSetCrudSource = new BehaviorSubject([]);
     permissionSetCrud = this.permissionSetCrudSource.asObservable();
 
-    constructor(private http:HttpClient, private route: ActivatedRoute, private router: Router, private authService: AuthService) {
-        console.log("In dataservice constructor, preliminary");
-        /*this.route.queryParams.subscribe(params => {
-            if (JSON.stringify(params)!=='{}') {
-                const allParams = JSON.parse(params.auth);
-                const authObj = { currentUser: allParams['user'], accessToken: allParams['accessToken'], refreshToken: allParams['refreshToken'], instanceUrl: allParams['instanceUrl'] };
-                sessionStorage.setItem('auth', JSON.stringify(authObj));
-                console.log("In dataservice constructor");
-                
-                //this.profiles.subscribe(data=>console.log(data));
-            }
-            this.getAllData();
-        });*/
-        
-        //this.getAllData();
+    constructor(private http:HttpClient, private route: ActivatedRoute, private router: Router, private authService: AuthService, private accountService: AccountService) {
+    
     }
 
     public getAllData(){
         const authString = JSON.parse(sessionStorage.getItem('auth'));
-        console.log('in getAllData from dataService, authString = ' + authString);
+        //console.log('in getAllData from dataService, authString = ' + authString);
 
         const accessToken = JSON.parse(authString).accessToken;
-        console.log('accessToken in getAllData(): ' + accessToken);
+        //console.log('accessToken in getAllData(): ' + accessToken);
         const instanceUrl = JSON.parse(authString).instanceUrl;
-        console.log('instanceUrl in getAllData(): ' + instanceUrl);
+        //console.log('instanceUrl in getAllData(): ' + instanceUrl);
 
         //let authObj = JSON.parse(sessionStorage.getItem('auth'));
         this.getProfiles('profiles', accessToken, instanceUrl);
         this.getPermissions('permission-sets', accessToken, instanceUrl);
         this.getProfileCrud('profile-crud-permissions', accessToken, instanceUrl);
         this.getPermissionSetCrud('permission-set-crud-permissions', accessToken, instanceUrl);
+        this.accountService.refreshAccountInformation('account', authString.authGovAccessToken, authString.authGovInstanceUrl, JSON.parse(authString).user.organizationId);
 
-        /*console.log("In dataService, getting all Objects ...");
-        this.getAllSObjects('getAllObjects', accessToken, instanceUrl);
-        console.log("In dataService, after getAllSObjects!");*/
     }
 
     public getPermissions(data, token, url) {
@@ -102,8 +88,7 @@ export class DataService {
             }
             this.profileSource.next(profileData);
         });
-        console.log('done');
-        this.profiles.subscribe(data=>console.log(data));
+
     }
 
     public getProfileCrud(data, token, url){
@@ -137,6 +122,7 @@ export class DataService {
             console.error(`${operation} failed: ` + error);
             this.authService.isAuth.next(false);
             sessionStorage.removeItem('auth');
+            this.authService.showMenu.next(false);
             this.router.navigate(['/login']);
 
             // call function to display toast here
