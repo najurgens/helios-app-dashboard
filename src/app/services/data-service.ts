@@ -8,16 +8,21 @@ import { AuthService } from './auth-service';
 import { AccountService } from './account-service';
 
 @Injectable({
-    providedIn:'root'
+  providedIn: "root",
 })
 export class DataService {
+    path: String = "http://localhost:3001/api/";
 
-    path:String = 'http://localhost:3001/api/';
-
-    private profileSource = new BehaviorSubject({tableData:[], tableHeaders:[]});
+    private profileSource = new BehaviorSubject({
+        tableData: [],
+        tableHeaders: [],
+    });
     profiles = this.profileSource.asObservable();
 
-    private permissionSetSource = new BehaviorSubject({tableData:[], tableHeaders:[]});
+    private permissionSetSource = new BehaviorSubject({
+        tableData: [],
+        tableHeaders: [],
+    });
     permissionSets = this.permissionSetSource.asObservable();
 
     private profileCrudSource = new BehaviorSubject([]);
@@ -25,6 +30,7 @@ export class DataService {
 
     private permissionSetCrudSource = new BehaviorSubject([]);
     permissionSetCrud = this.permissionSetCrudSource.asObservable();
+
 
     constructor(private http:HttpClient, private route: ActivatedRoute, private router: Router, private authService: AuthService, private accountService: AccountService) {
     
@@ -88,7 +94,6 @@ export class DataService {
             }
             this.profileSource.next(profileData);
         });
-
     }
 
     public getProfileCrud(data, token, url){

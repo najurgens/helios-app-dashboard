@@ -118,31 +118,10 @@
       <div class="slds-form-element" role="group" aria-labelledby="picklist-group-label">
         <h3 id="picklist-group-label" class="slds-form-element__label slds-form-element__legend">Select Your Profile or Permission-Set</h3>
         <div class="slds-form-element__control">
-          <div class="row">
-            <div class="objects-config">
-              <div class="slds-dueling-list">
-                <div class="slds-assistive-text" id="drag-live-region" aria-live="assertive">Option 5: current position 2 of 2. Press up or down arrows to move within list.</div>
-                <div class="slds-assistive-text" id="option-drag-label"></div>
-                <div class="slds-dueling-list__column">
-                  <span class="slds-form-element__label" id="label-104">Key Objects</span>
-                  <div class="slds-dueling-list__options">
-                    <ul aria-describedby="option-drag-label" aria-labelledby="label-104" aria-multiselectable="true" class="slds-listbox slds-listbox_vertical" role="listbox" id="keyObjects">
-                      <li *ngFor="let obj of Object.keys(assignedObjects)" role="presentation" class="slds-listbox__item" draggable="true">
-                        <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline"  attr.value="{{obj}}" aria-selected="false" draggable="true" role="option" tabindex="-1" (click)="toggleSelected($event); showPermissions($event);">
-                          <span class="slds-media__body">
-                            <span class="slds-truncate" title="Option 4">{{obj}}</span>
-                          </span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
             <div class="permissions-config">
+            <div class="row">
               <div class="slds-form-element">
-                <label class="slds-form-element__label" for="combobox-id-4">Key Objects</label>
+                <label class="slds-form-element__label" for="combobox-id-4">Permission Type</label>
                 <div class="slds-form-element__control">
                   <div class="slds-combobox_container slds-size_small">
                     <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false" aria-haspopup="listbox" role="combobox" id="keyObjectsPicklist" (click)="togglePicklist();">
@@ -172,46 +151,32 @@
                               </span>
                             </div>
                           </li>
-                          <!--<li role="presentation" class="slds-listbox__item">
-                            <div id="option2" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
-                              <span class="slds-media__figure slds-listbox__option-icon"></span>
-                              <span class="slds-media__body">
-                                <span class="slds-truncate" title="Option B"> Option B</span>
-                              </span>
-                            </div>
-                          </li>
-                          <li role="presentation" class="slds-listbox__item">
-                            <div id="option3" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
-                              <span class="slds-media__figure slds-listbox__option-icon"></span>
-                              <span class="slds-media__body">
-                                <span class="slds-truncate" title="Option ABCDEFGHIJKLMNOPQRSTUVWXYZ"> Option ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
-                              </span>
-                            </div>
-                          </li>-->
                         </ul>
                       </div>
+                    </div>
+                  </div>
+                  <div class="slds-dueling-list__column">
+                    <span class="slds-form-element__label" id="label-103">Available Permissions</span>
+                    <div class="slds-dueling-list__options">
+                      <ul id="nonKeyPermissions" aria-describedby="option-drag-label" aria-labelledby="label-103" aria-multiselectable="true" class="slds-listbox slds-listbox_vertical" role="listbox">
+                        <li *ngFor="let permission of availablePermissionsList" role="presentation" class="slds-listbox__item">
+                          <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline" attr.value="{{permission}}" aria-selected="false" draggable="true" role="option" tabindex="0" (click)="toggleSelected($event);">
+                            <span class="slds-media__body">
+                              <span class="slds-truncate" title="{{permission}}">{{permission}}</span>
+                            </span>
+                          </div>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
               </div>
   
+              <div class="objects-config">
               <div class="slds-dueling-list" style="height: 13rem;">
                 <div class="slds-assistive-text" id="drag-live-region" aria-live="assertive">Option 5: current position 2 of 2. Press up or down arrows to move within list.</div>
                 <div class="slds-assistive-text" id="option-drag-label"></div>
-                <div class="slds-dueling-list__column">
-                  <span class="slds-form-element__label" id="label-103">Available Permissions</span>
-                  <div class="slds-dueling-list__options">
-                    <ul id="nonKeyPermissions" aria-describedby="option-drag-label" aria-labelledby="label-103" aria-multiselectable="true" class="slds-listbox slds-listbox_vertical" role="listbox">
-                      <li *ngFor="let permission of availablePermissionsList" role="presentation" class="slds-listbox__item">
-                        <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline" attr.value="{{permission}}" aria-selected="false" draggable="true" role="option" tabindex="0" (click)="toggleSelected($event);">
-                          <span class="slds-media__body">
-                            <span class="slds-truncate" title="{{permission}}">{{permission}}</span>
-                          </span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                
                 <div class="slds-dueling-list__column">
                   <button class="slds-button slds-button_icon slds-button_icon-container" title="Move Selection to Second Category" (click)="shiftPermissionsRight();">
                     <svg class="slds-button__icon" aria-hidden="true">
@@ -219,31 +184,31 @@
                     </svg>
                     <span class="slds-assistive-text">Move Selection to Second Category</span>
                   </button>
-                  <button class="slds-button slds-button_icon slds-button_icon-container" title="Move Selection to First Category" (click)="shiftPermissionsLeft();">
-                    <svg class="slds-button__icon" aria-hidden="true">
-                      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#left"></use>
-                    </svg>
-                    <span class="slds-assistive-text">Move Selection to First Category</span>
-                  </button>
                 </div>
-                <div class="slds-dueling-list__column">
-                  <span class="slds-form-element__label" id="label-104">Assigned Permissions</span>
-                  <div class="slds-dueling-list__options">
-                    <ul id="keyPermissions" aria-describedby="option-drag-label" aria-labelledby="label-104" aria-multiselectable="true" class="slds-listbox slds-listbox_vertical" role="listbox">
-                      <li *ngFor="let permission of keyPermissionsList" role="presentation" class="slds-listbox__item" draggable="true">
-                        <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline" attr.value="{{permission}}" aria-selected="false" draggable="true" role="option" tabindex="-1" (click)="toggleSelected($event);">
-                          <span class="slds-media__body">
-                            <span class="slds-truncate" title="{{permission}}">{{permission}}</span>
-                          </span>
+                <div class="objects-config">
+                    <div class="slds-dueling-list">
+                      <div class="slds-assistive-text" id="drag-live-region" aria-live="assertive">Option 5: current position 2 of 2. Press up or down arrows to move within list.</div>
+                      <div class="slds-assistive-text" id="option-drag-label"></div>
+                      <div class="slds-dueling-list__column">
+                        <span class="slds-form-element__label" id="label-104">Similarity Percentages</span>
+                        <div class="slds-dueling-list__options long-list">
+                          <ul aria-describedby="option-drag-label" aria-labelledby="label-104" aria-multiselectable="true" class="slds-listbox slds-listbox_vertical" role="listbox" id="keyObjects">
+                            <li *ngFor="let obj of Object.keys(assignedObjects)" role="presentation" class="slds-listbox__item" draggable="true">
+                              <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_inline"  attr.value="{{obj}}" aria-selected="false" draggable="true" role="option" tabindex="-1" (click)="toggleSelected($event); showPermissions($event);">
+                                <span class="slds-media__body">
+                                  <span class="slds-truncate" title="Option 4">{{obj}}</span>
+                                </span>
+                              </div>
+                            </li>
+                          </ul>
                         </div>
-                      </li>
-                    </ul>
+                      </div>
+                    </div>
                   </div>
-                </div>
+              </div>
               </div>
             </div>
           </div>
-  
         </div>
       </div>
     </div>
