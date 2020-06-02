@@ -9,7 +9,7 @@ import { DataService } from "../../services/data-service";
 export class PermissionSetCrudPermissionsComponent implements OnInit {
   tableHeaders: Array<string> = [];
   tableData: Array<any> = [];
-  crudObj: Object = { "Permission Set Name": "" };
+  crudObj: Object = { PermissionSetName: "" };
   accessToken: string;
   instanceUrl: string;
 
@@ -17,8 +17,9 @@ export class PermissionSetCrudPermissionsComponent implements OnInit {
 
   ngOnInit() {
     this.dataService.permissionSetCrud.subscribe((data) => {
-      if (data.length === 0) this.dataService.getAllData();
-      else {
+      if (data.length === 0) {
+        this.dataService.getAllData();
+      } else {
         this.getTableHeaders(data);
         this.getTableData(data);
       }
@@ -28,7 +29,7 @@ export class PermissionSetCrudPermissionsComponent implements OnInit {
   }
 
   getTableHeaders(permissions) {
-    this.tableHeaders.push("Permission Set Name");
+    this.tableHeaders.push("PermissionSetName");
     for (let i = 0; i < permissions.length; i++) {
       if (!this.tableHeaders.includes(permissions[i].SobjectType)) {
         this.tableHeaders.push(permissions[i].SobjectType);
@@ -48,7 +49,7 @@ export class PermissionSetCrudPermissionsComponent implements OnInit {
       if (permissions[j].PermissionsViewAllRecords) crud += "V";
       if (permissions[j].PermissionsModifyAllRecords) crud += "M";
       if (j === 0) {
-        currentObj["Permission Set Name"] = permissions[j].Parent.Label;
+        currentObj["PermissionSetName"] = permissions[j].Parent.Label;
         currentObj[permissions[j].SobjectType] = crud;
       } else if (
         permissions[j].Parent.Label === permissions[j - 1].Parent.Label
@@ -57,7 +58,7 @@ export class PermissionSetCrudPermissionsComponent implements OnInit {
       } else {
         this.tableData.push(currentObj);
         currentObj = { ...this.crudObj };
-        currentObj["Permission Set Name"] = permissions[j].Parent.Label;
+        currentObj["PermissionSetName"] = permissions[j].Parent.Label;
         currentObj[permissions[j].SobjectType] = crud;
       }
     }
