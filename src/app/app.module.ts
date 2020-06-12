@@ -32,6 +32,8 @@ import { ObjectSettingsComponent } from './layouts/settings/object-settings/obje
 
 import { FilterPanelComponent } from "./components/datatable/filter-panel/filter-panel.component";
 import { ToastComponent } from './components/toast/toast.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { ToastComponent } from './components/toast/toast.component';
     ObjectSettingsComponent,
     DatatableComponent,
     FilterPanelComponent,
-    ToastComponent
+    ToastComponent,
+    NavbarComponent,
+    PageHeaderComponent
   ],
   imports: [
     BrowserModule,
