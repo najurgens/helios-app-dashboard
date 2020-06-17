@@ -40,12 +40,13 @@ export class DatatableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.tableData);
+    console.log("tableData in datatable component onInit() :" + this.tableData);
     this.originalTableData = this.tableData;
     console.log(this.originalTableData);
     this.filteredData = this.tableData;
     // Subscription for Filter Panel
     //this.filterListener.next([]);
+
     this.filterListener.asObservable().subscribe((filterValues) => {
       if (!this.initialSubscribe) this.filterDataTable(filterValues);
       if (this.initialSubscribe) this.initialSubscribe = false;
@@ -67,7 +68,6 @@ export class DatatableComponent implements OnInit {
       .subscribe((text: string) => {
         this.searchFilterDatatable(text.toLowerCase());
       });
-
   }
 
   ngAfterViewInit() {
