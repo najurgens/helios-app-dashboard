@@ -1,0 +1,59 @@
+<div
+  class="slds-brand-band slds-brand-band_medium slds-has-bottom-magnet"
+  style="width: 100vw;"
+>
+  <!--Salesforce Card Body-->
+  <div
+    class="slds-card slds-grid slds-grid_vertical slds-card-boundary mt-2 mr-2 ml-2 mb-2"
+  >
+    <!--Salesforce Page Header-->
+    <app-page-header
+      (toggleFilter)="toggleFilter()"
+      (searchFilterDatatable)="searchFilterDatatable($event)"
+      (refreshTable)="refreshTable()"
+      [(highlightCells)]="highlightCells"
+      [(highlightRows)]="highlightRows"
+    ></app-page-header>
+
+    <div class="slds-grid slds-no-space" style="height: 100vh;">
+      <!--Salesforce Datatable-->
+      <div class="slds-scrollable scroll-margins fillWidth">
+        <table
+          class="slds-col slds-table_bordered slds-max-medium-table_stacked-horizontal"
+          ngl-datatable
+          [data]="tableData"
+          trackByKey="rank"
+          [loading]="false"
+          [(sort)]="sort"
+          (sortChange)="onSort($event)"
+          (rowClick)="onRowClick($event)"
+        >
+          <ngl-datatable-column
+            *ngFor="let header of tableHeaders"
+            heading="{{ header }}"
+            cellClass="test"
+            key="{{ header }}"
+            cellClass="test"
+            sortable
+          ></ngl-datatable-column>
+          <!-- Loading overlay-->
+          <ng-template nglLoadingOverlay>
+            <app-loading-screen></app-loading-screen>
+          </ng-template>
+          <!-- No rows overlay-->
+          <ng-template nglNoRowsOverlay
+            >No data available in table!</ng-template
+          >
+        </table>
+      </div>
+
+      <!--Salesforce Filter Panel-->
+      <app-filter-panel
+        class="slds-hide"
+        [tableHeaders]="tableHeaders"
+        [filterListener]="filterListener"
+        [(showFilterPanel)]="showFilterPanel"
+      ></app-filter-panel>
+    </div>
+  </div>
+</div>
