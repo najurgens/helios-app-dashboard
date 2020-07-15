@@ -53,9 +53,6 @@ export class AccountService {
     */
 
   public getAccount(data, token, url, orgId): Observable<Object> {
-    console.log(
-      "Within ACCOUNT-SERVICE, getAccount, token = " + token + ", url = " + url
-    );
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -82,7 +79,6 @@ export class AccountService {
         if (JSON.stringify(account) !== "[]") {
           this.accountSource.next(account);
           this.accountSource.subscribe((acct) => {
-            console.log("acct already created: " + JSON.stringify(acct));
             this.keyPermissionsSource.next(
               JSON.parse(acct[0].Key_Permissions__c)
             );
@@ -110,12 +106,6 @@ export class AccountService {
     */
 
   public createAccount(data, token, url, body): Observable<Object> {
-    console.log(
-      "Within Account-SERVICE, createAccount, token = " +
-        token +
-        ", url = " +
-        url
-    );
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -131,7 +121,6 @@ export class AccountService {
   }
 
   public saveSystemSettings(data, token, url, body): Observable<Object> {
-    console.log("Within Account-SERVICE, saveSettings");
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -147,7 +136,6 @@ export class AccountService {
   }
 
   public getSystemSettings(data, token, url): Observable<Object> {
-    console.log("Within Account-SERVICE, getSettings");
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -162,7 +150,6 @@ export class AccountService {
   }
 
   public getObjectSettings(data, token, url): Observable<Object> {
-    console.log("Within Account-service, getObjectSettings");
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -192,14 +179,6 @@ export class AccountService {
     */
 
   public getOrgInfo(data, token, url): Observable<Array<Object>> {
-    console.log(
-      "Within account-service, getOrgInfo, data=" +
-        data +
-        ", token=" +
-        token +
-        ", url=" +
-        url
-    );
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -215,15 +194,10 @@ export class AccountService {
 
   private handleError<Any>(operation, result?: Any) {
     return (error: Any): Observable<Any> => {
-      console.error(`${operation} failed: ` + error);
       this.authService.isAuth.next(false);
       sessionStorage.removeItem("auth");
       this.router.navigate(["/login"]);
-      console.log(
-        this.authService.isAuth.subscribe((auth) =>
-          console.log("within handleError, after rejection, auth = " + auth)
-        )
-      );
+      
       this.authService.showMenu.next(false);
       // call function to display toast here
       // displayReAuthToast();

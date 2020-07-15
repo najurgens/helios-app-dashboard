@@ -14,9 +14,9 @@ export class LoadingScreenInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-      console.log("inside interceptor");
+      //console.log("inside interceptor");
     if (this.activeRequests === 0) {
-        console.log("Starting load");
+        //console.log("Starting load");
       this.loadingScreenService.startLoading();
     }
 
@@ -25,7 +25,7 @@ export class LoadingScreenInterceptor implements HttpInterceptor {
       finalize(() => {
         this.activeRequests--;
         if (this.activeRequests === 0) {
-            console.log("Ending load");
+            //console.log("Ending load");
           this.loadingScreenService.stopLoading();
         }
       })

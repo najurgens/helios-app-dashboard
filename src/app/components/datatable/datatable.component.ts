@@ -39,9 +39,8 @@ export class DatatableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("tableData in datatable component onInit() :" + this.tableData);
+    //console.log("tableData in datatable component onInit() :" + this.tableData);
     this.originalTableData = this.tableData;
-    console.log(this.originalTableData);
     this.filteredData = this.tableData;
 
     this.tableName === "permission-sets" || this.tableName === "profiles"
@@ -62,7 +61,7 @@ export class DatatableComponent implements OnInit {
     });
 
     // Subscription for Search Filter
-    fromEvent(this.dataSearchInput.nativeElement, "keyup")
+    /*fromEvent(this.dataSearchInput.nativeElement, "keyup")
       .pipe(
         // get value
         map((event: any) => {
@@ -76,7 +75,7 @@ export class DatatableComponent implements OnInit {
       )
       .subscribe((text: string) => {
         this.searchFilterDatatable(text.toLowerCase());
-      });
+      });*/
   }
 
   ngAfterViewInit() {
@@ -113,12 +112,12 @@ export class DatatableComponent implements OnInit {
   }
 
   onRowClick($event: INglDatatableRowClick) {
-    console.log("clicked row", $event.data);
+    //console.log("clicked row", $event.data);
   }
 
   searchFilterDatatable(event) {
-    console.log("in search");
-    console.log(event);
+    //console.log("in search");
+    //console.log(event);
     if (event.length > 2) {
       let val = event;
       let colsAmt = this.tableHeaders.length;
@@ -145,17 +144,17 @@ export class DatatableComponent implements OnInit {
     this.loadingScreenService.startLoading();
     if (filterValues.length === 0) this.tableData = this.originalTableData;
     else {
-      console.log("inside filterdatable");
-      console.log(this.tableData);
+      //console.log("inside filterdatable");
+      //console.log(this.tableData);
       const arrayToObject = (array) =>
         array.reduce((obj, item, index) => {
           obj[index] = item;
           return obj;
         }, {});
       const tableDataObject = arrayToObject(this.originalTableData);
-      console.log(tableDataObject);
+      //console.log(tableDataObject);
       //console.log(this.tableHeaders);
-      console.log(filterValues);
+      //console.log(filterValues);
 
       for (let filter of filterValues) {
         if (filter.selectedOperator === "Equals") {
@@ -180,7 +179,7 @@ export class DatatableComponent implements OnInit {
           });
         }
       }
-      console.log(tableDataObject);
+      //console.log(tableDataObject);
       this.tableData = Object.values(tableDataObject);
     }
     this.loadingScreenService.stopLoading();
@@ -188,7 +187,7 @@ export class DatatableComponent implements OnInit {
 
   highlight() {
     //Highligting for Key Permissions
-    console.log(this.tableData);
+    //console.log(this.tableData);
     if (this.tableName === "permission-sets" || this.tableName === "profiles") {
       for (let item in this.itemsToHighlight) {
         if (this.itemsToHighlight.hasOwnProperty(item)) {
@@ -222,7 +221,6 @@ export class DatatableComponent implements OnInit {
       //Highlighting for Key Objects
       const itemsToHighlight = this.itemsToHighlight;
       for (let item in itemsToHighlight) {
-        console.log(item);
         if (itemsToHighlight.hasOwnProperty(item)) {
           if (this.highlightCells === true && this.highlightRows === true) {
             $("td[data-label=" + item + "]")

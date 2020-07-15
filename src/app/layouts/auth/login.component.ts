@@ -23,18 +23,18 @@ export class LoginComponent {
             this.router.navigate(['/']);// this.location.back();
         }
 
-        console.log('in loginComponent, isAuthenticated() = ' + authService.isAuthenticated());
+        //console.log('in loginComponent, isAuthenticated() = ' + authService.isAuthenticated());
         this.authService.isAuth.subscribe((auth)=>this.showMenusStateChange.emit((authService.isAuthenticated() || auth)));
         
     }
 
     authenticate(orgType) {
-        console.log('LOGIN AUTHENTICATE CALLED!');
+        //console.log('LOGIN AUTHENTICATE CALLED!');
         this.loginUrl = (orgType==='prod') ? 'true' : 'false';
         window.location.href = 'http://localhost:3001/auth/login?org=' + this.loginUrl;
         
         // change AppComponent state here
-        console.log('EMITTING MENU STATE IN LOGIN ...');
+        //console.log('EMITTING MENU STATE IN LOGIN ...');
         
         this.showMenusStateChange.emit(true);
 

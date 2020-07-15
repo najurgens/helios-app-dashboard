@@ -15,8 +15,7 @@ export class AuthService {
     showMenu = new BehaviorSubject(true);
 
     constructor(private router: Router) {
-        console.log('in auth service constructor!!!!');
-        this.isAuth.asObservable().subscribe((auth)=>{console.log('value of isAuth: ' + auth); this.auth = auth});
+        this.isAuth.asObservable().subscribe((auth)=>{this.auth = auth});
     }
 
     // check for access token.

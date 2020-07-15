@@ -49,7 +49,6 @@ export class PageHeaderComponent implements OnInit {
         // subscription for response
       )
       .subscribe((text: string) => {
-        console.log(text);
         this.searchFilterDatatable.next(text.toLowerCase());
       });
   }
@@ -84,12 +83,10 @@ export class PageHeaderComponent implements OnInit {
       if (event.currentTarget.checked) {
         this.highlightCellsChange.emit(true);
       } else this.highlightCellsChange.emit(false);
-      console.log("Cell highlighting!");
     } else {
       if (event.currentTarget.checked) {
         this.highlightRowsChange.emit(true);
       } else this.highlightRowsChange.emit(false);
-      console.log("Row highlighting!");
     }
   }
 

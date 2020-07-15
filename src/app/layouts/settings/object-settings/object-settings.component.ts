@@ -38,52 +38,24 @@ export class ObjectSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.accountService.keyObjectsSource.asObservable().subscribe((objects) => {
-      console.log("OBJECTS: " + JSON.stringify(objects));
       if (JSON.stringify(objects) === "{}") {
-        console.log("null SUB");
         const authString = JSON.parse(sessionStorage.getItem("auth"));
-        console.log(
-          "in getAllData from dataService within object-settings, authString = " +
-            authString
-        );
-        console.log(
-          "authString.user.orgId = " +
-            JSON.stringify(JSON.parse(authString).user.organizationId)
-        );
+        
         this.dataService.getAllData();
         // need to wait for assignedObjects to populate before calling getAllObjects(objects)
       } else {
-        console.log("data SUB, objects = " + JSON.stringify(objects));
         this.assignedObjects = this.sortObject(objects);
         this.availableObjects = {};
         this.getAllObjects(objects);
         this.availableObjectsList = Object.keys(this.availableObjects);
         this.assignedObjectsList = Object.keys(this.assignedObjects);
-        console.log(
-          "assigned list: " +
-            JSON.stringify(this.assignedObjectsList) +
-            " available list: " +
-            JSON.stringify(this.availableObjectsList)
-        );
-        console.log(
-          "assigned: " +
-            JSON.stringify(this.assignedObjects) +
-            " available: " +
-            JSON.stringify(this.availableObjects)
-        );
       }
     });
   }
 
   getAllObjects(obj) {
-    console.log("obj = " + obj);
     this.dataService.profileCrud.subscribe((data) => {
       if (JSON.stringify(data) !== "[]") {
-        console.log(
-          "in getAllObjects, settings, profileCRUD, objects = " +
-            JSON.stringify(data)
-        );
-        console.log("SObject: " + JSON.stringify(data[0].SobjectType));
         for (let permission of data)
           if (this.assignedObjects[permission.SobjectType] === undefined)
             this.availableObjects[permission.SobjectType] = [0, 0, 0, 0, 0, 0];

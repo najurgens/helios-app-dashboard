@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
     })
     $("#homeTab").addClass("slds-is-active");
     $('.slds-is-active').removeClass("slds-is-active");
-    console.log('in dashboard');
+    //console.log('in dashboard');
   }
 
 }

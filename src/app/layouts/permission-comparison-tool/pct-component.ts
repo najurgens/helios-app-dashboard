@@ -36,18 +36,14 @@ export class PermissionComparisonToolComponent implements OnInit {
     // get all profiles currently in the org, into picklist
     this.dataService.profiles.subscribe((profiles) => {
       if (JSON.stringify(profiles.tableData) === "[]") {
-        console.log(JSON.stringify(profiles));
+        //console.log(JSON.stringify(profiles));
         this.dataService.getProfiles("profiles");
       } else {
         this.profileKeys = profiles.tableHeaders;
         this.mapObjectsToList(this.profilesMap, profiles.tableData, 0);
-        console.log(
-          "profilesMap Keys = " + JSON.stringify(Object.keys(this.profilesMap))
-        );
+        
         this.permissionsMap = { ...this.permissionsMap, ...this.profilesMap };
-        console.log(
-          "permissionsMap keys 1: " + Object.keys(this.permissionsMap)
-        );
+        
       }
     });
 
@@ -62,31 +58,18 @@ export class PermissionComparisonToolComponent implements OnInit {
           permissionSets.tableData,
           1
         );
-        console.log(
-          "permissionSetsMap Keys = " +
-            JSON.stringify(Object.keys(this.permissionSetsMap))
-        );
         this.permissionsMap = {
           ...this.permissionsMap,
           ...this.permissionSetsMap,
         };
-        console.log(
-          "permissionsMap keys 2: " + Object.keys(this.permissionsMap)
-        );
       }
     });
   }
 
   mapObjectsToList(map: Object, items: Array<JSON>, id: number) {
-    console.log("within mapObjectsToList, data = " + JSON.stringify(items));
-    console.log("number of items: " + items.length);
-    console.log("profilesMap: " + JSON.stringify(map));
-
     switch (id) {
       case 0:
-        console.log("profilesMap: " + JSON.stringify(map));
         items.forEach((profile) => {
-          console.log("ID = " + profile["Id"]);
           map[profile["Id"]] = profile;
         });
         break;
@@ -102,8 +85,6 @@ export class PermissionComparisonToolComponent implements OnInit {
     this.dataService.permissionSets.subscribe((data) => {
       this.tableData = data.tableData;
       this.tableHeaders = data.tableHeaders;
-      console.log("tableData: " + JSON.stringify(data.tableData));
-      console.log("tableHeaders: " + JSON.stringify(data.tableHeaders));
     });
   }
 

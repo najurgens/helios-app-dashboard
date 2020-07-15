@@ -17,9 +17,6 @@ export class ProfilePermissionsComponent implements OnInit {
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
-    console.log(
-      "PATH IN PROFILE-PERMISSIONS-COMPONENT: " + this.dataService.path
-    );
     this.dataService.profiles.subscribe((data) => {
       if (this.tableData) this.tableData = [];
       if (data.tableData.length === 0) this.dataService.getAllData();

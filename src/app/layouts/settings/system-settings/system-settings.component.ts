@@ -38,25 +38,16 @@ export class SystemSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountService.keyPermissions.subscribe((permissions) => {
-      console.log("permissions here: " + JSON.stringify(permissions));
       if (JSON.stringify(permissions) === "{}") this.dataService.getAllData();
       else {
-        console.log("permissions: " + JSON.stringify(permissions));
-        console.log(
-          "permissions[key]: " + permissions["PermissionsViewAllUsers"]
-        );
+        
         //this.systemPermissions = permissions;
         this.systemPermissions = new Object(permissions);
-        console.log(
-          "System permissions: " + JSON.stringify(this.systemPermissions)
-        );
+        
         this.userPermissions["PermissionsViewAllUsers"] =
           permissions["PermissionsViewAllUsers"];
         delete this.systemPermissions["PermissionsViewAllUsers"];
-        console.log(
-          "userPermissions[key] = " +
-            this.userPermissions["PermissionsViewAllUsers"]
-        );
+        
         this.userPermissions["PermissionsAssignPermissionSets"] =
           permissions["PermissionsAssignPermissionSets"];
         delete this.systemPermissions["PermissionsAssignPermissionSets"];
@@ -87,47 +78,26 @@ export class SystemSettingsComponent implements OnInit {
         this.userPermissions["PermissionsResetPasswords"] =
           permissions["PermissionsResetPasswords"];
         delete this.systemPermissions["PermissionsResetPasswords"];
-        console.log(
-          "system Permissions: " + JSON.stringify(this.systemPermissions)
-        );
-        console.log(
-          "user Permissions: " + JSON.stringify(this.userPermissions)
-        );
+        
 
         this.accountService.keyObjectsSource
           .asObservable()
           .subscribe((objects) => {
-            console.log("objects: " + JSON.stringify(objects));
             this.objectPermissions = objects;
-            console.log(
-              "object Permissions: " + JSON.stringify(this.objectPermissions)
-            );
           });
 
         this.userPermissionsKeys = Object.keys(this.userPermissions);
-        console.log("userPermissionsKeys: " + this.userPermissionsKeys);
         this.systemPermissionsKeys = Object.keys(this.systemPermissions);
         const len = this.userPermissionsKeys.length,
           len2 = this.systemPermissionsKeys.length;
-        console.log("len = " + len + ", len2 = " + len2);
-        console.log(
-          "1: A = " +
-            this.userPermissionsKeysA +
-            " B = " +
-            this.userPermissionsKeysB
-        );
+        
 
         this.userPermissionsKeysA = this.userPermissionsKeys.slice(0, len / 2);
         this.userPermissionsKeysB = this.userPermissionsKeys.slice(
           len / 2,
           len
         );
-        console.log(
-          "2: A = " +
-            this.userPermissionsKeysA +
-            " B = " +
-            this.userPermissionsKeysB
-        );
+        
         this.systemPermissionsKeysA = this.systemPermissionsKeys.slice(
           0,
           len2 / 2
@@ -137,12 +107,7 @@ export class SystemSettingsComponent implements OnInit {
           len2
         );
 
-        console.log(
-          "3: A = " +
-            this.userPermissionsKeysA +
-            " B = " +
-            this.userPermissionsKeysB
-        );
+        
       }
     });
   }
@@ -186,7 +151,7 @@ export class SystemSettingsComponent implements OnInit {
         settings
       )
       .subscribe((resp) =>
-        console.log("system settings saved - response: " + JSON.stringify(resp))
+        console.log("system settings saved - response: ")
       );
   }
 }

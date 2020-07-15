@@ -180,7 +180,7 @@ export class FilterPanelComponent implements OnInit {
 
   saveChanges() {
     //Save new values to current values
-    console.log(this.newFilters);
+    //console.log(this.newFilters);
     this.filtersUpdated = false;
     this.filters = new Map(this.newFilters);
     this.filterCount = this.newFilterCount;

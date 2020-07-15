@@ -51,8 +51,6 @@ export class DataService {
     const authObj = JSON.parse(sessionStorage.getItem("auth"));
     const token = JSON.parse(authObj).accessToken;
     const url = JSON.parse(authObj).instanceUrl;
-    console.log(token);
-    console.log(url);
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -61,7 +59,6 @@ export class DataService {
       }),
       withCredentials: true,
     };
-    console.log(httpOptions);
     this.http.get<any>(this.path + data, httpOptions).subscribe((data) => {
       for (let i = 0; i < data.length; i++) delete data[i].attributes;
       const permissionData = {
@@ -76,7 +73,6 @@ export class DataService {
     const authObj = JSON.parse(sessionStorage.getItem("auth"));
     const token = JSON.parse(authObj).accessToken;
     const url = JSON.parse(authObj).instanceUrl;
-    console.log("TOKEN IN DATA-SERVICE: " + token);
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -99,7 +95,6 @@ export class DataService {
     const authObj = JSON.parse(sessionStorage.getItem("auth"));
     const token = JSON.parse(authObj).accessToken;
     const url = JSON.parse(authObj).instanceUrl;
-    console.log("TOKEN IN DATA-SERVICE: " + token);
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -117,7 +112,6 @@ export class DataService {
     const authObj = JSON.parse(sessionStorage.getItem("auth"));
     const token = JSON.parse(authObj).accessToken;
     const url = JSON.parse(authObj).instanceUrl;
-    console.log("TOKEN IN DATA-SERVICE: " + token);
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -133,7 +127,6 @@ export class DataService {
 
   private handleError<Any>(operation, result?: Any) {
     return (error: Any): Observable<Any> => {
-      console.error(`${operation} failed: ` + error);
       this.authService.isAuth.next(false);
       sessionStorage.removeItem("auth");
       this.authService.showMenu.next(false);
