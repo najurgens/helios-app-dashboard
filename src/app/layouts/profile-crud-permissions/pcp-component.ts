@@ -16,6 +16,7 @@ export class ProfileCrudPermissionsComponent implements OnInit {
 
   ngOnInit() {
     this.dataService.profileCrud.subscribe((data) => {
+      if (this.tableData) this.tableData = [];
       if (data.length === 0) this.dataService.getAllData();
       else {
         this.getTableHeaders(data);

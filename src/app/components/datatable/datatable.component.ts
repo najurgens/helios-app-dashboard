@@ -1,17 +1,10 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
-import {
-  debounceTime,
-  map,
-  distinctUntilChanged,
-  filter,
-} from "rxjs/operators";
-import { fromEvent, Observable, BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { INglDatatableSort, INglDatatableRowClick } from "ng-lightning";
 import { DataService } from "../../services/data-service";
-import { ExportToCsv } from "export-to-csv";
 import { FilterPanelComponent } from "./filter-panel/filter-panel.component";
 import { LoadingScreenService } from "../../services/loading-screen.service";
-import { style } from "@angular/animations";
+import { AccountService } from "../../services/account-service";
 
 @Component({
   selector: "app-datatable",
@@ -33,10 +26,14 @@ export class DatatableComponent implements OnInit {
   showFilterPanel: boolean = false;
   filterListener = new BehaviorSubject([]);
   initialSubscribe: boolean = true;
+  itemsToHighlight: Object;
+  highlightRows: boolean = false;
+  highlightCells: boolean = false;
 
   constructor(
     private dataService: DataService,
-    private loadingScreenService: LoadingScreenService
+    private loadingScreenService: LoadingScreenService,
+    private accountService: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -44,10 +41,20 @@ export class DatatableComponent implements OnInit {
     this.originalTableData = this.tableData;
     console.log(this.originalTableData);
     this.filteredData = this.tableData;
+
+    this.tableName === "permission-sets" || this.tableName === "profiles"
+      ? this.accountService.keyPermissions.subscribe(
+          (permissions) => (this.itemsToHighlight = permissions)
+        )
+      : this.accountService.keyObjectsSource
+          .asObservable()
+          .subscribe((objects) => (this.itemsToHighlight = objects));
     // Subscription for Filter Panel
     //this.filterListener.next([]);
 
     this.filterListener.asObservable().subscribe((filterValues) => {
+      //clear previous highlighting for table filter
+      $('td[style*="background-color: yellow"]').css("background-color", "");
       if (!this.initialSubscribe) this.filterDataTable(filterValues);
       if (this.initialSubscribe) this.initialSubscribe = false;
     });
@@ -75,17 +82,18 @@ export class DatatableComponent implements OnInit {
     $("th").css("position", "sticky");
     $("th").css("top", "0");
     $("th").css("z-index", "1000");
-    //$(".test").css("background-color", "yellow");
-    //console.log($(".test"));
   }
 
   ngAfterViewChecked() {
-    //for(let keyLabel of keyLabels){
-    $("td[data-label='PermissionsApexRestServices']")
-      .find("div:contains(true)")
-      .parent()
-      .css("background-color", "yellow");
-    //}
+    if (this.highlightCells === false) {
+      $('td[style*="background-color: lightblue"]').css("background-color", "");
+      $('td[style*="background-color: cadetblue"]').css("background-color", "");
+    }
+    if (this.highlightRows === false) {
+      $('tr[style*="background-color: lightblue"]').css("background-color", "");
+    }
+    if (this.highlightCells === true || this.highlightRows === true)
+      this.highlight();
   }
 
   checkKeyObjects(keyObjects) {}
@@ -107,6 +115,8 @@ export class DatatableComponent implements OnInit {
   }
 
   searchFilterDatatable(event) {
+    console.log("in search");
+    console.log(event);
     if (event.length > 2) {
       let val = event;
       let colsAmt = this.tableHeaders.length;
@@ -148,7 +158,7 @@ export class DatatableComponent implements OnInit {
       for (let filter of filterValues) {
         if (filter.selectedOperator === "Equals") {
           this.originalTableData.forEach((row, index) => {
-            if (row[filter.selectedField] !== filter.inputValue) {
+            if (row[filter.selectedField].toString() !== filter.inputValue) {
               delete tableDataObject[index];
             }
           });
@@ -160,7 +170,9 @@ export class DatatableComponent implements OnInit {
           });
         } else if (filter.selectedOperator === "Contains") {
           this.originalTableData.forEach((row, index) => {
-            if (!row[filter.selectedField].includes(filter.inputValue)) {
+            if (
+              !row[filter.selectedField].toString().includes(filter.inputValue)
+            ) {
               delete tableDataObject[index];
             }
           });
@@ -170,6 +182,76 @@ export class DatatableComponent implements OnInit {
       this.tableData = Object.values(tableDataObject);
     }
     this.loadingScreenService.stopLoading();
+  }
+
+  highlight() {
+    //Highligting for Key Permissions
+    console.log(this.tableData);
+    if (this.tableName === "permission-sets" || this.tableName === "profiles") {
+      for (let item in this.itemsToHighlight) {
+        if (this.itemsToHighlight.hasOwnProperty(item)) {
+          if (this.itemsToHighlight[item] === true) {
+            if (this.highlightCells === true && this.highlightRows === true) {
+              $("td[data-label=" + item + "]")
+                .find("div:contains(true)")
+                .parent()
+                .css("background-color", "cadetblue");
+              $("td[data-label=" + item + "]")
+                .find("div:contains(true)")
+                .parent()
+                .parent()
+                .css("background-color", "lightblue");
+            } else if (this.highlightCells === true) {
+              $("td[data-label=" + item + "]")
+                .find("div:contains(true)")
+                .parent()
+                .css("background-color", "lightblue");
+            } else {
+              $("td[data-label=" + item + "]")
+                .find("div:contains(true)")
+                .parent()
+                .parent()
+                .css("background-color", "lightblue");
+            }
+          }
+        }
+      }
+    } else {
+      //Highlighting for Key Objects
+      const itemsToHighlight = this.itemsToHighlight;
+      for (let item in itemsToHighlight) {
+        console.log(item);
+        if (itemsToHighlight.hasOwnProperty(item)) {
+          if (this.highlightCells === true && this.highlightRows === true) {
+            $("td[data-label=" + item + "]")
+              .filter(function () {
+                return $(this).text() === itemsToHighlight[item].join("");
+              })
+              .css("background-color", "cadetblue");
+            $("td[data-label=" + item + "]")
+              .filter(function () {
+                return $(this).text() === itemsToHighlight[item].join("");
+              })
+              .parent()
+              .css("background-color", "lightblue");
+          } else if (this.highlightCells === true) {
+            $("td[data-label=" + item + "]")
+              .filter(function () {
+                return $(this).text() === itemsToHighlight[item].join("");
+              })
+              .css("background-color", "lightblue");
+          } else {
+            $("td[data-label=" + item + "]")
+              .filter(function () {
+                return $(this).text() === itemsToHighlight[item].join("");
+              })
+              .parent()
+              .css("background-color", "lightblue");
+          }
+        }
+      }
+    }
+    //}
   }
 
   toggleFilter() {
@@ -186,22 +268,5 @@ export class DatatableComponent implements OnInit {
     else if (this.tableName === "profile-crud-permissions")
       this.dataService.getProfileCrud(this.tableName);
     else this.dataService.getPermissionSetCrud(this.tableName);
-  }
-
-  createCSV(data) {
-    const options = {
-      fieldSeparator: ",",
-      quoteStrings: '"',
-      decimalSeparator: ".",
-      showLabels: true,
-      showTitle: true,
-      title: "Profiles and Permissions",
-      useTextFile: false,
-      useBom: true,
-      useKeysAsHeaders: true,
-      // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
-    };
-    const csvExporter = new ExportToCsv(options);
-    csvExporter.generateCsv(this.tableData);
   }
 }

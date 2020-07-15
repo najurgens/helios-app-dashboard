@@ -17,6 +17,7 @@ export class PermissionSetCrudPermissionsComponent implements OnInit {
 
   ngOnInit() {
     this.dataService.permissionSetCrud.subscribe((data) => {
+      if (this.tableData) this.tableData = [];
       if (data.length === 0) {
         this.dataService.getAllData();
       } else {

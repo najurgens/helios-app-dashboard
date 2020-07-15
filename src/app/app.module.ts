@@ -31,7 +31,9 @@ import { DatatableComponent } from "./components/datatable/datatable.component";
 import { ObjectSettingsComponent } from "./layouts/settings/object-settings/object-settings.component";
 
 import { FilterPanelComponent } from "./components/datatable/filter-panel/filter-panel.component";
-import { ToastComponent } from "./components/toast/toast.component";
+import { ToastComponent } from './components/toast/toast.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { PermissionComparisonToolComponent } from "./layouts/permission-comparison-tool/pct-component";
 
 @NgModule({
@@ -50,6 +52,8 @@ import { PermissionComparisonToolComponent } from "./layouts/permission-comparis
     FilterPanelComponent,
     PermissionComparisonToolComponent,
     ToastComponent,
+    NavbarComponent,
+    PageHeaderComponent
   ],
   imports: [
     BrowserModule,

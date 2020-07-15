@@ -21,6 +21,7 @@ export class ProfilePermissionsComponent implements OnInit {
       "PATH IN PROFILE-PERMISSIONS-COMPONENT: " + this.dataService.path
     );
     this.dataService.profiles.subscribe((data) => {
+      if (this.tableData) this.tableData = [];
       if (data.tableData.length === 0) this.dataService.getAllData();
       else {
         this.tableData = data.tableData;
